@@ -162,3 +162,5 @@ Card 会员卡
 Golaravel: <http://www.golaravel.com>
 
 Laravel 5.1中文文档: <http://www.golaravel.com/laravel/docs/5.1/>
+
+ThinkPHP 3.2.2文档: <http://document.thinkphp.cn/manual_3_2.html>

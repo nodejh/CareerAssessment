@@ -1,0 +1,15 @@
+body {
+    min-height: 500px;
+    padding-top: 70px;
+}
+
+/* signup */
+.ca-tab-content {
+    padding:  20px 15px 0 15px;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.ca-btn-getsms {
+    cursor: pointer;
+}

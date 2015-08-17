@@ -1,0 +1,90 @@
+<include file="./Template/Public/header.html" />
+<include file="./Template/Public/navbar.html" />
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-10 col-sm-6 col-md-4 col-xs-offset-1 col-sm-offset-3 col-md-offset-4">
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#user" aria-controls="home" role="tab" data-toggle="tab">会员注册</a></li>
+                <li role="presentation"><a href="#teacher" aria-controls="profile" role="tab" data-toggle="tab">咨询师注册</a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content ca-tab-content">
+                <div role="tabpanel" class="tab-pane active" id="user">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="user-phone" placeholder="请输入您的手机号">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="请输入短信验证码" aria-describedby="user-btn-getsms">
+                                    <span class="input-group-addon ca-btn-getsms" id="user-btn-getsms">获取验证码</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="password" class="form-control" id="user-password" placeholder="请输入您的密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="password" class="form-control" id="user-password-confirm" placeholder="请再次输入您的密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-primary btn-block" id="user-btn-signup" url="__APP__/Home/Signup/signup_phone/">会员注册</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="teacher">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control" id="teacher-phone" placeholder="请输入您的手机号">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="请输入短信验证码" aria-describedby="teacher-btn-getsms">
+                                    <span class="input-group-addon ca-btn-getsms" id="teacher-btn-getsms">获取验证码</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="password" class="form-control" id="teacher-password" placeholder="请输入您的密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <input type="password" class="form-control" id="teacher-password-confirm" placeholder="请再次输入您的密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-primary btn-block" id="teacher-btn-signup">咨询师注册</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <p>
+                <span>您也可以直接<a href="#">使用会员卡卡号和密码登录</a></span>
+            </p>
+        </div>
+    </div>
+</div>
+
+
+<include file="./Template/Public/footer.html" />

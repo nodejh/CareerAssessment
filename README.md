@@ -164,3 +164,13 @@ Golaravel: <http://www.golaravel.com>
 Laravel 5.1中文文档: <http://www.golaravel.com/laravel/docs/5.1/>
 
 ThinkPHP 3.2文档: <http://document.thinkphp.cn/manual_3_2.html>
+
+
+
+一般咨询师需要审核
+
+会员咨询师不需要审核
+
+评分： 
+
+专业水平，服务态度

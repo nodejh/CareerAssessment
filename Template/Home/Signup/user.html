@@ -1,0 +1,96 @@
+<include file="./Template/Public/header.html" />
+<include file="./Template/Public/navbar.html" />
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-10 col-sm-6 col-md-4 col-xs-offset-1 col-sm-offset-3 col-md-offset-4">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">完善信息</h3>
+                </div>
+                <div class="panel-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="info-user-real-name">真实姓名</label>
+                            <input type="text" class="form-control" id="info-user-real-name" placeholder="请输入您的真实姓名">
+                        </div>
+                        <div class="form-group">
+                            <label for="info-user-email">邮箱</label>
+                            <input type="email" class="form-control" id="info-user-email" placeholder="请输入您的邮箱">
+                        </div>
+                        <div class="form-group">
+                            <label for="info-user-study-status">学习或工作状态</label>
+                            <select class="form-control" id="info-user-study-status">
+                                <option value="1">高中</option>
+                                <option value="2">大学</option>
+                                <option value="3">工作（未满1年）</option>
+                                <option value="4">工作（1-3年）</option>
+                                <option value="5">工作（3-5年）</option>
+                                <option value="6">工作（5年以上）</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="info-user-school">学校</label>
+                            <input type="text" class="form-control" id="info-user-school" placeholder="请输入您的当前学校">
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <strong>性别</strong>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="info-user-gender" id="info-user-gender-1" value="男"> 男
+                                    </label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="info-user-gender" id="info-user-gender-2" value="女"> 女
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <strong>考生类型</strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="info-user-senior-status-1" value="1"> 是否艺体生
+                                    </label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="info-user-senior-status-2" value="1"> 是否少数名族考生
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="info-user-senior-status-3" value="1"> 是否国家专项计划
+                                    </label>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label class="checkbox-inline">
+                                        <input type="checkbox" id="info-user-senior-status-4" value="1"> 是否军校或国防生
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-block" id="info-user-btn" url="__APP__/Home/Signup/signup_userinfo">确定</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<include file="./Template/Public/footer.html" />

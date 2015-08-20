@@ -3,6 +3,12 @@ body {
     padding-top: 70px;
 }
 
+
+/* account */
+.ca-wrong-message {
+    display: none;
+}
+
 /* signup */
 .ca-tab-content {
     padding:  20px 15px 0 15px;

@@ -3,12 +3,12 @@
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">蓝鲸职业学业咨询平台</span>
+                <span class="sr-only">蓝鲸教育咨询</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="__APP__/Home/Index/index">蓝鲸职业学业咨询平台</a>
+            <a class="navbar-brand" href="__APP__/Home/Index/index">蓝鲸教育咨询</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -19,16 +19,11 @@
                 <li><a href="#">职业锚评测</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="{$active_signup}"><a href="__APP__/Home/Signup/index">注册</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">登录 <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">会员登录</a></li>
-                        <li><a href="#">咨询师登录</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">管理员登录</a></li>
-                    </ul>
-                </li>
+                <form class="navbar-form navbar-right" role="search">
+                    <a href="__APP__/Home/Login/index">
+                        <button type="button" class="btn btn-primary">注册/登录</button>
+                    </a>
+                </form>
             </ul>
         </div><!--/.nav-collapse -->
     </div>

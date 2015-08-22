@@ -5,9 +5,13 @@ class LoginController extends Controller {
 
     // 登录首页
     public function index() {
-        $data['title'] = '登录－蓝鲸教育咨询';
-        $this->assign($data);
-        $this->display();
+        if (!function_is_login()) {
+            $data['title'] = '登录－蓝鲸教育咨询';
+            $this->assign($data);
+            $this->display();
+        } else {
+            $this->redirect('Admin/User/index', '', 0);
+        }
     }
 
 
@@ -55,7 +59,6 @@ class LoginController extends Controller {
                             $data['message'] = '尚未完善基本信息';
                             $data['url'] = U('Login/user');
                             $Account = M('account');
-//                            $card_id = $result_ucard['ucard_id'];
                             $where['card_id'] = $result_ucard['ucard_id'];
                             $where['type'] = $user_first_number;
                             $result_account = $Account->where($where)->find();

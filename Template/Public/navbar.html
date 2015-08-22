@@ -18,13 +18,49 @@
                 <li><a href="#">霍兰德职业兴趣评测</a></li>
                 <li><a href="#">职业锚评测</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <form class="navbar-form navbar-right" role="search">
-                    <a href="__APP__/Home/Login/index">
-                        <button type="button" class="btn btn-primary">注册/登录</button>
-                    </a>
-                </form>
-            </ul>
+
+            <switch name="{utype}" >
+                <case value="user">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{$name} <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">我的评测</a></li>
+                                <li><a href="#">我的预约</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="__APP__/Home/Index/logout">退出</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </case>
+                <case value="teacher">
+                    <case value="user">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{$name} <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">我的预约</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="__APP__/Home/Index/logout">退出</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </case>
+                </case>
+                <case value="admin">
+                    <li><a href="#">管理中心</a></li>
+                </case>
+                <default />
+                <ul class="nav navbar-nav navbar-right">
+                    <form class="navbar-form navbar-right" role="search">
+                        <a href="__APP__/Home/Login/index">
+                            <button type="button" class="btn btn-primary">注册/登录</button>
+                        </a>
+                    </form>
+                </ul>
+            </switch>
+
+
         </div><!--/.nav-collapse -->
     </div>
 </nav>

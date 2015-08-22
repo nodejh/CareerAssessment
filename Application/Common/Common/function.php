@@ -3,6 +3,7 @@
 // 判断是否登录
 function function_is_login() {
     if($_SESSION['uid'] && $_SESSION['uid'] != '') {
+        // Account 表的 id
         return $_SESSION['uid'];
     } else {
         return false;
@@ -12,8 +13,11 @@ function function_is_login() {
 
 // 用户类型
 function function_login_type() {
-    $type = $_SESSION['user_type'];
-    return $type;
+    if ($_SESSION['utype'] && $_SESSION['utype'] != '') {
+        return $_SESSION['utype'];
+    } else {
+        return false;
+    }
 }
 
 
@@ -29,10 +33,16 @@ function function_teacher_number() {
 }
 
 
+// 管理员type
+function function_admin_number() {
+    return 11;
+}
+
+
 // 设置用户登录状态
-function function_set_login_in($user_id, $type) {
-    $_SESSION['uid'] = $user_id;
-    $_SESSION['type'] = $type;
+function function_set_login_in($uid, $utype) {
+    $_SESSION['uid'] = $uid;
+    $_SESSION['utype'] = $utype;
     return true;
 }
 

@@ -4,17 +4,35 @@ use Think\Controller;
 class IndexController extends Controller {
 
     public function index(){
-        $data = [];
-        $is_login = function_is_login();
-        if ($is_login) {
-            $User = M('user');
-            $user_info = $User->where('user_id = ' . $is_login);
-            $data['user_info'] = $user_info;
-        } else {
-            $data['user_info'] = '';
-        }
+        //var_dump($_SESSION);
+        //function_set_logout();
+        $uid = function_is_login();
+        if ($uid) {
+            $utype = function_login_type();
+            if ($utype == function_user_number()) {
+                $data['utype'] = 'user';
+                $account = M('account');
 
+            } elseif ($utype == function_teacher_number()) {
+                $data['utype'] = 'teacher';
+
+            } elseif ($utype == function_admin_number()) {
+                $data['utype'] = 'admin';
+
+            } else {
+                function_set_logout();
+            }
+            $data['name'] = 'test';
+        }
+        $data['title'] = '蓝鲸教育咨询';
         $this->assign($data);
         $this->display();
+    }
+
+
+    // 退出登录
+    public function logout() {
+        function_set_logout();
+        $this->redirect('Index/index', '', 0);
     }
 }

@@ -8,8 +8,11 @@ body {
 .ca-wrong-message {
     display: none;
 }
+.ca-small-tips {
+    color: #bbb;
+}
 
-/* signup */
+    /* signup */
 .ca-tab-content {
     padding:  20px 15px 0 15px;
     border-right: 1px solid #ddd;
@@ -19,7 +22,9 @@ body {
 .ca-btn-getsms {
     cursor: pointer;
 }
-
+.ca-signup-hide {
+    display: none;
+}
 
 
 .citySelector{font:12px/1.5 tahoma,arial,\5b8b\4f53;background:#fff;text-align:left;}

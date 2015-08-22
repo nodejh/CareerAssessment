@@ -1,8 +1,8 @@
 (function ($) {
 
   /*
-  * 登录部分
-  **/
+   * 登录部分
+   **/
 
   // 会员卡登录
   $('#login-card-btn').click(function () {
@@ -200,13 +200,191 @@
 
   /*
    * 完善信息
-  **/
-
-  // 显示更多信息
+   **/
+  var signup_user_type = 0;
+  // 显示更多信息-高中
   $('#signup-userinfo-senior').click(function () {
-
+    $('.ca-signup-choose-form').addClass('ca-signup-hide');
+    $('#singnup-userinfo-form-school').removeClass('ca-signup-hide');
+    $('#singnup-userinfo-form-student-type').removeClass('ca-signup-hide');
+    signup_user_type = 1;
+    able_button($('#singnup-userinfo-btn'));
   });
 
+
+  // 显示更多信息-大学
+  $('#signup-userinfo-university').click(function () {
+    $('.ca-signup-choose-form').addClass('ca-signup-hide');
+    $('#singnup-userinfo-form-school').removeClass('ca-signup-hide');
+    $('#singnup-userinfo-form-college').removeClass('ca-signup-hide');
+    $('#singnup-userinfo-form-student-type').removeClass('ca-signup-hide');
+    signup_user_type = 2;
+    able_button($('#singnup-userinfo-btn'));
+  });
+
+
+  // 显示更多信息-工作
+  $('#signup-userinfo-work').click(function () {
+    $('.ca-signup-choose-form').addClass('ca-signup-hide');
+    $('#singnup-userinfo-form-work').removeClass('ca-signup-hide');
+    signup_user_type = 3;
+    able_button($('#singnup-userinfo-btn'));
+  });
+
+
+  // 完善来访者信息
+  $('#singnup-userinfo-btn').click(function () {
+    var $button = $(this);
+    disable_button($button);
+    var $error_message = $('#signup-userinfo-panel .ca-wrong-message');
+    $error_message.hide();
+    var post_data = [];
+    var name = $('#signup-userinfo-name').val();
+    if (!name.length > 0) {
+      $error_message.text('请填写您的姓名');
+      $error_message.show();
+      able_button($button);
+      return;
+    }
+    post_data.name = name;
+    //console.log(post_data);
+
+    var gender = $('#signup-userinfo-gender input[type="radio"]:checked').val();
+    if (gender != 1 && gender != 2) {
+      $error_message.text('请选择您的性别');
+      $error_message.show();
+      able_button($button);
+      return;
+    }
+    post_data.gender = gender;
+    //console.log(post_data);
+
+    var email = $('#signup-userinfo-email').val();
+    if (!reg_exp_email(email)) {
+      $error_message.text('邮箱格式错误');
+      $error_message.show();
+      able_button($button);
+      return;
+    }
+    post_data.email = email;
+    //console.log(post_data);
+
+    var city = $('#signup-userinfo-city').val();
+    if (city == '请选择您所在城市' || city == '') {
+      $error_message.text('请选择您所在城市');
+      $error_message.show();
+      able_button($button);
+      return;
+    }
+    post_data.city = city;
+    //console.log(post_data);
+
+    var status = $('#signup-userinfo-status input[type="radio"]:checked').val();
+    if (status != 1 && status != 2 && status != 30) {
+      $error_message.text('请选择您当前学习或工作状态');
+      $error_message.show();
+      able_button($button);
+      return;
+    }
+    post_data.status = status;
+    //console.log(post_data);
+
+    if (signup_user_type == 1) {
+      var school =  $('#signup-userinfo-school').val();
+      if (!school.length > 0) {
+        $error_message.text('请填写您当前学校名称');
+        $error_message.show();
+        able_button($button);
+        return;
+      }
+      post_data.school = school;
+      if($('#signup-userinfo-student-type-1').is(':checked') == true) {
+        var student_type_1 = '1';
+      } else {
+        var student_type_1 = '0';
+      }
+      if($('#signup-userinfo-student-type-2').is(':checked') == true) {
+        var student_type_2 = '1';
+      } else {
+        var student_type_2 = '0';
+      }
+      if($('#signup-userinfo-student-type-3').is(':checked') == true) {
+        var student_type_3 = '1';
+      } else {
+        var student_type_3 = '0';
+      }
+      if($('#signup-userinfo-student-type-4').is(':checked') == true) {
+        var student_type_4 = '1';
+      } else {
+        var student_type_4 = '0';
+      }
+      var student_type = student_type_1 + student_type_2 + student_type_3 + student_type_4;
+      post_data.student_type = student_type;
+    } else if (signup_user_type == 2) {
+      var school =  $('#signup-userinfo-school').val();
+      if (!school.length > 0) {
+        $error_message.text('请填写您当前学校名称');
+        $error_message.show();
+        able_button($button);
+        return;
+      }
+      post_data.school = school;
+
+      var college = $('#signup-userinfo-college').val();
+      //console.log(college);
+      if (!college.length > 0) {
+        $error_message.text('请填写您的专业');
+        $error_message.show();
+        able_button($button);
+        return;
+      }
+      post_data.college = college;
+
+      if($('#signup-userinfo-student-type-1').is(':checked') == true) {
+        var student_type_1 = '1';
+      } else {
+        var student_type_1 = '0';
+      }
+      if($('#signup-userinfo-student-type-2').is(':checked') == true) {
+        var student_type_2 = '1';
+      } else {
+        var student_type_2 = '0';
+      }
+      if($('#signup-userinfo-student-type-3').is(':checked') == true) {
+        var student_type_3 = '1';
+      } else {
+        var student_type_3 = '0';
+      }
+      if($('#signup-userinfo-student-type-4').is(':checked') == true) {
+        var student_type_4 = '1';
+      } else {
+        var student_type_4 = '0';
+      }
+      var student_type = student_type_1 + student_type_2 + student_type_3 + student_type_4;
+      post_data.student_type = student_type;
+    } else if (signup_user_type == 3) {
+      status = $('#singnup-userinfo-worktime input[type="radio"]:checked').val();
+      if (status != 3 && status != 4 && status != 5 && status != 6) {
+        $error_message.text('请选择您的工作时间');
+        $error_message.show();
+        able_button($button);
+        return;
+      }
+      post_data.status = status;
+    }
+    //console.log(post_data);
+    var url = $button.attr('url');
+    $.post(url, post_data, function(data) {
+      if (data.status == 0) {
+        $button.text('成功，跳转中...');
+        window.location.href = data.url;
+      } else {
+        $error_message.text('注册失败，请重试');
+        $error_message.show();
+        able_button($button);
+      }
+    });
+  });
 
   // 点击按钮后，禁用按钮
   function disable_button($element) {
@@ -239,7 +417,7 @@
   // 验证邮箱
   function reg_exp_email(string) {
     var pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-    if(pattern.text(string)) {
+    if(string != undefined && pattern.test(string)) {
       return true;
     } else {
       return false;

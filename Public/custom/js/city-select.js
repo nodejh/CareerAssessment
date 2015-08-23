@@ -502,4 +502,3 @@ Vcity.CitySelector.prototype = {
     }
   }
 };
-var test=new Vcity.CitySelector({input:'signup-userinfo-city'});

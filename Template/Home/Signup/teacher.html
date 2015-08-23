@@ -11,84 +11,177 @@
                     <h3 class="panel-title">完善信息</h3>
                 </div>
                 <div class="panel-body">
-                    <form>
+                    <!--<form>-->
+                        <!--<div class="form-group">-->
+                            <!--<label for="info-teacher-name">姓名</label>-->
+                            <!--<input type="text" class="form-control" id="info-teacher-name" placeholder="请输入您的真实姓名">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label for="info-teacher-email">邮箱</label>-->
+                            <!--<input type="email" class="form-control" id="info-teacher-email" placeholder="请输入您的邮箱">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label for="info-teacher-email">城市</label>-->
+                            <!--<input type="text" class="form-control" id="info-teacher-email" placeholder="请输入您的邮箱">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<label for="info-teacher-email">头像</label>-->
+                            <!--<input type="email" class="form-control" id="info-teacher-email" placeholder="请输入您的邮箱">-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-xs-12">-->
+                                    <!--<strong>性别</strong>-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-4">-->
+                                    <!--<label class="radio-inline">-->
+                                        <!--<input type="radio" id="info-teacher-gender-1" value="男"> 男-->
+                                    <!--</label>-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-4">-->
+                                    <!--<label class="radio-inline">-->
+                                        <!--<input type="radio" id="info-teacher-gender-2" value="女"> 女-->
+                                    <!--</label>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-xs-12">-->
+                                    <!--<strong>已取得资质证书</strong>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-xs-4">-->
+                                    <!--<label class="checkbox-inline">-->
+                                        <!--<input type="checkbox" value="1"> 心理咨询师-->
+                                    <!--</label>-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-4">-->
+                                    <!--<label class="checkbox-inline">-->
+                                        <!--<input type="checkbox" value="2"> 生涯规划师-->
+                                    <!--</label>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="form-group">-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-xs-12">-->
+                                    <!--<strong>服务类型</strong>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-xs-4">-->
+                                    <!--<label class="checkbox-inline">-->
+                                        <!--<input type="checkbox" value="1"> 高中-->
+                                    <!--</label>-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-4">-->
+                                    <!--<label class="checkbox-inline">-->
+                                        <!--<input type="checkbox" value="2"> 大学-->
+                                    <!--</label>-->
+                                <!--</div>-->
+                                <!--<div class="col-xs-4">-->
+                                    <!--<label class="checkbox-inline">-->
+                                        <!--<input type="checkbox" value="2"> 工作-->
+                                    <!--</label>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<button type="button" class="btn btn-primary btn-block" id="info-user-btn" url="__APP__/Home/Signup/signup_teacherinfo">确定</button>-->
+                    <!--</form>-->
+
+
+                    <form class="form-horizontal" id="signup-teacherinfo-panel">
+                        <div class="alert alert-danger ca-wrong-message" role="alert"></div>
                         <div class="form-group">
-                            <label for="info-teacher-name">姓名</label>
-                            <input type="text" class="form-control" id="info-teacher-name" placeholder="请输入您的真实姓名">
+                            <label for="signup-teacherinfo-name" class="col-sm-3 control-label">姓名</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="signup-teacherinfo-name" placeholder="请输入您的真实姓名">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="info-teacher-email">邮箱</label>
-                            <input type="email" class="form-control" id="info-teacher-email" placeholder="请输入您的邮箱">
+                            <label class="col-sm-3 control-label">性别</label>
+                            <div class="col-sm-9" id="signup-teacherinfo-gender">
+                                <label class="radio-inline">
+                                    <input type="radio" name="signup-teacherinfo-gender" id="signup-teacherinfo-man" value="1"> 男
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="signup-teacherinfo-gender" id="signup-teacherinfo-woman" value="2"> 女
+                                </label>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="info-teacher-email">城市</label>
-                            <input type="text" class="form-control" id="info-teacher-email" placeholder="请输入您的邮箱">
+                            <label for="signup-teacherinfo-email" class="col-sm-3 control-label">邮箱</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control" id="signup-teacherinfo-email" placeholder="请输入您的邮箱">
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="info-teacher-email">头像</label>
-                            <input type="email" class="form-control" id="info-teacher-email" placeholder="请输入您的邮箱">
+                            <label for="signup-teacherinfo-city" class="col-sm-3 control-label">地点</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="signup-teacherinfo-city" placeholder="请选择您所在城市">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <strong>性别</strong>
+                        <div class="form-group" id="singnup-teacherinfo-form-service-type">
+                            <label class="col-sm-3 control-label">服务类型</label>
+                            <div class="col-sm-9">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="signup-teacherinfo-service-type-1" name="singnup-teacherinfo-service-type" value="1" checked> 高中
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="signup-teacherinfo-service-type-2" name="singnup-teacherinfo-service-type" value="2" checked> 大学
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="signup-teacherinfo-service-type-3" name="singnup-teacherinfo-service-type" value="3" checked> 工作未满1年
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="signup-teacherinfo-service-type-4" name="singnup-teacherinfo-service-type" value="4" checked> 工作1-3年
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="signup-teacherinfo-service-type-5" name="singnup-teacherinfo-service-type" value="5" checked> 工作3－5年
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="signup-teacherinfo-service-type-6" name="singnup-teacherinfo-service-type" value="6" checked> 工作5年以上
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="col-xs-4">
-                                    <label class="radio-inline">
-                                        <input type="radio" id="info-teacher-gender-1" value="男"> 男
-                                    </label>
-                                </div>
-                                <div class="col-xs-4">
-                                    <label class="radio-inline">
-                                        <input type="radio" id="info-teacher-gender-2" value="女"> 女
-                                    </label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="singnup-teacherinfo-form-certificate">
+                            <label class="col-sm-3 control-label">资质证书</label>
+                            <div class="col-sm-9">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="signup-teacherinfo-certificate-1" name="singnup-teacherinfo-service-type" value="1"> 心理咨询师
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" id="signup-teacherinfo-certificate-2" name="singnup-teacherinfo-service-type" value="2"> 职业生涯规划师
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <strong>已取得资质证书</strong>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" value="1"> 心理咨询师
-                                    </label>
-                                </div>
-                                <div class="col-xs-4">
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" value="2"> 生涯规划师
-                                    </label>
-                                </div>
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="button" class="btn btn-primary btn-block" id="singnup-teacherinfo-btn" url="__APP__/Home/Signup/signup_teacherinfo">完成</button>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <strong>服务类型</strong>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-4">
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" value="1"> 高中
-                                    </label>
-                                </div>
-                                <div class="col-xs-4">
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" value="2"> 大学
-                                    </label>
-                                </div>
-                                <div class="col-xs-4">
-                                    <label class="checkbox-inline">
-                                        <input type="checkbox" value="2"> 工作
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-block" id="info-user-btn" url="__APP__/Home/Signup/signup_teacherinfo">确定</button>
                     </form>
                 </div>
             </div>
@@ -98,4 +191,8 @@
 </div>
 
 
+<script src="__PUBLIC__/custom/js/city-select.js"></script>
+<script>
+    var test2=new Vcity.CitySelector({input:'signup-teacherinfo-city'});
+</script>
 <include file="./Template/Public/footer.html" />

@@ -109,7 +109,7 @@
     };
     $.post(url, form_data, function(data) {
       if (data.status == 0) {
-        $button.text('登录成功，跳转中...');
+        $button.text('注册成功，跳转中...');
         window.location.href = data.url;
       } else if (data.status == 2001) {
         $error_message.text('手机号格式错误');
@@ -141,7 +141,8 @@
   $('#signup-teacher-btn').click(function () {
     var $button = $(this);
     disable_button($button);
-    var phone = $('#singnup-teacher-phone').val();
+    var $error_message = $('#signup-teacher-panel .ca-wrong-message');
+    var phone = $('#signup-teacher-phone').val();
     var password = $('#signup-teacher-password').val();
     var password_confirm = $('#signup-teacher-password-confirm').val();
     if (!reg_exp_phone(phone)) {
@@ -238,7 +239,7 @@
     disable_button($button);
     var $error_message = $('#signup-userinfo-panel .ca-wrong-message');
     $error_message.hide();
-    var post_data = [];
+    var post_data = {};
     var name = $('#signup-userinfo-name').val();
     if (!name.length > 0) {
       $error_message.text('请填写您的姓名');
@@ -372,12 +373,56 @@
       }
       post_data.status = status;
     }
-    //console.log(post_data);
     var url = $button.attr('url');
     $.post(url, post_data, function(data) {
+      console.log(data);
       if (data.status == 0) {
         $button.text('成功，跳转中...');
-        window.location.href = data.url;
+        //window.location.href = data.url;
+      } else if (data.status == 3000) {
+        $error_message.text('注册失败，请重试');
+        $error_message.show();
+        able_button($button);
+      } else if (data.status == 3001) {
+        $error_message.text('注册失败，请重试');
+        $error_message.show();
+        able_button($button);
+      } else if (data.status == 3002) {
+        $error_message.text('姓名格式错误，请检查后重新提交');
+        $error_message.show();
+        able_button($button);
+      } else if (data.status == 3003) {
+        $error_message.text('性别格式错误，请检查后重新提交');
+        $error_message.show();
+        able_button($button);
+      } else if (data.status == 3004) {
+        $error_message.text('邮箱格式错误，请检查后重新提交');
+        $error_message.show();
+        able_button($button);
+      } else if (data.status == 3005) {
+        $error_message.text('地点格式错误，请检查后重新提交');
+        $error_message.show();
+        able_button($button);
+      } else if (data.status == 3006) {
+        $error_message.text('学习或工作状态格式错误，请检查后重新提交');
+        $error_message.show();
+        able_button($button);
+      } else if (data.status == 3007) {
+        $error_message.text('学校格式错误，请检查后重新提交');
+        $error_message.show();
+        able_button($button);
+      }else if (data.status == 3008) {
+        $error_message.text('学生类别格式错误，请检查后重新提交');
+        $error_message.show();
+        able_button($button);
+      }else if (data.status == 3009) {
+        $error_message.text('专业格式错误，请检查后重新提交');
+        $error_message.show();
+        able_button($button);
+      } else if (data.status == 3101) {
+        $error_message.text('注册失败，请重试');
+        $error_message.show();
+        able_button($button);
       } else {
         $error_message.text('注册失败，请重试');
         $error_message.show();
@@ -385,6 +430,12 @@
       }
     });
   });
+
+
+  // 完善咨询师信息
+
+
+
 
   // 点击按钮后，禁用按钮
   function disable_button($element) {

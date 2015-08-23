@@ -85,7 +85,7 @@ function reg_exp_email($string) {
 }
 
 
-// 验证密码，6-20为不含引号字符串
+// 验证密码，6-20位不含引号字符串
 function reg_exp_password($string) {
     $pattern = '/^[^\'\"]{6,20}$/';
     if (preg_match($pattern, $string)) {
@@ -104,4 +104,15 @@ function reg_exp_number($string) {
     } else {
         return false;
     }
-  }
+}
+
+
+// 验证2-20位不含引号字符串
+function reg_exp_nomarks($string) {
+    $pattern = '/^[^\'\"]{2,20}$/';
+    if (preg_match($pattern, $string)) {
+        return true;
+    } else {
+        return false;
+    }
+}

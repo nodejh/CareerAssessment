@@ -3,6 +3,11 @@ body {
     padding-top: 70px;
 }
 
+/* navbar */
+.navbar-default .navbar-nav > li > a.ca-a-navbar-btn {
+    padding: 0 10px;
+}
+
 
 /* account */
 .ca-wrong-message {
@@ -12,7 +17,7 @@ body {
     color: #bbb;
 }
 
-    /* signup */
+/* signup */
 .ca-tab-content {
     padding:  20px 15px 0 15px;
     border-right: 1px solid #ddd;
@@ -24,6 +29,18 @@ body {
 }
 .ca-signup-hide {
     display: none;
+}
+.ca-avatar {
+    display: block;
+    width: auto;
+    height: 130px;
+}
+.ca-no-free-time {
+    cursor: pointer;
+}
+.ca-free-time {
+    color: #fff;
+    background-color: #449D44;
 }
 
 

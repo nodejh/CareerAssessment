@@ -1,0 +1,25 @@
+<include file="./Template/Public/header.html" />
+<include file="./Template/Public/navbar.html" />
+
+
+<div class="container">
+    <div class="row">
+        <foreach name="data" item="vo" >
+            <div class="col-xs-6 col-sm-4 col-md-3">
+                <div class="thumbnail">
+                    <img src="__PUBLIC__/picture/default_avatar.png" alt="...">
+                    <div class="caption">
+                        <h3>咨询师</h3>
+                        <p>简介</p>
+                        <p><a href="#" class="btn btn-success btn-block" role="button">预约</a></p>
+                    </div>
+                </div>
+            </div>
+        </foreach>
+    </div>
+
+
+
+</div>
+
+<include file="./Template/Public/footer.html" />

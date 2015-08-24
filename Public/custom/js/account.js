@@ -580,7 +580,32 @@
         able_button($button);
       }
     });
+  });
 
+
+  /*
+   * 添加咨询师头像、空闲时间、简介
+  */
+  // 空闲时间
+  $("#signup-complete-free-time td.ca-no-free-time").click(function(){
+
+    $(this).toggleClass('ca-free-time');
+
+    if ($(this).text() == '否') {
+      $(this).text('空闲');
+    } else if ($(this).text() == '空闲') {
+      $(this).text('否');
+    }
+
+  });
+
+
+  // 个人介绍
+  var introduction = UE.getEditor('signup-complete-introduction');
+  //对编辑器的操作最好在编辑器ready之后再做
+  introduction.ready(function() {
+    //设置编辑器的内容
+    introduction.setContent('请编辑您的个人简介...');
   });
 
 

@@ -31,6 +31,7 @@
                                 <li><a href="__APP__/Home/Index/logout">退出</a></li>
                             </ul>
                         </li>
+
                     </ul>
                 </case>
                 <case value="teacher">
@@ -44,22 +45,38 @@
                                     <li><a href="__APP__/Home/Index/logout">退出</a></li>
                                 </ul>
                             </li>
+                            <li>
+                                <a href="__APP__/Home/Appointment/index" class="ca-a-navbar-btn">
+                                    <button type="submit" class="btn btn-primary btn-sm navbar-btn">预约咨询师</button>
+                                </a>
+                            </li>
                         </ul>
                     </case>
                 </case>
                 <case value="admin">
-                    <li><a href="#">管理中心</a></li>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">管理中心</a></li>
+                        <li>
+                            <a href="__APP__/Home/Appointment/index " class="ca-a-navbar-btn">
+                                <button type="submit" class="btn btn-primary btn-sm navbar-btn" >预约咨询师</button>
+                            </a>
+                        </li>
+                    </ul>
                 </case>
                 <default />
                 <ul class="nav navbar-nav navbar-right">
-                    <form class="navbar-form navbar-right" role="search">
-                        <a href="__APP__/Home/Login/index">
-                            <button type="button" class="btn btn-primary">注册/登录</button>
+                    <li>
+                        <a href="__APP__/Home/Login/index" class="ca-a-navbar-btn">
+                            <button type="button" class="btn btn-primary btn-sm navbar-btn">注册/登录</button>
                         </a>
-                    </form>
+                    </li>
+                    <li>
+                        <a href="__APP__/Home/Appointment/index" class="ca-a-navbar-btn">
+                            <button type="button" class="btn btn-primary btn-sm navbar-btn">预约咨询师</button>
+                        </a>
+                    </li>
                 </ul>
             </switch>
-
 
         </div><!--/.nav-collapse -->
     </div>

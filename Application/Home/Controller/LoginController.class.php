@@ -5,14 +5,22 @@ class LoginController extends Controller {
 
     // 登录首页
     public function index() {
-        if (!function_is_login()) {
-            $data['title'] = '登录－蓝鲸教育咨询';
-            $this->assign($data);
-            $this->display();
-        } else {
+//        if (!function_is_login()) {
+//            $data['title'] = '登录－蓝鲸教育咨询';
+//            $this->assign($data);
+//            $this->display();
+//        } else {
+//            $this->redirect('Admin/User/index', '', 0);
+//        }
+        if (function_is_login() && function_login_type() == function_user_number()) {
             $this->redirect('Admin/User/index', '', 0);
+        } elseif (function_is_login() && function_login_type() == function_teacher_number()) {
+            $this->redirect('Admin/Teacher/index', '', 0);
+        } else {
+            function_set_logout();
+            $this->display();
         }
-    }
+     }
 
 
     // 完善来访者信息

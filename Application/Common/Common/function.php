@@ -4,7 +4,7 @@
 function function_is_login() {
     if($_SESSION['uid'] && $_SESSION['uid'] != '') {
         // Account 表的 id
-        return $_SESSION['uid'];
+        return intval($_SESSION['uid']);
     } else {
         return false;
     }
@@ -14,7 +14,7 @@ function function_is_login() {
 // 用户类型
 function function_login_type() {
     if ($_SESSION['utype'] && $_SESSION['utype'] != '') {
-        return $_SESSION['utype'];
+        return intval($_SESSION['utype']);
     } else {
         return false;
     }

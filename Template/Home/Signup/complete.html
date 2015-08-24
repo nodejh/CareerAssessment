@@ -1,0 +1,58 @@
+<include file="./Template/Public/header.html" />
+<include file="./Template/Public/navbar.html" />
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-10 col-sm-6 col-md-4 col-xs-offset-1 col-sm-offset-3 col-md-offset-4">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">添加个人简介(3/3)</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" id="signup-complete-panel">
+                        <div class="alert alert-danger ca-wrong-message" role="alert"></div>
+                        <div class="form-group">
+                            <label for="signup-complete-name" class="col-sm-3 control-label">姓名</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="signup-complete-name" placeholder="请输入您的真实姓名">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">性别</label>
+                            <div class="col-sm-9" id="signup-complete-gender">
+                                <label class="radio-inline">
+                                    <input type="radio" name="signup-complete-gender" id="signup-complete-man" value="1"> 男
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="signup-complete-gender" id="signup-complete-woman" value="2"> 女
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-complete-email" class="col-sm-3 control-label">邮箱</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control" id="signup-complete-email" placeholder="请输入您的邮箱">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="button" class="btn btn-primary btn-block" id="singnup-complete-btn" url="__APP__/Home/Signup/signup_complete">提交</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="__PUBLIC__/custom/js/city-select.js"></script>
+<script>
+    var test2=new Vcity.CitySelector({input:'signup-complete-city'});
+</script>
+<include file="./Template/Public/footer.html" />

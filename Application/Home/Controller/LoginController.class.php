@@ -18,6 +18,8 @@ class LoginController extends Controller {
             $this->redirect('Admin/Teacher/index', '', 0);
         } else {
             function_set_logout();
+            $data['title'] = '登录－蓝鲸教育咨询';
+            $this->assign($data);
             $this->display();
         }
      }
@@ -107,9 +109,27 @@ class LoginController extends Controller {
         $this->ajaxReturn($data);
     }
 
-    // 手机号登录
+    // 手机号（用户）登录
     public function login_phone() {
 
+    }
+
+
+    // 选择注册类型
+    public function type() {
+
+        if (function_is_login() && function_login_type() == function_user_number()) {
+            $this->redirect('Admin/User/index', '', 0);
+
+        } elseif (function_is_login() && function_login_type() == function_teacher_number()) {
+            $this->redirect('Admin/Teacher/index', '', 0);
+
+        } else {
+            function_set_logout();
+            $data['title'] = '选择注册类型';
+            $this->assign($data);
+            $this->display();
+        }
     }
 
 }

@@ -1,13 +1,13 @@
 <?php
 /*
- * 一般用户注册
+ * 会员注册
  */
 namespace Home\Controller;
 use Think\Controller;
-class SignupController extends Controller {
+class SignController extends Controller {
 
 
-    // 一般用户注册页面
+    // 会员注册页面
     public function index(){
         if (!function_is_login()) {
             $data['title'] = '注册－蓝鲸教育咨询';

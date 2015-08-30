@@ -19,7 +19,7 @@ class SignController extends Controller {
             $this->redirect('Admin/Teacher/index', '', 0);
         } else {
             function_set_logout();
-            $data['title'] = '注册－蓝鲸教育咨询';
+            $data['title'] = '会员注册－蓝鲸教育咨询';
             $this->assign($data);
             $this->display();
         }

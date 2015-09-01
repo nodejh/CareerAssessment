@@ -1,0 +1,106 @@
+<include file="./Template/Public/Admin/header.html" />
+<include file="./Template/Public/Admin/teacher_navbar.html" />
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">时间表</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+            <input id="today" week="{$date.week}" year="{$date.year}" month="{$date.month}" day="{$date.day}" style="display: none;">
+            <table class="table table-bordered" id="free-time-1">
+            <thead>
+            <tr>
+            <th>时间</th>
+            <th id="Monday">周一</th>
+            <th id="Tuesday">周二</th>
+            <th id="Wednesday">周三</th>
+            <th id="Thursday">周四</th>
+            <th id="Friday">周五</th>
+            <th id="Saturday">周六</th>
+            <th id="Sunday">周日</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+            <th scope="row">9:00-10:30</th>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            </tr>
+            <tr>
+            <th scope="row">10:30-12:00</th>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            </tr>
+            <tr>
+            <td colspan="7"></td>
+            </tr>
+            <tr>
+            <th scope="row">14:30-16:00</th>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            </tr>
+            <tr>
+            <th scope="row">16:00-17:30</th>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            </tr>
+            <tr>
+            <td colspan="7"></td>
+            </tr>
+            <tr>
+            <th scope="row">19:00-20:30</th>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            </tr>
+            <tr>
+            <th scope="row">20:30-22:00</th>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            <td class="ca-no-free-time">否</td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<!-- /#page-wrapper -->
+
+<script src="__PUBLIC__/custom/js/time.js"></script>
+
+
+<include file="./Template/Public/Admin/footer.html" />

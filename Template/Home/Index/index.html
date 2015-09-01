@@ -4,13 +4,19 @@
 
 <div class="container">
 
-    <!-- Main component for a primary marketing message or call to action -->
-    <div class="jumbotron">
-        <h1>欢迎</h1>
-        <p>欢迎来到蓝鲸职业学业咨询平台！</p>
-        <p>
-            <a class="btn btn-lg btn-primary" href="__APP__/" role="button">开始评测 &raquo;</a>
-        </p>
+    <div class="row">
+        <foreach name="list" item="vo" >
+            <div class="col-xs-6 col-sm-4 col-md-3">
+                <div class="thumbnail">
+                    <img src="__ROOT__/Uploads/{$vo.avatar}" alt="...">
+                    <div class="caption">
+                        <h3>{$vo.name}</h3>
+                        <p>{$vo.introduction|substr=0,50}</p>
+                        <p><a href="__APP__/Home/Appointment/index/tid/{$vo.account_id}" class="btn btn-success btn-block" role="button">预约</a></p>
+                    </div>
+                </div>
+            </div>
+        </foreach>
     </div>
 
 </div> <!-- /container -->

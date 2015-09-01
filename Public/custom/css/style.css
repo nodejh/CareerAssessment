@@ -43,7 +43,6 @@ body {
     background-color: #449D44;
 }
 
-
 .citySelector{font:12px/1.5 tahoma,arial,\5b8b\4f53;background:#fff;text-align:left;}
 .cityslide{width:250px;list-style:none;margin:0;padding:0;border:1px solid #85BEE5;border-right-color:#3485C0;border-bottom-color:#3485C0;box-shadow:2px 2px 3px rgba(0,0,0,0.3);margin-top:-2px;}
 .cityslide li{list-style:none;overflow:hidden;height:26px;padding:4px 5px;}
@@ -66,3 +65,16 @@ p.tip{color:#666;line-height:20px;padding:5px;margin:0;text-indent:3px;}
 .cityTab dl dd{margin-left:2px;float:left;width:290px;}
 .cityTab dl dd a{padding-left:5px;width:66px;line-height:22px;display:inline-block;color:#000;text-decoration:none;}
 .cityTab dl dd a:hover{text-decoration:underline;color:red}
+
+
+/* Appointment/index.html */
+.ca-teacher-img {
+    display: block;
+    height: 250px;
+    width: auto;
+    max-width: 100%;
+    margin: 0 auto;
+}
+.ca-teacher-introduction {
+    overflow-x: scroll;
+}

@@ -21,13 +21,13 @@ function function_login_type() {
 }
 
 
-// 来访者会员卡第一个数字编号
+// 来访者类型
 function function_user_number() {
     return 1;
 }
 
 
-// 来访者会员卡第一个数字编号
+// 咨询师类型
 function function_teacher_number() {
     return 9;
 }
@@ -60,6 +60,18 @@ function function_encrypt($string) {
     $encrypt = md5($string);
     $encrypt = $string;
     return $encrypt;
+}
+
+
+// 生成默认密码
+function get_default_password() {
+    $number = '0123456789';
+    $password = '';
+    for ($i=0; $i<8; $i++) {
+        $rand = rand(0, 9);
+        $password .= substr($number, $rand, 1);
+    }
+    return $password;
 }
 
 
@@ -116,3 +128,4 @@ function reg_exp_nomarks($string) {
         return false;
     }
 }
+

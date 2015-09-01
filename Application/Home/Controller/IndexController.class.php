@@ -25,8 +25,17 @@ class IndexController extends Controller {
             $data['name'] = 'test';
         }
         $data['title'] = '蓝鲸教育咨询';
-        $this->assign($data);
-        $this->display();
+        $Teacher = M('teacherinfo');
+        $list = $Teacher->order('teacherinfo_id desc')->limit(16)->select();
+        if ($list) {
+
+            $data['list'] = $list;
+           // var_dump($data['list']);
+            $this->assign('list', $data['list']);
+            $this->assign($data);
+            $this->display();
+        }
+
     }
 
 

@@ -229,5 +229,9 @@ ThinkPHP 3.2文档: <http://document.thinkphp.cn/manual_3_2.html>
   - 3106 服务类型格式错误
   - 3007 写入数据库失败
   - 3110 数据正确
-
+  
++ 40XX Home/Login/phone 一般用户登录
+ - 4000 非法操作
+ - 4001 用户不存在
+ - 4002 密码错误
   

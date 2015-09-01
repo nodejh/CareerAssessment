@@ -4,86 +4,60 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-xs-10 col-sm-6 col-md-4 col-xs-offset-1 col-sm-offset-3 col-md-offset-4">
-
+            <h3>会员注册</h3>
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation" class="active"><a href="#signup-user-panel" aria-controls="home" role="tab" data-toggle="tab">来访者注册(1/2)</a></li>
-                <li role="presentation"><a href="#signup-teacher-panel" aria-controls="profile" role="tab" data-toggle="tab">咨询师注册(1/3)</a></li>
+                <li role="presentation" class="active"><a href="#sign-user-panel" aria-controls="home" role="tab" data-toggle="tab">来访者注册(1/2)</a></li>
+                <li role="presentation"><a href="#sign-teacher-panel" aria-controls="profile" role="tab" data-toggle="tab">咨询师注册(1/3)</a></li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content ca-tab-content">
-                <div role="tabpanel" class="tab-pane active" id="signup-user-panel">
+                <div role="tabpanel" class="tab-pane active" id="sign-user-panel">
                     <div class="alert alert-danger ca-wrong-message" role="alert"></div>
                     <form class="form-horizontal">
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="signup-user-phone" placeholder="请输入您的手机号">
+                                <input type="text" class="form-control" id="sign-user-phone" placeholder="请输入您的会员卡卡号">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="请输入短信验证码" aria-describedby="user-btn-getsms">
-                                    <span class="input-group-addon ca-btn-getsms" id="signup-user-btn-getsms">获取验证码</span>
-                                </div>
+                                <input type="password" class="form-control" id="sign-user-password" placeholder="请输入您的会员卡密码">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <input type="password" class="form-control" id="signup-user-password" placeholder="请输入6-20位密码">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <input type="password" class="form-control" id="signup-user-password-confirm" placeholder="请再次输入您的密码">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <button type="button" class="btn btn-primary btn-block" id="signup-user-btn" url="__APP__/Home/Signup/signup_user">来访者注册</button>
+                                <button type="button" class="btn btn-primary btn-block" id="sign-user-btn" url="__APP__/Home/sign/sign_user">来访者注册</button>
                             </div>
                         </div>
                     </form>
                 </div>
 
-                <div role="tabpanel" class="tab-pane" id="signup-teacher-panel">
+                <div role="tabpanel" class="tab-pane" id="sign-teacher-panel">
                     <div class="alert alert-danger ca-wrong-message" role="alert"></div>
                     <form class="form-horizontal">
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="signup-teacher-phone" placeholder="请输入您的手机号">
+                                <input type="text" class="form-control" id="sign-teacher-phone" placeholder="请输入您的会员卡卡号">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="请输入短信验证码" aria-describedby="teacher-btn-getsms">
-                                    <span class="input-group-addon ca-btn-getsms" id="signup-teacher-btn-getsms">获取验证码</span>
-                                </div>
+                                <input type="password" class="form-control" id="sign-teacher-password" placeholder="请输入您的会员卡密码">
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <input type="password" class="form-control" id="signup-teacher-password" placeholder="请输入6-20位密码">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <input type="password" class="form-control" id="signup-teacher-password-confirm" placeholder="请再次输入您的密码">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-12">
-                                <button type="button" class="btn btn-primary btn-block" id="signup-teacher-btn" url="__APP__/Home/Signup/signup_teacher">咨询师注册</button>
+                                <button type="button" class="btn btn-primary btn-block" id="sign-teacher-btn" url="__APP__/Home/sign/sign_teacher">咨询师注册</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
             <br/>
-            <p id="signup-login-p">
-                <span>您也可以直接<a href="__APP__/Home/Login/index">使用会员卡卡号和密码登录</a></span>
+            <p id="sign-login-p">
+                <span>已有账号？<a href="__APP__/Home/Login/index">登录</a></span>
             </p>
         </div>
     </div>

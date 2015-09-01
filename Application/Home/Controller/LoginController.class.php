@@ -111,7 +111,39 @@ class LoginController extends Controller {
 
     // 手机号（用户）登录
     public function login_phone() {
+        $data['status'] = 4000;
+        $data['message'] = '非法操作';
+        if ($_POST) {
+            $data['status'] = 4001;
+            $data['message'] = '用户不存在';
+            $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
+            $password = isset($_POST['password']) ? $_POST['password'] : '';
+            $Account = M('account');
+            $where['phone'] = $phone;
+            $account_info = $Account->where($where)->find();
 
+            if ($account_info) {
+                $data['status'] = 4002;
+                $data['message'] = '密码错误';
+
+                if ($account_info['password'] == function_encrypt($password)) {
+
+                    if ($account_info['type'] == function_user_number()) {
+                        $data['url'] = U('Admin/User/index');
+                        $data['status'] = 0;
+                        $data['message'] = '登录成功';
+                        function_set_login_in($account_info['account_id'], $account_info['type']);
+                    } else if ($account_info['type'] == function_teacher_number()) {
+                        $data['url'] = U('Admin/Teacher/index');
+                        $data['status'] = 0;
+                        $data['message'] = '登录成功';
+                        function_set_login_in($account_info['account_id'], $account_info['type']);
+                    }
+                }
+            }
+        }
+
+        $this->ajaxReturn($data);
     }
 
 

@@ -34,8 +34,6 @@ class SignupController extends Controller {
             $exit_userinfo = $Userinfo->where($where)->find();
 
             if ($exit_userinfo) {
-                $this->redirect('Admin/User/index', '', 0);
-            } else {
                 $data['title'] = '完善个人信息';
                 $this->assign($data);
                 $this->display();
@@ -61,11 +59,16 @@ class SignupController extends Controller {
                     $exit_teacherinfo['free_time'] == NULL ||
                     $exit_teacherinfo['introduction'] == NULL) {
 
-                    $this->redirect('Signup/complete', '', 0);
+                    //$this->redirect('Signup/complete', '', 0);
 
-                } else {
-                    $this->redirect('Admin/Teacher/index', '', 0);
+                    $data['title'] = '完善个人信息';
+                    $this->assign($data);
+                    $this->display();
+
                 }
+//                else {
+//                    $this->redirect('Admin/Teacher/index', '', 0);
+//                }
 
             } else {
                 $data['title'] = '完善个人信息';
@@ -79,7 +82,7 @@ class SignupController extends Controller {
     }
 
 
-    // 完善咨询师信息页面二 -- 头像、简介、空闲时间
+    // 完善咨询师信息页面二 -- 头像、简介
     public function complete() {
         $uid = function_is_login();
         if ($uid) {
@@ -91,10 +94,10 @@ class SignupController extends Controller {
             if ($exit_teacherinfo) {
 
                 if ($exit_teacherinfo['picture'] == NULL ||
-                    $exit_teacherinfo['free_time'] == NULL ||
                     $exit_teacherinfo['introduction'] == NULL) {
-
                     $data['title'] = '添加个人简介';
+                    $data['certificate_a'] = substr($exit_teacherinfo['certificate'], 0, 1);
+                    $data['certificate_b'] = substr($exit_teacherinfo['certificate'], 1, 1);
                     $this->assign($data);
                     $this->display();
 
@@ -119,36 +122,34 @@ class SignupController extends Controller {
 
         if ($_POST) {
             $phone = $_POST['phone'];
-            $password = $_POST['password'];
-            $password_confirm = $_POST['password_confirm'];
             $data['status']  = 2001;
             $data['message'] = '手机号格式错误';
             if (reg_exp_phone($phone)) {
-                $data['status']  = 2002;
-                $data['message'] = '密码格式错误';
-                if (reg_exp_password($password)) {
-                    $data['status']  = 2003;
-                    $data['message'] = '两次密码不一致';
-                    if ($password == $password_confirm) {
-                        $Account = M('account');
-                        $where_exit_phone['phone'] = $phone;
-                        $exit_phone = $Account->where($where_exit_phone)->find();
-                        $data['status']  = 2004;
-                        $data['message'] = '手机号已存在';
-                        if (!$exit_phone) {
-                            $insert_data['phone'] = $phone;
-                            $insert_data['password'] = function_encrypt($password);
-                            $insert_data['type'] = function_user_number();
-                            $insert_data['date'] = time();
-                            $insert_account = $Account->data($insert_data)->add();
-                            $data['status']  = 2005;
-                            $data['message'] = '注册失败';
-                            if ($insert_account) {
-                                $data['status']  = 0;
-                                $data['message'] = '注册成功';
-                                $data['url'] = U('Signup/user');
-                                function_set_login_in($insert_account, function_user_number());
-                            }
+
+                $Account = M('account');
+                $where_exit_phone['phone'] = $phone;
+                $exit_phone = $Account->where($where_exit_phone)->find();
+                $data['status']  = 2004;
+                $data['message'] = '手机号已存在';
+                if (!$exit_phone) {
+                    $insert_data['phone'] = $phone;
+                    $insert_data['type'] = function_user_number();
+                    $insert_data['date'] = time();
+                    $insert_account = $Account->data($insert_data)->add();
+
+                    $data['status']  = 2005;
+                    $data['message'] = '注册失败';
+                    if ($insert_account) {
+
+                        $Userinfo = M('userinfo');
+                        $insert_data_userinfo['account_id'] = $insert_account;
+                        $insert_userinfo = $Userinfo->data($insert_data_userinfo)->add();
+
+                        if ($insert_userinfo) {
+                            $data['status']  = 0;
+                            $data['message'] = '注册成功';
+                            $data['url'] = U('Signup/user');
+                            function_set_login_in($insert_account, function_user_number());
                         }
                     }
                 }
@@ -164,36 +165,33 @@ class SignupController extends Controller {
         $data['message'] = '非法操作';
         if ($_POST) {
             $phone = $_POST['phone'];
-            $password = $_POST['password'];
-            $password_confirm = $_POST['password_confirm'];
             $data['status']  = 2001;
             $data['message'] = '手机号格式错误';
             if (reg_exp_phone($phone)) {
-                $data['status']  = 2002;
-                $data['message'] = '密码格式错误';
-                if (reg_exp_password($password)) {
-                    $data['status']  = 2003;
-                    $data['message'] = '两次密码不一致';
-                    if ($password == $password_confirm) {
-                        $Account = M('account');
-                        $where_exit_phone['phone'] = $phone;
-                        $exit_phone = $Account->where($where_exit_phone)->find();
-                        $data['status']  = 2004;
-                        $data['message'] = '手机号已存在';
-                        if (!$exit_phone) {
-                            $insert_data['phone'] = $phone;
-                            $insert_data['password'] = function_encrypt($password);
-                            $insert_data['type'] = function_teacher_number();
-                            $insert_data['date'] = time();
-                            $insert_account = $Account->data($insert_data)->add();
-                            $data['status']  = 2005;
-                            $data['message'] = '注册失败';
-                            if ($insert_account) {
-                                $data['status']  = 0;
-                                $data['message'] = '注册成功';
-                                $data['url'] = U('Signup/teacher');
-                                function_set_login_in($insert_account, function_teacher_number());
-                            }
+                $Account = M('account');
+                $where_exit_phone['phone'] = $phone;
+                $exit_phone = $Account->where($where_exit_phone)->find();
+                $data['status']  = 2004;
+                $data['message'] = '手机号已存在';
+                if (!$exit_phone) {
+                    $insert_data['phone'] = $phone;
+                    $insert_data['type'] = function_teacher_number();
+                    $insert_data['date'] = time();
+                    $insert_account = $Account->data($insert_data)->add();
+                    $data['status']  = 2005;
+                    $data['message'] = '注册失败';
+
+                    if ($insert_account) {
+
+                        $Teacherinfo = M('teacherinfo');
+                        $insert_data_teacherinfo['account_id'] = $insert_account;
+                        $insert_teacherinfo = $Teacherinfo->data($insert_data_teacherinfo)->add();
+
+                        if ($insert_teacherinfo) {
+                            $data['status']  = 0;
+                            $data['message'] = '注册成功';
+                            $data['url'] = U('Signup/teacher');
+                            function_set_login_in($insert_account, function_teacher_number());
                         }
                     }
                 }
@@ -213,9 +211,6 @@ class SignupController extends Controller {
             $where_account['account_id'] = function_is_login();
             $exit_account = $Userinfo->where($where_account)->find();
             if ($exit_account) {
-                $this->redirect('Admin/User/index', '', 0);
-                exit();
-            } else {
                 $data['status']  = 3001;
                 $data['message'] = '提交方式错误';
 
@@ -287,20 +282,20 @@ class SignupController extends Controller {
                                                     $post_college = isset($_POST['college']) ? $_POST['college'] : '';
                                                     if ($post_college && reg_exp_nomarks($post_college)) {
                                                         $insert_data['college'] = $post_college;
-                                                        $data['status']  = 3100;
+                                                        $data['status']  = 3010;
                                                         $data['message'] = '数据正确';
                                                     }
                                                 }
                                             }
                                         } else {
-                                            $data['status']  = 3100;
+                                            $data['status']  = 3010;
                                             $data['message'] = '数据正确';
                                         }
 
-                                        if ($data['status'] == 3100) {
-                                            $insert_data['account_id'] = function_is_login();
+                                        if ($data['status'] == 3010) {
+                                            $insert_where['account_id'] = function_is_login();
                                             $data['insert'] = $insert_data;
-                                            $insert_result = $Userinfo->data($insert_data)->add();
+                                            $insert_result = $Userinfo->where($insert_where)->data($insert_data)->save();
                                             $data['status']  = 3011;
                                             $data['message'] = '写入数据库失败';
                                             if ($insert_result) {
@@ -331,10 +326,7 @@ class SignupController extends Controller {
             $where_account['account_id'] = function_is_login();
             $exit_account = $Teacherinfo->where($where_account)->find();
             if ($exit_account) {
-                $this->redirect('Admin/Teacher/index', '', 0);
-                exit();
 
-            } else {
                 $data['status']  = 3101;
                 $data['message'] = '提交方式错误';
 
@@ -379,8 +371,8 @@ class SignupController extends Controller {
                                         $data['message'] = '数据正确';
 
                                         if ($data['status'] == 3110) {
-                                            $insert_data['account_id'] = function_is_login();
-                                            $insert_result = $Teacherinfo->data($insert_data)->add();
+                                            $insert_where['account_id'] = function_is_login();
+                                            $insert_result = $Teacherinfo->where($insert_where)->data($insert_data)->save();
                                             $data['status']  = 3107;
                                             $data['message'] = '写入数据库失败';
                                             if ($insert_result) {
@@ -399,6 +391,58 @@ class SignupController extends Controller {
         }
 
         $this->ajaxReturn($data);
+    }
+
+
+    // 完善咨询师信息页面二 -- 头像、简介
+    public function complete_teacher() {
+        //var_dump($_POST);
+        //var_dump($_FILES);
+        //die();
+        if ($_POST && isset($_POST['editorValue'])) {
+            $insert_data['introduction'] = $_POST['editorValue'];
+        }
+        $config = array(
+            'maxSize'    =>    3145728,
+            'rootPath'   =>    './Uploads/',
+            'savePath'   =>    'teacher/',
+            'saveName'   =>    array('uniqid',''),
+            'exts'       =>    array('jpg', 'gif', 'png', 'jpeg'),
+            'autoSub'    =>    true,
+            'subName'    =>    array('date','Ymd'),
+        );
+        $upload = new \Think\Upload($config);// 实例化上传类
+        $info   =   $upload->upload();
+        if(!$info) {// 上传错误提示错误信息
+            $this->error($upload->getError());
+        }else{// 上传成功 获取上传文件信息
+            if (isset($info['signup-complete-avatar'])) {
+                $insert_data['avatar'] = $info['signup-complete-avatar']['savepath'].$info['signup-complete-avatar']['savename'];
+            }
+            if (isset($info['signup-complete-certificate1'])) {
+                $insert_data['certificate_a'] = $info['signup-complete-certificate1']['savepath'].$info['signup-complete-certificate1']['savename'];
+            }
+            if (isset($info['signup-complete-certificate2'])) {
+                $insert_data['certificate_b'] = $info['signup-complete-certificate2']['savepath'].$info['signup-complete-certificate2']['savename'];
+            }
+
+        }
+//        var_dump($insert_data);
+        if (isset($insert_data['introduction']) || $insert_data['certificate_a'] || $insert_data['certificate_b']) {
+            $Teacherinfo = M('teacherinfo');
+            $where_account['account_id'] = function_is_login();
+            $exit_account = $Teacherinfo->where($where_account)->find();
+            if ($exit_account) {
+                $insert_result = $Teacherinfo->where($where_account)->data($insert_data)->save();
+                if ($insert_result) {
+                    $this->redirect('Admin/Teacher/index', '', 0);
+                } else {
+                    $this->error('添加失败，请重试');
+                }
+            } else {
+                $this->error('用户不存在，请重新注册', '/Login/type');
+            }
+        }
     }
 
 

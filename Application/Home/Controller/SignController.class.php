@@ -10,7 +10,7 @@ class SignController extends Controller {
     // 会员注册页面
     public function index(){
         if (!function_is_login()) {
-            $data['title'] = '注册－蓝鲸教育咨询';
+            $data['title'] = '会员注册－蓝鲸教育咨询';
             $this->assign($data);
             $this->display();
         } else if (function_login_type() == function_user_number()) {
@@ -113,46 +113,49 @@ class SignController extends Controller {
 
 
     // 来访者注册
-    public function signup_user() {
+    public function sign_user() {
         $data['status']  = 1000;
         $data['message'] = '非法操作';
 
         if ($_POST) {
-            $phone = $_POST['phone'];
-            $password = $_POST['password'];
-            $password_confirm = $_POST['password_confirm'];
-            $data['status']  = 2001;
-            $data['message'] = '手机号格式错误';
-            if (reg_exp_phone($phone)) {
-                $data['status']  = 2002;
-                $data['message'] = '密码格式错误';
-                if (reg_exp_password($password)) {
-                    $data['status']  = 2003;
-                    $data['message'] = '两次密码不一致';
-                    if ($password == $password_confirm) {
-                        $Account = M('account');
-                        $where_exit_phone['phone'] = $phone;
-                        $exit_phone = $Account->where($where_exit_phone)->find();
-                        $data['status']  = 2004;
-                        $data['message'] = '手机号已存在';
-                        if (!$exit_phone) {
-                            $insert_data['phone'] = $phone;
-                            $insert_data['password'] = function_encrypt($password);
-                            $insert_data['type'] = function_user_number();
-                            $insert_data['date'] = time();
-                            $insert_account = $Account->data($insert_data)->add();
-                            $data['status']  = 2005;
-                            $data['message'] = '注册失败';
-                            if ($insert_account) {
-                                $data['status']  = 0;
-                                $data['message'] = '注册成功';
-                                $data['url'] = U('Signup/user');
-                                function_set_login_in($insert_account, function_user_number());
-                            }
-                        }
-                    }
-                }
-            }
+            $number = $_POST['number'];
+
+
+//            $phone = $_POST['phone'];
+//            $password = $_POST['password'];
+//            $password_confirm = $_POST['password_confirm'];
+//            $data['status']  = 2001;
+//            $data['message'] = '手机号格式错误';
+//            if (reg_exp_phone($phone)) {
+//                $data['status']  = 2002;
+//                $data['message'] = '密码格式错误';
+//                if (reg_exp_password($password)) {
+//                    $data['status']  = 2003;
+//                    $data['message'] = '两次密码不一致';
+//                    if ($password == $password_confirm) {
+//                        $Account = M('account');
+//                        $where_exit_phone['phone'] = $phone;
+//                        $exit_phone = $Account->where($where_exit_phone)->find();
+//                        $data['status']  = 2004;
+//                        $data['message'] = '手机号已存在';
+//                        if (!$exit_phone) {
+//                            $insert_data['phone'] = $phone;
+//                            $insert_data['password'] = function_encrypt($password);
+//                            $insert_data['type'] = function_user_number();
+//                            $insert_data['date'] = time();
+//                            $insert_account = $Account->data($insert_data)->add();
+//                            $data['status']  = 2005;
+//                            $data['message'] = '注册失败';
+//                            if ($insert_account) {
+//                                $data['status']  = 0;
+//                                $data['message'] = '注册成功';
+//                                $data['url'] = U('Signup/user');
+//                                function_set_login_in($insert_account, function_user_number());
+//                            }
+//                        }
+//                    }
+//                }
+//            }
         }
         $this->ajaxReturn($data);
     }

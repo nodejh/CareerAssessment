@@ -16,7 +16,7 @@ class TeacherController extends BaseController {
      * Teacher后台首页
      */
     public function index(){
-//logout();
+logout();
     }
 
 }

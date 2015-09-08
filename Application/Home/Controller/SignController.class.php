@@ -169,7 +169,7 @@ class SignController extends BaseController {
                             $row_account = $Account->bind($account_bind)->add();
                             if ($row_account) {
                                 login($row_account, 2);
-
+                                $this->redirect('Complete/teacher', '', 0);
 
                             } else {
                                 $this->_data['error'] = '注册失败，请重试';

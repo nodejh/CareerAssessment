@@ -1,118 +1,47 @@
-<include file="./Template/Public/Admin/header.html" />
-<include file="./Template/Public/Admin/user_navbar.html" />
+<include file="./Template/Admin/Common/header.html" />
+<include file="./Template/Admin/Common/nav_user.html" />
 
 <div id="page-wrapper">
     <div class="row">
-        <notempty name="password">
+        <present name="first">
             <br>
             <div class="alert alert-success" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <p>您的用户号是：<strong class="ca-default-usernumber">{$phone}</strong>
-                    ，默认登录密码是：<strong class="ca-default-usernumber">{$password}</strong></p>
+                <p>您的用户号是：<strong class="ca-default-usernumber">{$user.phone}</strong>
+                    ，默认登录密码是：<strong class="ca-default-usernumber">{$user.password}</strong></p>
                 <p>建议您<a href="__APP__/Admin/User/password">修改密码</a>。</p>
             </div>
-        </notempty>
+        </present>
         <div class="col-lg-12">
-            <h1 class="page-header">咨询师列表</h1>
+            <h1 class="page-header">咨询师/课程列表</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-comments fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">26</div>
-                            <div>New Comments!</div>
-                        </div>
+        <volist name="list" id="vo">
+            <div class="col-lg-3 col-md-6">
+                <div class="thumbnail">
+                    <img src="__ROOT__/Uploads/{$vo.avatar}" alt="{$vo.name}">
+                    <div class="caption">
+                        <h4>{$vo.name} <small> {$vo.city}</small></h4>
+                        <p>
+                            <small>专业程度</small>
+                            <br>
+                            <small>服务态度</small>
+                        </p>
+                        <p><a href="#" class="btn btn-primary" role="button">预约</a> <a href="#" class="btn btn-default" role="button">详情</a></p>
                     </div>
                 </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
+
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-green">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-tasks fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">12</div>
-                            <div>New Tasks!</div>
-                        </div>
-                    </div>
-                </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-yellow">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-shopping-cart fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">124</div>
-                            <div>New Orders!</div>
-                        </div>
-                    </div>
-                </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-red">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-support fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">13</div>
-                            <div>Support Tickets!</div>
-                        </div>
-                    </div>
-                </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
-        </div>
+        </volist>
     </div>
 
 </div>
 <!-- /#page-wrapper -->
 
 
-<include file="./Template/Public/Admin/footer.html" />
+<include file="./Template/Admin/Common/footer.html" />

@@ -52,9 +52,9 @@ class SignController extends BaseController {
         $password = I('post.password', 0);
         $phone = I('post.phone', 0);
 
-        $this->_data['msg']['card'] = $card;
-        $this->_data['msg']['password'] = $password;
-        $this->_data['msg']['phone'] = $phone;
+        $this->_data['msg']['card'] = $card ? $card : '';
+        $this->_data['msg']['password'] = $password ? $password : '';
+        $this->_data['msg']['phone'] = $phone ? $phone : '';
 
         if ($card && $password && $phone) {
 
@@ -135,9 +135,9 @@ class SignController extends BaseController {
         $password = I('post.password', 0);
         $phone = I('post.phone', 0);
 
-        $this->_data['msg']['card'] = $card;
-        $this->_data['msg']['password'] = $password;
-        $this->_data['msg']['phone'] = $phone;
+        $this->_data['msg']['card'] = $card ? $card : '';
+        $this->_data['msg']['password'] = $password ? $password : '';
+        $this->_data['msg']['phone'] = $phone ? $phone : '';
 
         if ($card && $password && $phone) {
 

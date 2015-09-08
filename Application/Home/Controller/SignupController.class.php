@@ -50,7 +50,7 @@ class SignupController extends BaseController {
         $this->_data['title'] = '一般来访者用户注册';
         $phone = I('post.phone', 0);
 
-        $this->_data['msg']['phone'] = $phone;
+        $this->_data['msg']['phone'] = $phone ? $phone : '';
 
         if ($phone) {
 
@@ -114,7 +114,7 @@ class SignupController extends BaseController {
         $this->_data['title'] = '一般咨询师/讲师注册';
         $phone = I('post.phone', 0);
 
-        $this->_data['msg']['phone'] = $phone;
+        $this->_data['msg']['phone'] = $phone ? $phone : 0;
 
         if ($phone) {
 

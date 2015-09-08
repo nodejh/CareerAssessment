@@ -17,6 +17,13 @@ class IndexController extends BaseController {
      * Home Page
      */
     public function index(){
-        //echo 'a';
+        $this->_data['title'] = '个人中心';
+        
+        $Teacher = M('teacher');
+        $list = $Teacher->order('teacher_id desc')->limit(16)->select();
+        $this->_data['list'] = $list;
+
+        $this->assign($this->_data);
+        $this->display();
     }
 }

@@ -1,113 +1,96 @@
-<include file="./Template/Public/Admin/header.html" />
-<include file="./Template/Public/Admin/teacher_navbar.html" />
+<include file="./Template/Admin/Common/header.html" />
+<include file="./Template/Admin/Common/nav_teacher.html" />
 
 <div id="page-wrapper">
     <div class="row">
-        <notempty name="password">
+        <present name="first">
             <br>
             <div class="alert alert-success" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <p>您的用户号是：<strong class="ca-default-usernumber">{$phone}</strong>
-                    ，默认登录密码是：<strong class="ca-default-usernumber">{$password}</strong></p>
+                <p>您的用户号是：<strong class="ca-default-usernumber">{$user.phone}</strong>
+                    ，默认登录密码是：<strong class="ca-default-usernumber">{$user.password}</strong></p>
                 <p>建议您<a href="__APP__/Admin/Teacher/password">修改密码</a>。</p>
             </div>
-        </notempty>
+        </present>
         <div class="col-lg-12">
-            <h1 class="page-header">时间表</h1>
+            <h1 class="page-header">修改个人资料</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
     <div class="row">
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
+        <div class="col-xs-10 col-sm-8 col-md-6">
+        <form class="form-horizontal" id="signup-teacherinfo-panel" action="__APP__/Admin/Teacher/index" method="post" enctype="multipart/form-data">
+            <present name="error">
+                <div class="alert alert-danger" role="alert">{$error}</div>
+            </present>
+            <div class="form-group" id="signup-complete-panel">
+                <label for="up_img_WU_FILE_0" class="col-sm-3 control-label" style="margin-left: -15px;">个人照片</label>
+                <div class="col-sm-9 signup-complete-preview">
+                    <input type="file" id="up_img_WU_FILE_0" name="avatar" required>
+                    <span class="help-block">请上传至少200x200的高清个人照片</span>
+                    <img class="ca-avatar" id="imgShow_WU_FILE_0" src="__PUBLIC__/picture/default_avatar.png" alt="个人照片">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="signup-teacherinfo-name" class="col-sm-3 control-label">姓名</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="name" id="signup-teacherinfo-name" placeholder="请输入您的真实姓名" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">性别</label>
+                <div class="col-sm-9" id="signup-teacherinfo-gender">
+                    <label class="radio-inline">
+                        <input type="radio" name="gender" id="signup-teacherinfo-man" value="1" required> 男
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="gender" id="signup-teacherinfo-woman" value="2" required> 女
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="signup-teacherinfo-email" class="col-sm-3 control-label">邮箱</label>
+                <div class="col-sm-9">
+                    <input type="email" class="form-control" name="email" id="signup-teacherinfo-email" placeholder="请输入您的邮箱" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="signup-teacherinfo-city" class="col-sm-3 control-label">地点</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" name="city" id="signup-teacherinfo-city" placeholder="请选择您所在城市" required>
+                </div>
+            </div>
+            <div class="form-group" id="singnup-teacherinfo-form-service-type">
+                <label class="col-sm-3 control-label">服务类型</label>
+                <div class="col-sm-9">
                     <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-comments fa-5x"></i>
+                        <div class="col-sm-4">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" id="signup-teacherinfo-service-type-1" name="type_1" value="高中" checked> 高中
+                            </label>
                         </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">26</div>
-                            <div>New Comments!</div>
+                        <div class="col-sm-4">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" id="signup-teacherinfo-service-type-2" name="type_2" value="大学" checked> 大学
+                            </label>
+                        </div>
+                        <div class="col-sm-4">
+                            <label class="checkbox-inline">
+                                <input type="checkbox" id="signup-teacherinfo-service-type-3" name="type_3" value="工作" checked> 工作
+                            </label>
                         </div>
                     </div>
                 </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-green">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-tasks fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">12</div>
-                            <div>New Tasks!</div>
-                        </div>
-                    </div>
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <button type="submit" class="btn btn-primary btn-block" id="singnup-teacherinfo-btn">提交</button>
                 </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
             </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-yellow">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-shopping-cart fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">124</div>
-                            <div>New Orders!</div>
-                        </div>
-                    </div>
-                </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-red">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-support fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">13</div>
-                            <div>Support Tickets!</div>
-                        </div>
-                    </div>
-                </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
+        </form>
         </div>
     </div>
 
@@ -116,4 +99,4 @@
 
 
 
-<include file="./Template/Public/Admin/footer.html" />
+<include file="./Template/Admin/Common/footer.html" />

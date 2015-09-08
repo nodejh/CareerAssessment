@@ -1,25 +1,85 @@
-<include file="./Template/Public/header.html" />
-<include file="./Template/Public/navbar.html" />
+<include file="./Template/Home/Common/header.html" />
+<include file="./Template/Home/Common/navbar.html" />
 
 
 <div class="container">
+    <div class="page-header ca-select">
+        <form class="form-inline">
 
-    <div class="row">
-        <foreach name="list" item="vo" >
-            <div class="col-xs-6 col-sm-4 col-md-3">
-                <div class="thumbnail">
-                    <img src="__ROOT__/Uploads/{$vo.avatar}" alt="...">
-                    <div class="caption">
-                        <h3>{$vo.name}</h3>
-                        <p>{$vo.introduction|substr=0,50}</p>
-                        <p><a href="__APP__/Home/Appointment/index/tid/{$vo.account_id}" class="btn btn-success btn-block" role="button">预约</a></p>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label>性别</label>
+                <select class="form-control">
+                    <option>不限</option>
+                    <option>男</option>
+                    <option>女</option>
+                </select>
             </div>
-        </foreach>
+            <div class="form-group">
+                <label>从业时间</label>
+                <select class="form-control">
+                    <option>1年</option>
+                    <option>2年</option>
+                    <option>3年</option>
+                    <option>4年</option>
+                    <option>5年</option>
+                    <option>6年</option>
+                    <option>7年</option>
+                    <option>8年</option>
+                    <option>9年</option>
+                    <option>10年</option>
+                    <option>10年以上</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="teacherinfo-city">地点</label>
+                <input type="text" class="form-control" name="city" id="teacherinfo-city" placeholder="请选择您所在城市" required>
+            </div>
+
+            <div class="form-group">
+                <label>服务类型</label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="signup-teacherinfo-service-type-1" name="type_1" value="高中" checked> 高中
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="signup-teacherinfo-service-type-2" name="type_2" value="大学" checked> 大学
+                </label>
+                <label class="checkbox-inline">
+                    <input type="checkbox" id="signup-teacherinfo-service-type-3" name="type_3" value="工作" checked> 工作
+                </label>
+            </div>
+
+        </form>
     </div>
 
+    <div class="row">
+        <volist name="list" id="vo">
+            <div class="col-lg-3 col-md-6">
+                <div class="thumbnail">
+                    <img src="__ROOT__/Uploads/{$vo.avatar}" alt="{$vo.name}">
+                    <div class="caption">
+                        <h4>{$vo.name} <small> {$vo.city}</small></h4>
+                        <p>
+                            <small>专业程度</small>
+                            <br>
+                            <small>服务态度</small>
+                        </p>
+                        <p>
+                            <a href="#" class="btn btn-primary" role="button">预约</a>
+                            <a href="#" class="btn btn-default" role="button">详情</a></p>
+                    </div>
+                </div>
+
+            </div>
+        </volist>
+    </div>
 </div> <!-- /container -->
 
+<script src="__PUBLIC__/custom/js/city-select.js"></script>
+<script>
 
-<include file="./Template/Public/footer.html" />
+    var test2=new Vcity.CitySelector({input:'teacherinfo-city'});
+
+</script>
+
+<include file="./Template/Home/Common/footer.html" />

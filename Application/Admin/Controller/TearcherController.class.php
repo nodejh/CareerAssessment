@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | User 后台
+// | Teacher后台
 // +----------------------------------------------------------------------
 
 namespace Admin\Controller;
@@ -10,10 +10,10 @@ use Think\Controller;
  * Class IndexController
  * @package Admin\Controller
  */
-class UserController extends BaseController {
+class TeacherController extends BaseController {
 
     /**
-     * User后台首页
+     * Teacher后台首页
      */
     public function index(){
 

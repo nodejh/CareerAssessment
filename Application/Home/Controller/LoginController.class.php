@@ -1,167 +1,161 @@
 <?php
+// +----------------------------------------------------------------------
+// | 登录
+// +----------------------------------------------------------------------
+
 namespace Home\Controller;
 use Think\Controller;
-class LoginController extends Controller {
 
-    // 登录首页
-    public function index() {
-//        if (!function_is_login()) {
-//            $data['title'] = '登录－蓝鲸教育咨询';
-//            $this->assign($data);
-//            $this->display();
-//        } else {
-//            $this->redirect('Admin/User/index', '', 0);
-//        }
-        if (function_is_login() && function_login_type() == function_user_number()) {
-            $this->redirect('Admin/User/index', '', 0);
-        } elseif (function_is_login() && function_login_type() == function_teacher_number()) {
-            $this->redirect('Admin/Teacher/index', '', 0);
+/**
+ * Class LoginController
+ * @package Home\Controller
+ */
+class LoginController extends BaseController {
+
+
+    /**
+     * 登录页面
+     */
+    public function index(){
+        $this->_data['title'] = '登录';
+
+        if ($this->is_login()) {
+            $login_type = $this->login_type();
+            if ($login_type) {
+
+                switch ($login_type) {
+                    case 1:
+                        $this->redirect('User/index', '', 0);
+                        break;
+                    case 2:
+                        $this->redirect('Teacher/index', '', 0);
+                        break;
+                    case 3:
+                        $this->redirect('Index/index', '', 0);
+                        break;
+                }
+
+            } else {
+                logout();
+                $this->display('index');
+            }
+
         } else {
-            function_set_logout();
-            $data['title'] = '登录－蓝鲸教育咨询';
-            $this->assign($data);
+            logout();
+            $this->assign($this->_data);
             $this->display();
         }
-     }
-
-
-    // 完善来访者信息
-    public function user() {
-        $data['title'] = '完善基本信息';
-        $this->assign($data);
-        $this->display();
     }
 
 
-    // 完善咨询师信息
-    public function teacher() {
-        $data['title'] = '完善基本信息';
-        $this->assign($data);
-        $this->display();
-    }
+    /**
+     * card login
+     */
+    public function card() {
 
+        $card = I('post.card', 0);
+        $password = I('post.password', 0);
+        if ($card && $password) {
 
-    // 会员卡登录
-    public function login_card() {
-        $data['status'] = 1000;
-        $data['message'] = '非法操作';
-        if ($_POST) {
-            $number = $_POST['number'];
-            $password = $_POST['password'];
+            $Card = M('card');
+            $where_card['card'] = ':card';
+            $data_card = $Card->where($where_card)->bind(':card', $card)->find();
+            if (encrypt($password) == $data_card['password']) {
 
-            $user_first_number = function_user_number();
-            $teacher_first_number = function_teacher_number();
+                $Account = M('account');
+                $where_account['card_id'] = ':card_id';
+                $data_account = $Account->where($where_account)->bind(':card_id', $data_card['card_id'])->find();
 
-            $data['status'] = 1001;
-            $data['message'] = '会员卡卡号或密码错误';
+                if ($data_account) {
+                    login($data_account['account_id'], $data_card['type']);
 
-            if (reg_exp_number($number) && reg_exp_password($password)) {
-                $first_number = substr($number, 0 ,1);
-                if($first_number == $user_first_number) {
-                    // 来访者
-                    $Ucard = M('ucard');
-                    $result_ucard = $Ucard->where('number=' . $number)->find();
-
-                    if ($result_ucard && $result_ucard['password']) {
-                        if (function_encrypt($password) == $result_ucard['password']) {
-                            // 会员卡卡号密码正确
-                            $data['status'] = 1;
-                            $data['message'] = '尚未完善基本信息';
-                            $data['url'] = U('Login/user');
-                            $Account = M('account');
-                            $where['card_id'] = $result_ucard['ucard_id'];
-                            $where['type'] = $user_first_number;
-                            $result_account = $Account->where($where)->find();
-                            if ($result_account) {
-                                function_set_login_in($result_account['account_id'], $user_first_number);
-                                $data['status'] = 0;
-                                $data['message'] = '登录成功';
-                                $data['url'] = U('Admin/User/index');
-                            }
-                        }
+                    switch ($data_account['type']) {
+                        case 1:
+                            $this->redirect('User/index', '', 0);
+                            break;
+                        case 2:
+                            $this->redirect('Teacher/index', '', 0);
                     }
 
-                } elseif($first_number == $teacher_first_number) {
-                   // 咨询师
-                    $Tcard = M('tcard');
-                    $result_tcard = $Tcard->where('number=' . $number)->find();
-
-                    if ($result_tcard && $result_tcard['password']) {
-                        if (function_encrypt($password) == $result_tcard['password']) {
-                            // 会员卡卡号密码正确
-                            $data['status'] = 1001;
-                            $data['message'] = '尚未完善基本信息';
-                            $data['url'] = U('Login/teacher');
-                            $Account = M('account');
-                            $result_account = $Account->where('card_id=' . $result_tcard['tcard_id'] . 'AND type=' . $teacher_first_number)->find();
-                            if ($result_account) {
-                                function_set_login_in($result_account['account_id'], $teacher_first_number);
-                                $data['status'] = 0;
-                                $data['message'] = '登录成功';
-                                $data['url'] = U('Admin/Teacher/index');
-                            }
-                        }
+                } else {
+                    switch ($data_card['type']) {
+                        case 1:
+                            $this->_data['error'] = '您尚未注册，请<a href="'.U('Sign/index').'">注册</a>后登录';
+                            break;
+                        case 2:
+                            $this->_data['error'] = '您尚未注册，请<a href="'.U('Sign/tindex').'">注册</a>后登录';
+                            break;
+                        default:
+                            $this->_data['error'] = '您尚未注册，请<a href="'.U('Sign/index').'">注册</a>后登录';
                     }
+                    $this->_data['title'] = '登录';
+                    $this->assign($this->_data);
+                    $this->display('index');
                 }
-            }
-        }
 
-        $this->ajaxReturn($data);
+            } else {
+                $this->_data['error'] = '会员卡卡号或密码错误';
+                $this->_data['title'] = '登录';
+                $this->assign($this->_data);
+                $this->display('index');
+            }
+
+        } else {
+            $this->_data['title'] = '登录';
+            $this->assign($this->_data);
+            $this->display('index');
+        }
     }
 
-    // 手机号（用户）登录
-    public function login_phone() {
-        $data['status'] = 4000;
-        $data['message'] = '非法操作';
-        if ($_POST) {
-            $data['status'] = 4001;
-            $data['message'] = '用户不存在';
-            $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
-            $password = isset($_POST['password']) ? $_POST['password'] : '';
+
+    /**
+     * phone login
+     */
+    public function phone() {
+        $phone = I('post.phone', 0);
+        $password = I('post.password', 0);
+        if ($phone && $password) {
+
             $Account = M('account');
-            $where['phone'] = $phone;
-            $account_info = $Account->where($where)->find();
+            $where_account['phone'] = ':phone';
+            $data_account = $Account->where($where_account)->bind(':phone', $phone)->find();
 
-            if ($account_info) {
-                $data['status'] = 4002;
-                $data['message'] = '密码错误';
+            if ($data_account) {
 
-                if ($account_info['password'] == function_encrypt($password)) {
+                if (encrypt($password) == $data_account['password']) {
+                    login($data_account['account_id'], $data_account['type']);
 
-                    if ($account_info['type'] == function_user_number()) {
-                        $data['url'] = U('Admin/User/index');
-                        $data['status'] = 0;
-                        $data['message'] = '登录成功';
-                        function_set_login_in($account_info['account_id'], $account_info['type']);
-                    } else if ($account_info['type'] == function_teacher_number()) {
-                        $data['url'] = U('Admin/Teacher/index');
-                        $data['status'] = 0;
-                        $data['message'] = '登录成功';
-                        function_set_login_in($account_info['account_id'], $account_info['type']);
+                    switch ($data_account['type']) {
+                        case 1:
+                            $this->redirect('User/index', '', 0);
+                            break;
+                        case 2:
+                            $this->redirect('Teacher/index', '', 0);
                     }
+
+                } else {
+                    $this->_data['error'] = '用户号或密码错误';
+                    $this->_data['phone'] = 'phone';
+                    $this->_data['title'] = '登录';
+                    $this->assign($this->_data);
+                    $this->display('index');
                 }
+
+            } else {
+                $this->_data['error'] = '用户号或密码错误';
+                $this->_data['phone'] = 'phone';
+                $this->_data['title'] = '登录';
+                $this->assign($this->_data);
+                $this->display('index');
             }
-        }
-
-        $this->ajaxReturn($data);
-    }
-
-
-    // 选择注册类型
-    public function type() {
-
-        if (function_is_login() && function_login_type() == function_user_number()) {
-            $this->redirect('Admin/User/index', '', 0);
-
-        } elseif (function_is_login() && function_login_type() == function_teacher_number()) {
-            $this->redirect('Admin/Teacher/index', '', 0);
 
         } else {
-            function_set_logout();
-            $data['title'] = '选择注册类型';
-            $this->assign($data);
-            $this->display();
+            $this->_data['phone'] = 'phone'; // 用于前台判断是会员登录还是一般用户登录；如果 phone 被赋值，则为一般用户登录
+            $this->_data['title'] = '登录';
+            $this->assign($this->_data);
+            $this->display('index');
         }
     }
+
 
 }

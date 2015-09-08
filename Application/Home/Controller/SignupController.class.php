@@ -137,7 +137,7 @@ class SignupController extends BaseController {
                     $row_account = $Account->bind($account_bind)->add();
 
                     if ($row_account) {
-                        login($row_account, 1);
+                        login($row_account, 2);
                         first_signup();
                         $this->redirect('Complete/teacher', '', 0);
 

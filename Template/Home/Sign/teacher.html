@@ -21,34 +21,34 @@
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <present name="msg.card">
-                                    <input type="text" class="form-control" name="card" placeholder="请输入您的会员卡卡号" value="{$msg.card}">
+                                    <input type="text" class="form-control" name="card" placeholder="请输入您的会员卡卡号" value="{$msg.card}" required>
                                     <else />
-                                    <input type="text" class="form-control" name="card" placeholder="请输入您的会员卡卡号">
+                                    <input type="text" class="form-control" name="card" placeholder="请输入您的会员卡卡号" required>
                                 </present>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <present name="msg.password">
-                                    <input type="password" class="form-control" name="password" placeholder="请输入您的会员卡密码" value="{$msg.password}">
+                                    <input type="password" class="form-control" name="password" placeholder="请输入您的会员卡密码" value="{$msg.password}" required>
                                     <else />
-                                    <input type="password" class="form-control" name="password" placeholder="请输入您的会员卡密码">
+                                    <input type="password" class="form-control" name="password" placeholder="请输入您的会员卡密码" required>
                                 </present>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <present name="msg.phone">
-                                    <input type="text" class="form-control" name="phone" placeholder="请输入您的手机号" value="{$msg.phone}">
+                                    <input type="text" class="form-control" name="phone" placeholder="请输入您的手机号" value="{$msg.phone}" required>
                                     <else />
-                                    <input type="text" class="form-control" name="phone" placeholder="请输入您的手机号">
+                                    <input type="text" class="form-control" name="phone" placeholder="请输入您的手机号" required>
                                 </present>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="code" placeholder="请输入短信验证码" aria-describedby="user-btn-getsms">
+                                    <input type="text" class="form-control" name="code" placeholder="请输入短信验证码" aria-describedby="user-btn-getsms" required>
                                     <span class="input-group-addon ca-btn-getsms" id="user-btn-getsms">获取验证码</span>
                                 </div>
                             </div>
@@ -69,41 +69,41 @@
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <present name="msg.card">
-                                    <input type="text" class="form-control" name="card" placeholder="请输入您的会员卡卡号" value="{$msg.card}">
+                                    <input type="text" class="form-control" name="card" placeholder="请输入您的会员卡卡号" value="{$msg.card}" required>
                                     <else />
-                                    <input type="text" class="form-control" name="card" placeholder="请输入您的会员卡卡号">
+                                    <input type="text" class="form-control" name="card" placeholder="请输入您的会员卡卡号" required>
                                 </present>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <present name="msg.password">
-                                    <input type="password" class="form-control" name="password" placeholder="请输入您的会员卡密码" value="{$msg.password}">
+                                    <input type="password" class="form-control" name="password" placeholder="请输入您的会员卡密码" value="{$msg.password}" required>
                                     <else />
-                                    <input type="password" class="form-control" name="password" placeholder="请输入您的会员卡密码">
+                                    <input type="password" class="form-control" name="password" placeholder="请输入您的会员卡密码" required>
                                 </present>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <present name="msg.phone">
-                                    <input type="text" class="form-control" name="phone" placeholder="请输入您的手机号" value="{$msg.phone}">
+                                    <input type="text" class="form-control" name="phone" placeholder="请输入您的手机号" value="{$msg.phone}" required>
                                     <else />
-                                    <input type="text" class="form-control" name="phone" placeholder="请输入您的手机号">
+                                    <input type="text" class="form-control" name="phone" placeholder="请输入您的手机号" required>
                                 </present>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="code" placeholder="请输入短信验证码" aria-describedby="teacher-btn-getsms">
+                                    <input type="text" class="form-control" name="code" placeholder="请输入短信验证码" aria-describedby="teacher-btn-getsms" required>
                                     <span class="input-group-addon ca-btn-getsms" id="teacher-btn-getsms">获取验证码</span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button type="submit" class="btn btn-primary btn-block" id="sign-teacher-btn" url="__APP__/Home/sign/sign_teacher">咨询师/讲师注册</button>
+                                <button type="submit" class="btn btn-primary btn-block" id="sign-teacher-btn">咨询师/讲师注册</button>
                             </div>
                         </div>
                     </form>

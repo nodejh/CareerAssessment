@@ -1,0 +1,190 @@
+<include file="./Template/Home/Common/header.html" />
+<include file="./Template/Home/Common/navbar.html" />
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-10 col-sm-8 col-md-6 col-xs-offset-1 col-sm-offset-2 col-md-offset-3">
+            <!--<h3>咨询师/讲师注册</h3>-->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">咨询师资料(3/4)</h3>
+                </div>
+                <div class="panel-body" id="signup-complete-panel">
+                    <form class="form-horizontal" id="signup-teacherinfo-panel" action="__APP__/Home/Complete/teacher3" method="post" enctype="multipart/form-data">
+                        <present name="error">
+                            <div class="alert alert-danger" role="alert">{$error}</div>
+                        </present>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">个人介绍</label>
+                            <div class="col-sm-9">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <textarea class="form-control" name="introduction" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" id="certificate">
+                            <label class="col-sm-3 control-label">资质证书</label>
+                            <div class="col-sm-9">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="checkbox-inline">
+                                            <present name="msg.a">
+                                                <input type="checkbox" id="box-certificate-a" name="c_a" value="心理咨询师" checked> 心理咨询师
+                                                <else />
+                                                <input type="checkbox" id="box-certificate-a" name="c_a" value="心理咨询师"> 心理咨询师
+                                            </present>
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label class="checkbox-inline">
+                                            <present name="msg.b">
+                                                <input type="checkbox" id="box-certificate-b" name="c_b" value="职业生涯规划师" checked> 职业生涯规划师
+                                                <else />
+                                                <input type="checkbox" id="box-certificate-b" name="c_b" value="职业生涯规划师"> 职业生涯规划师
+                                            </present>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="div-time-a">
+                            <label class="col-sm-3 control-label">从业时间</label>
+                            <div class="col-sm-9">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="time_a">
+                                            <option>心理咨询师</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">10年以上</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="div-time-b">
+                            <label class="col-sm-3 control-label">从业时间</label>
+                            <div class="col-sm-9">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <select class="form-control" name="time_b">
+                                            <option>职业生涯规划师</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">10年以上</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="div-img-a">
+                            <label for="up_img_WU_FILE_0" class="col-sm-3 control-label" style="margin-left: -15px;">证书照片</label>
+                            <div class="col-sm-9">
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <div class="col-sm-12 signup-complete-preview">
+                                            <input type="file" id="up_img_WU_FILE_0" name="img_a">
+                                            <span class="help-block">请上传您的心理咨询师证书照片</span>
+                                            <img class="ca-avatar" id="imgShow_WU_FILE_0" src="__PUBLIC__/picture/default_avatar.png" alt="心理咨询师证书">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" id="div-img-b">
+                            <label for="up_img_WU_FILE_1" class="col-sm-3 control-label" style="margin-left: -15px;">证书照片</label>
+                            <div class="col-sm-9">
+                                <div class="col-sm-9">
+                                    <div class="row">
+                                        <div class="col-sm-12 signup-complete-preview">
+                                            <input type="file" id="up_img_WU_FILE_1" name="img_b">
+                                            <span class="help-block">请上传您的职业生涯规划师师证书照片</span>
+                                            <img class="ca-avatar" id="imgShow_WU_FILE_1" src="__PUBLIC__/picture/default_avatar.png" alt="职业生涯规划师师证书">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="submit" class="btn btn-primary btn-block" id="singnup-teacherinfo-btn">下一步</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="__PUBLIC__/custom/js/upload-preview.js"></script>
+<script>
+
+    // 默认进入页面，隐藏时间选择和证书上传
+    change_dom();
+
+    $('#box-certificate-a').click(function () {
+        change_dom();
+    });
+
+    $('#box-certificate-b').click(function () {
+        change_dom();
+    });
+
+    // 控制心理咨询师和生涯规划师的显示和隐藏
+    function change_dom() {
+        if ($('#box-certificate-a').is(':checked') == true) {
+            $('#div-time-a').show();
+            $('#div-img-a').show();
+        } else {
+            $('#div-time-a').hide();
+            $('#div-img-a').hide();
+        }
+        if ($('#box-certificate-b').is(':checked') == true) {
+            $('#div-time-b').show();
+            $('#div-img-b').show();
+        } else {
+            $('#div-time-b').hide();
+            $('#div-img-b').hide();
+        }
+    }
+
+    function file_click(){
+        var WARP = document.getElementById('signup-complete-panel');
+        var WARP_LI = WARP.getElementsByClassName('signup-complete-preview');
+        for(var i=0; i<WARP_LI.length;i++){
+            new uploadPreview({ UpBtn: "up_img_WU_FILE_"+i, ImgShow: "imgShow_WU_FILE_"+i});
+        }
+    }
+    window.onload = file_click;
+</script>
+<include file="./Template/Home/Common/footer.html" />

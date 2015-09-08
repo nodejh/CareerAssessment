@@ -21,9 +21,9 @@
                             <label for="signup-userinfo-name" class="col-sm-3 control-label">姓名</label>
                             <div class="col-sm-9">
                                 <present name="msg.name">
-                                    <input type="text" class="form-control" name="name" id="signup-userinfo-name" placeholder="请输入您的真实姓名" value="{$msg.name}">
+                                    <input type="text" class="form-control" name="name" id="signup-userinfo-name" placeholder="请输入您的真实姓名" value="{$msg.name}" required>
                                     <else />
-                                    <input type="text" class="form-control" name="name" id="signup-userinfo-name" placeholder="请输入您的真实姓名">
+                                    <input type="text" class="form-control" name="name" id="signup-userinfo-name" placeholder="请输入您的真实姓名" required>
                                 </present>
                             </div>
                         </div>
@@ -60,9 +60,9 @@
                             <label for="signup-userinfo-email" class="col-sm-3 control-label">邮箱</label>
                             <div class="col-sm-9">
                                 <present name="msg.email">
-                                    <input type="email" class="form-control" name="email" id="signup-userinfo-email" placeholder="请输入您的邮箱" value="{$msg.email}">
+                                    <input type="email" class="form-control" name="email" id="signup-userinfo-email" placeholder="请输入您的邮箱" value="{$msg.email}" required>
                                     <else />
-                                    <input type="email" class="form-control" name="email" id="signup-userinfo-email" placeholder="请输入您的邮箱">
+                                    <input type="email" class="form-control" name="email" id="signup-userinfo-email" placeholder="请输入您的邮箱" required>
                                 </present>
                             </div>
                         </div>
@@ -70,9 +70,9 @@
                             <label for="signup-userinfo-city" class="col-sm-3 control-label">地点</label>
                             <div class="col-sm-9">
                                 <present name="msg.city">
-                                    <input type="text" class="form-control" name="city" id="signup-userinfo-city" placeholder="请选择您所在城市" value="{$msg.city}">
+                                    <input type="text" class="form-control" name="city" id="signup-userinfo-city" placeholder="请选择您所在城市" value="{$msg.city}" required>
                                     <else />
-                                    <input type="text" class="form-control" name="city" id="signup-userinfo-city" placeholder="请选择您所在城市">
+                                    <input type="text" class="form-control" name="city" id="signup-userinfo-city" placeholder="请选择您所在城市" required>
                                 </present>
                             </div>
                         </div>

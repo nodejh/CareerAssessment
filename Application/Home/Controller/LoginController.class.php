@@ -47,6 +47,7 @@ class LoginController extends BaseController {
      * 登录页面
      */
     public function index(){
+
         $this->_data['title'] = '登录';
         $this->assign($this->_data);
         $this->display();

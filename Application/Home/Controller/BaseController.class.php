@@ -28,7 +28,6 @@ class BaseController extends Controller {
             switch ($login_type) {
                 case 1:
                     // login type of user
-                    //  var_dump(I(session.id, 0));
                     $data = $this->get_user_info($_SESSION['id']);
                     if ($data) {
                         $this->_data['user']['account_id'] = $data['account']['account_id'];
@@ -67,7 +66,7 @@ class BaseController extends Controller {
                         $this->_data['teacher']['time_a'] = $data['teacher']['time_a'];
                         $this->_data['teacher']['time_b'] = $data['teacher']['time_b'];
                     } else {
-                        $this->_data['user'] = 0;
+                        $this->_data['teacher'] = 0;
                     }
                     break;
                 case 3:
@@ -197,8 +196,8 @@ class BaseController extends Controller {
     private function get_teacher_info($id) {
         $Account = M('account');
         $Teacher = M('teacher');
-        $where['account_id'] = ':acccount_id';
-        $data['account'] = $Account->where($where)->bind(':account_id',$id)->find();
+        $where['account_id'] = ':account_id';
+        $data['account'] = $Account->where($where)->bind(':account_id', $id)->find();
         $data['teacher'] = $Teacher->where($where)->bind(':account_id', $id)->find();
 
         if ($data['account'] && $data['teacher']) {

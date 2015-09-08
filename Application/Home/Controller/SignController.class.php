@@ -34,7 +34,6 @@ class SignController extends BaseController {
                         $this->redirect('Index/index', '', 0);
                         break;
                 }
-
             } else {
                 logout();
                 $this->display('index');

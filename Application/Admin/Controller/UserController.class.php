@@ -16,7 +16,10 @@ class UserController extends BaseController {
      * User后台首页
      */
     public function index(){
-//        logout();
+        var_dump($_SESSION);
+
+                logout();
+
     }
 
 }

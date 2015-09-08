@@ -1,16 +1,17 @@
 <?php
 // +----------------------------------------------------------------------
-// | 完善用户信息。会员与非会员的界面一样
+// | 完善一般用户信息
 // +----------------------------------------------------------------------
 
 namespace Home\Controller;
 use Think\Controller;
 
 /**
- * Class CompleteController
+ * Class CompletelyController
  * @package Home\Controller
  */
-class CompleteController extends BaseController {
+class CompletelyController extends BaseController {
+
 
 
     /**
@@ -31,6 +32,7 @@ class CompleteController extends BaseController {
      * 完善来访者会员信息
      */
     public function index() {
+
         $this->_data['title'] = '完善会员信息';
 
         if ($this->_data['user']) {
@@ -135,15 +137,4 @@ class CompleteController extends BaseController {
 
     }
 
-
-    /**
-     * 完善咨询师/讲师会员信息
-     */
-    public function teacher() {
-        $this->_data['title'] = '完善会员信息';
-        var_dump($_SESSION);
-        var_dump($this->_data);
-        $this->assign($this->_data);
-        $this->display();
-    }
 }

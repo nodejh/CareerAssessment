@@ -1,5 +1,5 @@
-<include file="./Template/Public/header.html" />
-<include file="./Template/Public/navbar.html" />
+<include file="./Template/Home/Common/header.html" />
+<include file="./Template/Home/Common/navbar.html" />
 
 <div class="container-fluid">
     <div class="row">
@@ -8,17 +8,23 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" class="active"><a href="#signup-user-panel" aria-controls="home" role="tab" data-toggle="tab">来访者注册(1/2)</a></li>
-                <li role="presentation"><a href="#signup-teacher-panel" aria-controls="profile" role="tab" data-toggle="tab">咨询师注册(1/3)</a></li>
+                <li role="presentation"><a href="#signup-teacher-panel" aria-controls="profile" role="tab" data-toggle="tab">咨询师/讲师注册(1/4)</a></li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content ca-tab-content">
                 <div role="tabpanel" class="tab-pane active" id="signup-user-panel">
-                    <div class="alert alert-danger ca-wrong-message" role="alert"></div>
-                    <form class="form-horizontal">
+                    <present name="error">
+                        <div class="alert alert-danger" role="alert">{$error}</div>
+                    </present>
+                    <form class="form-horizontal" action="__APP__/Home/Signup/index" method="post">
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="signup-user-phone" placeholder="请输入您的手机号">
+                                <present name="msg.phone">
+                                    <input type="text" class="form-control" name="phone" placeholder="请输入您的手机号" value="{$msg.phone}">
+                                    <else />
+                                    <input type="text" class="form-control" name="phone" placeholder="请输入您的手机号">
+                                </present>
                             </div>
                         </div>
                         <div class="form-group">
@@ -29,30 +35,26 @@
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="form-group">-->
-                            <!--<div class="col-sm-12">-->
-                                <!--<input type="password" class="form-control" id="signup-user-password" placeholder="请输入6-20位密码">-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<div class="col-sm-12">-->
-                                <!--<input type="password" class="form-control" id="signup-user-password-confirm" placeholder="请再次输入您的密码">-->
-                            <!--</div>-->
-                        <!--</div>-->
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button type="button" class="btn btn-primary btn-block" id="signup-user-btn" url="__APP__/Home/Signup/signup_user">来访者注册</button>
+                                <button type="submit" class="btn btn-primary btn-block" id="signup-user-btn">来访者注册</button>
                             </div>
                         </div>
                     </form>
                 </div>
 
                 <div role="tabpanel" class="tab-pane" id="signup-teacher-panel">
-                    <div class="alert alert-danger ca-wrong-message" role="alert"></div>
-                    <form class="form-horizontal">
+                    <present name="error">
+                        <div class="alert alert-danger" role="alert">{$error}</div>
+                    </present>
+                    <form class="form-horizontal" action="__APP__/Home/Signup/teacher" method="post">
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="signup-teacher-phone" placeholder="请输入您的手机号">
+                                <present name="msg.phone">
+                                    <input type="text" class="form-control" name="phone" placeholder="请输入您的手机号" value="{$msg.phone}">
+                                    <else />
+                                    <input type="text" class="form-control" name="phone" placeholder="请输入您的手机号">
+                                </present>
                             </div>
                         </div>
                         <div class="form-group">
@@ -63,19 +65,9 @@
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="form-group">-->
-                            <!--<div class="col-sm-12">-->
-                                <!--<input type="password" class="form-control" id="signup-teacher-password" placeholder="请输入6-20位密码">-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="form-group">-->
-                            <!--<div class="col-sm-12">-->
-                                <!--<input type="password" class="form-control" id="signup-teacher-password-confirm" placeholder="请再次输入您的密码">-->
-                            <!--</div>-->
-                        <!--</div>-->
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <button type="button" class="btn btn-primary btn-block" id="signup-teacher-btn" url="__APP__/Home/Signup/signup_teacher">咨询师注册</button>
+                                <button type="submit" class="btn btn-primary btn-block" id="signup-teacher-btn">咨询师注册</button>
                             </div>
                         </div>
                     </form>
@@ -90,4 +82,4 @@
 </div>
 
 
-<include file="./Template/Public/footer.html" />
+<include file="./Template/Home/Common/footer.html" />

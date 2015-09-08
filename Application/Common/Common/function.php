@@ -17,6 +17,16 @@ function login($id, $type) {
 
 
 /**
+ * common user first signup
+ * set a session, to mark it
+ * once the user change the password, unset the session['f']
+ */
+function first_signup() {
+    $_SESSION['f'] = '1';
+}
+
+
+/**
  * 注销登录
  * @return void
  */
@@ -48,7 +58,7 @@ function get_default_password() {
         $rand = rand(0, 9);
         $password .= substr($number, $rand, 1);
     }
-    return $password;
+    return encrypt($password);
 }
 
 

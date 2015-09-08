@@ -5,41 +5,41 @@
   * */
 
   // 来访者注册 Signup/index.html
-  $('#signup-user-btn').click(function () {
-    var $button = $(this);
-    disable_button($button);
-    var $error_message = $('#signup-user-panel .ca-wrong-message');
-    var phone = $('#signup-user-phone').val();
-    if (!reg_exp_phone(phone)) {
-      $error_message.text('手机号格式错误');
-      $error_message.show();
-      able_button($button);
-      return;
-    }
-    var url = $button.attr('url');
-    var form_data = {
-      'phone': phone
-    };
-    $.post(url, form_data, function(data) {
-      if (data.status == 0) {
-        $button.text('注册成功，跳转中...');
-        window.location.href = data.url;
-      } else if (data.status == 2001) {
-        $error_message.text('手机号格式错误');
-        $error_message.show();
-        able_button($button);
-      } else if (data.status == 2004) {
-        var login_url = $('#signup-login-p a').attr('href');
-        $error_message.html('手机号已存在，您可以直接<a href="'+login_url+'">登录</a>');
-        $error_message.show();
-        able_button($button);
-      } else if (data.status == 2005) {
-        $error_message.text('注册失败，请重试');
-        $error_message.show();
-        able_button($button);
-      }
-    });
-  });
+  //$('#signup-user-btn').click(function () {
+  //  var $button = $(this);
+  //  disable_button($button);
+  //  var $error_message = $('#signup-user-panel .ca-wrong-message');
+  //  var phone = $('#signup-user-phone').val();
+  //  if (!reg_exp_phone(phone)) {
+  //    $error_message.text('手机号格式错误');
+  //    $error_message.show();
+  //    able_button($button);
+  //    return;
+  //  }
+  //  var url = $button.attr('url');
+  //  var form_data = {
+  //    'phone': phone
+  //  };
+  //  $.post(url, form_data, function(data) {
+  //    if (data.status == 0) {
+  //      $button.text('注册成功，跳转中...');
+  //      window.location.href = data.url;
+  //    } else if (data.status == 2001) {
+  //      $error_message.text('手机号格式错误');
+  //      $error_message.show();
+  //      able_button($button);
+  //    } else if (data.status == 2004) {
+  //      var login_url = $('#signup-login-p a').attr('href');
+  //      $error_message.html('手机号已存在，您可以直接<a href="'+login_url+'">登录</a>');
+  //      $error_message.show();
+  //      able_button($button);
+  //    } else if (data.status == 2005) {
+  //      $error_message.text('注册失败，请重试');
+  //      $error_message.show();
+  //      able_button($button);
+  //    }
+  //  });
+  //});
 
   /*
    * 完善信息
@@ -276,245 +276,245 @@
 
 
   // 咨询师注册
-  $('#signup-teacher-btn').click(function () {
-    var $button = $(this);
-    disable_button($button);
-    var $error_message = $('#signup-teacher-panel .ca-wrong-message');
-    var phone = $('#signup-teacher-phone').val();
-    if (!reg_exp_phone(phone)) {
-      $error_message.text('手机号格式错误');
-      $error_message.show();
-      able_button($button);
-      return;
-    }
-    var url = $button.attr('url');
-    var form_data = {
-      'phone': phone
-    };
-    $.post(url, form_data, function(data) {
-      if (data.status == 0) {
-        $button.text('登录成功，跳转中...');
-        window.location.href = data.url;
-      } else if (data.status == 2001) {
-        $error_message.text('手机号格式错误');
-        $error_message.show();
-        able_button($button);
-      } else if (data.status == 2004) {
-        var login_url = $('#signup-login-p a').attr('href');
-        $error_message.html('手机号已存在，您可以直接<a href="'+login_url+'">登录</a>');
-        $error_message.show();
-        able_button($button);
-      } else if (data.status == 2005) {
-        $error_message.text('注册失败，请重试');
-        $error_message.show();
-        able_button($button);
-      }
-    });
-  });
+  //$('#signup-teacher-btn').click(function () {
+  //  var $button = $(this);
+  //  disable_button($button);
+  //  var $error_message = $('#signup-teacher-panel .ca-wrong-message');
+  //  var phone = $('#signup-teacher-phone').val();
+  //  if (!reg_exp_phone(phone)) {
+  //    $error_message.text('手机号格式错误');
+  //    $error_message.show();
+  //    able_button($button);
+  //    return;
+  //  }
+  //  var url = $button.attr('url');
+  //  var form_data = {
+  //    'phone': phone
+  //  };
+  //  $.post(url, form_data, function(data) {
+  //    if (data.status == 0) {
+  //      $button.text('登录成功，跳转中...');
+  //      window.location.href = data.url;
+  //    } else if (data.status == 2001) {
+  //      $error_message.text('手机号格式错误');
+  //      $error_message.show();
+  //      able_button($button);
+  //    } else if (data.status == 2004) {
+  //      var login_url = $('#signup-login-p a').attr('href');
+  //      $error_message.html('手机号已存在，您可以直接<a href="'+login_url+'">登录</a>');
+  //      $error_message.show();
+  //      able_button($button);
+  //    } else if (data.status == 2005) {
+  //      $error_message.text('注册失败，请重试');
+  //      $error_message.show();
+  //      able_button($button);
+  //    }
+  //  });
+  //});
 
 
-
-  // 完善咨询师信息 Signup/teacher.html
-  $('#singnup-teacherinfo-btn').click(function () {
-    var $button = $(this);
-    disable_button($button);
-    var $error_message = $('#signup-teacherinfo-panel .ca-wrong-message');
-    $error_message.hide();
-    var post_data = {};
-    var name = $('#signup-teacherinfo-name').val();
-    if (!name.length > 0) {
-      $error_message.text('请填写您的姓名');
-      $error_message.show();
-      able_button($button);
-      return;
-    }
-    post_data.name = name;
-    //console.log(post_data);
-
-    var gender = $('#signup-teacherinfo-gender input[type="radio"]:checked').val();
-    if (gender != 1 && gender != 2) {
-      $error_message.text('请选择您的性别');
-      $error_message.show();
-      able_button($button);
-      return;
-    }
-    post_data.gender = gender;
-    //console.log(post_data);
-
-    var email = $('#signup-teacherinfo-email').val();
-    if (!reg_exp_email(email)) {
-      $error_message.text('邮箱格式错误');
-      $error_message.show();
-      able_button($button);
-      return;
-    }
-    post_data.email = email;
-    //console.log(post_data);
-
-    var city = $('#signup-teacherinfo-city').val();
-    if (city == '请选择您所在城市' || city == '') {
-      $error_message.text('请选择您所在城市');
-      $error_message.show();
-      able_button($button);
-      return;
-    }
-    post_data.city = city;
-    // console.log(post_data);
-
-    if($('#signup-teacherinfo-service-type-1').is(':checked') == true) {
-      var service_type_1 = '1';
-    } else {
-      var service_type_1 = '0';
-    }
-    if($('#signup-teacherinfo-service-type-2').is(':checked') == true) {
-      var service_type_2 = '2';
-    } else {
-      var service_type_2 = '0';
-    }
-    if($('#signup-teacherinfo-service-type-3').is(':checked') == true) {
-      var service_type_3 = '3';
-    } else {
-      var service_type_3 = '0';
-    }
-    if($('#signup-teacherinfo-service-type-4').is(':checked') == true) {
-      var service_type_4 = '4';
-    } else {
-      var service_type_4 = '0';
-    }
-    if($('#signup-teacherinfo-service-type-5').is(':checked') == true) {
-      var service_type_5 = '5';
-    } else {
-      var service_type_5 = '0';
-    }
-    if($('#signup-teacherinfo-service-type-6').is(':checked') == true) {
-      var service_type_6 = '6';
-    } else {
-      var service_type_6 = '0';
-    }
-    var service_type = service_type_1 + service_type_2 + service_type_3 + service_type_4 + service_type_5 + service_type_6;
-    if (service_type == '000000') {
-      $error_message.text('至少选择一项服务类型');
-      $error_message.show();
-      able_button($button);
-      return;
-    }
-    post_data.service_type = service_type;
-    // console.log(post_data);
-
-    if($('#signup-teacherinfo-certificate-1').is(':checked') == true) {
-      var certificate_1 = '1';
-    } else {
-      var certificate_1 = '0';
-    }
-    if($('#signup-teacherinfo-certificate-2').is(':checked') == true) {
-      var certificate_2 = '2';
-    } else {
-      var certificate_2 = '0';
-    }
-    var certificate = certificate_1 + certificate_2;
-    post_data.certificate = certificate;
-    // console.log(post_data);
-
-    var url = $button.attr('url');
-    //able_button($button);
-    $.post(url, post_data, function(data) {
-      //console.log(data);
-      if (data.status == 0) {
-        //console.log('scuess');
-        able_button($button);
-        $button.text('提交成功，跳转中...');
-        window.location.href = data.url;
-      } else if (data.status == 3100) {
-        $error_message.text('提交失败，请重试');
-        $error_message.show();
-        able_button($button);
-      } else if (data.status == 3101) {
-        $error_message.text('提交失败，请重试');
-        $error_message.show();
-        able_button($button);
-      } else if (data.status == 3102) {
-        $error_message.text('姓名格式错误，请检查后重新提交');
-        $error_message.show();
-        able_button($button);
-      } else if (data.status == 3103) {
-        $error_message.text('性别格式错误，请检查后重新提交');
-        $error_message.show();
-        able_button($button);
-      } else if (data.status == 3104) {
-        $error_message.text('邮箱格式错误，请检查后重新提交');
-        $error_message.show();
-        able_button($button);
-      } else if (data.status == 3105) {
-        $error_message.text('地点格式错误，请检查后重新提交');
-        $error_message.show();
-        able_button($button);
-      } else if (data.status == 3106) {
-        $error_message.text('至少选择一项服务类型，请检查后重新提交');
-        $error_message.show();
-        able_button($button);
-      } else if (data.status == 3107) {
-        $error_message.text('提交失败，请重试');
-        $error_message.show();
-        able_button($button);
-      } else {
-        $error_message.text('提交失败，请重试');
-        $error_message.show();
-        able_button($button);
-      }
-    });
-  });
+  //
+  //// 完善咨询师信息 Signup/teacher.html
+  //$('#singnup-teacherinfo-btn').click(function () {
+  //  var $button = $(this);
+  //  disable_button($button);
+  //  var $error_message = $('#signup-teacherinfo-panel .ca-wrong-message');
+  //  $error_message.hide();
+  //  var post_data = {};
+  //  var name = $('#signup-teacherinfo-name').val();
+  //  if (!name.length > 0) {
+  //    $error_message.text('请填写您的姓名');
+  //    $error_message.show();
+  //    able_button($button);
+  //    return;
+  //  }
+  //  post_data.name = name;
+  //  //console.log(post_data);
+  //
+  //  var gender = $('#signup-teacherinfo-gender input[type="radio"]:checked').val();
+  //  if (gender != 1 && gender != 2) {
+  //    $error_message.text('请选择您的性别');
+  //    $error_message.show();
+  //    able_button($button);
+  //    return;
+  //  }
+  //  post_data.gender = gender;
+  //  //console.log(post_data);
+  //
+  //  var email = $('#signup-teacherinfo-email').val();
+  //  if (!reg_exp_email(email)) {
+  //    $error_message.text('邮箱格式错误');
+  //    $error_message.show();
+  //    able_button($button);
+  //    return;
+  //  }
+  //  post_data.email = email;
+  //  //console.log(post_data);
+  //
+  //  var city = $('#signup-teacherinfo-city').val();
+  //  if (city == '请选择您所在城市' || city == '') {
+  //    $error_message.text('请选择您所在城市');
+  //    $error_message.show();
+  //    able_button($button);
+  //    return;
+  //  }
+  //  post_data.city = city;
+  //  // console.log(post_data);
+  //
+  //  if($('#signup-teacherinfo-service-type-1').is(':checked') == true) {
+  //    var service_type_1 = '1';
+  //  } else {
+  //    var service_type_1 = '0';
+  //  }
+  //  if($('#signup-teacherinfo-service-type-2').is(':checked') == true) {
+  //    var service_type_2 = '2';
+  //  } else {
+  //    var service_type_2 = '0';
+  //  }
+  //  if($('#signup-teacherinfo-service-type-3').is(':checked') == true) {
+  //    var service_type_3 = '3';
+  //  } else {
+  //    var service_type_3 = '0';
+  //  }
+  //  if($('#signup-teacherinfo-service-type-4').is(':checked') == true) {
+  //    var service_type_4 = '4';
+  //  } else {
+  //    var service_type_4 = '0';
+  //  }
+  //  if($('#signup-teacherinfo-service-type-5').is(':checked') == true) {
+  //    var service_type_5 = '5';
+  //  } else {
+  //    var service_type_5 = '0';
+  //  }
+  //  if($('#signup-teacherinfo-service-type-6').is(':checked') == true) {
+  //    var service_type_6 = '6';
+  //  } else {
+  //    var service_type_6 = '0';
+  //  }
+  //  var service_type = service_type_1 + service_type_2 + service_type_3 + service_type_4 + service_type_5 + service_type_6;
+  //  if (service_type == '000000') {
+  //    $error_message.text('至少选择一项服务类型');
+  //    $error_message.show();
+  //    able_button($button);
+  //    return;
+  //  }
+  //  post_data.service_type = service_type;
+  //  // console.log(post_data);
+  //
+  //  if($('#signup-teacherinfo-certificate-1').is(':checked') == true) {
+  //    var certificate_1 = '1';
+  //  } else {
+  //    var certificate_1 = '0';
+  //  }
+  //  if($('#signup-teacherinfo-certificate-2').is(':checked') == true) {
+  //    var certificate_2 = '2';
+  //  } else {
+  //    var certificate_2 = '0';
+  //  }
+  //  var certificate = certificate_1 + certificate_2;
+  //  post_data.certificate = certificate;
+  //  // console.log(post_data);
+  //
+  //  var url = $button.attr('url');
+  //  //able_button($button);
+  //  $.post(url, post_data, function(data) {
+  //    //console.log(data);
+  //    if (data.status == 0) {
+  //      //console.log('scuess');
+  //      able_button($button);
+  //      $button.text('提交成功，跳转中...');
+  //      window.location.href = data.url;
+  //    } else if (data.status == 3100) {
+  //      $error_message.text('提交失败，请重试');
+  //      $error_message.show();
+  //      able_button($button);
+  //    } else if (data.status == 3101) {
+  //      $error_message.text('提交失败，请重试');
+  //      $error_message.show();
+  //      able_button($button);
+  //    } else if (data.status == 3102) {
+  //      $error_message.text('姓名格式错误，请检查后重新提交');
+  //      $error_message.show();
+  //      able_button($button);
+  //    } else if (data.status == 3103) {
+  //      $error_message.text('性别格式错误，请检查后重新提交');
+  //      $error_message.show();
+  //      able_button($button);
+  //    } else if (data.status == 3104) {
+  //      $error_message.text('邮箱格式错误，请检查后重新提交');
+  //      $error_message.show();
+  //      able_button($button);
+  //    } else if (data.status == 3105) {
+  //      $error_message.text('地点格式错误，请检查后重新提交');
+  //      $error_message.show();
+  //      able_button($button);
+  //    } else if (data.status == 3106) {
+  //      $error_message.text('至少选择一项服务类型，请检查后重新提交');
+  //      $error_message.show();
+  //      able_button($button);
+  //    } else if (data.status == 3107) {
+  //      $error_message.text('提交失败，请重试');
+  //      $error_message.show();
+  //      able_button($button);
+  //    } else {
+  //      $error_message.text('提交失败，请重试');
+  //      $error_message.show();
+  //      able_button($button);
+  //    }
+  //  });
+  //});
 
 
   /*
   *  一般用户登录
   * */
-
-  $('#login-phone-btn').click(function () {
-    var $button = $(this);
-    disable_button($button);
-    var $error_message = $('#login-phone .ca-wrong-message');
-    var phone = $('#login-phone-number').val();
-    var password = $('#login-phone-password').val();
-    if (!reg_exp_phone(phone)) {
-      $error_message.text('手机号格式错误');
-      $error_message.show();
-      able_button($button);
-      return;
-    }
-    if (!reg_exp_password(password)) {
-      $error_message.text('密码格式错误');
-      $error_message.show();
-      able_button($button);
-      return;
-    }
-    var url = $button.attr('url');
-    var form_data = {
-      'phone': phone,
-      'password': password
-    };
-    $.post(url, form_data, function(data) {
-      console.log(data);
-      if (data.status == 0) {
-        //console.log('scuess');
-        able_button($button);
-        $button.text('登录成功，跳转中...');
-        window.location.href = data.url;
-      } else if (data.status == 4001) {
-        $error_message.text('用户不存在');
-        $error_message.show();
-        able_button($button);
-      } else if (data.status == 4002) {
-        $error_message.text('密码错误');
-        $error_message.show();
-        able_button($button);
-      } else {
-        $error_message.text('登录失败，请重试');
-        $error_message.show();
-        able_button($button);
-      }
-    });
-
-  });
+  //
+  //$('#login-phone-btn').click(function () {
+  //  var $button = $(this);
+  //  disable_button($button);
+  //  var $error_message = $('#login-phone .ca-wrong-message');
+  //  var phone = $('#login-phone-number').val();
+  //  var password = $('#login-phone-password').val();
+  //  if (!reg_exp_phone(phone)) {
+  //    $error_message.text('手机号格式错误');
+  //    $error_message.show();
+  //    able_button($button);
+  //    return;
+  //  }
+  //  if (!reg_exp_password(password)) {
+  //    $error_message.text('密码格式错误');
+  //    $error_message.show();
+  //    able_button($button);
+  //    return;
+  //  }
+  //  var url = $button.attr('url');
+  //  var form_data = {
+  //    'phone': phone,
+  //    'password': password
+  //  };
+  //  $.post(url, form_data, function(data) {
+  //    console.log(data);
+  //    if (data.status == 0) {
+  //      //console.log('scuess');
+  //      able_button($button);
+  //      $button.text('登录成功，跳转中...');
+  //      window.location.href = data.url;
+  //    } else if (data.status == 4001) {
+  //      $error_message.text('用户不存在');
+  //      $error_message.show();
+  //      able_button($button);
+  //    } else if (data.status == 4002) {
+  //      $error_message.text('密码错误');
+  //      $error_message.show();
+  //      able_button($button);
+  //    } else {
+  //      $error_message.text('登录失败，请重试');
+  //      $error_message.show();
+  //      able_button($button);
+  //    }
+  //  });
+  //
+  //});
 
 
 

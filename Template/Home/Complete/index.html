@@ -1,0 +1,470 @@
+<include file="./Template/Home/Common/header.html" />
+<include file="./Template/Home/Common/navbar.html" />
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-10 col-sm-6 col-md-4 col-xs-offset-1 col-sm-offset-3 col-md-offset-4">
+            <h3>来访者注册</h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">完善信息(2/2)</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" id="signup-userinfo-panel" action="__APP__/Home/Complete/index" method="post">
+
+                        <present name="error">
+                            <div class="alert alert-danger" role="alert">{$error}</div>
+                        </present>
+
+                        <div class="form-group">
+                            <label for="signup-userinfo-name" class="col-sm-3 control-label">姓名</label>
+                            <div class="col-sm-9">
+                                <present name="msg.name">
+                                    <input type="text" class="form-control" name="name" id="signup-userinfo-name" placeholder="请输入您的真实姓名" value="{$msg.name}">
+                                    <else />
+                                    <input type="text" class="form-control" name="name" id="signup-userinfo-name" placeholder="请输入您的真实姓名">
+                                </present>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">性别</label>
+                            <div class="col-sm-9" id="signup-userinfo-gender">
+                                <present name="msg.gender">
+                                    <eq name="msg.gender" value="1">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="gender" id="signup-userinfo-man" value="1" checked> 男
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="gender" id="signup-userinfo-woman" value="2"> 女
+                                        </label>
+                                        <else/>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="gender" id="signup-userinfo-man" value="1"> 男
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="gender" id="signup-userinfo-woman" value="2" checked> 女
+                                        </label>
+                                    </eq>
+                                    <else />
+                                    <label class="radio-inline">
+                                        <input type="radio" name="gender" id="signup-userinfo-man" value="1"> 男
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="gender" id="signup-userinfo-woman" value="2"> 女
+                                    </label>
+                                </present>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-userinfo-email" class="col-sm-3 control-label">邮箱</label>
+                            <div class="col-sm-9">
+                                <present name="msg.email">
+                                    <input type="email" class="form-control" name="email" id="signup-userinfo-email" placeholder="请输入您的邮箱" value="{$msg.email}">
+                                    <else />
+                                    <input type="email" class="form-control" name="email" id="signup-userinfo-email" placeholder="请输入您的邮箱">
+                                </present>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="signup-userinfo-city" class="col-sm-3 control-label">地点</label>
+                            <div class="col-sm-9">
+                                <present name="msg.city">
+                                    <input type="text" class="form-control" name="city" id="signup-userinfo-city" placeholder="请选择您所在城市" value="{$msg.city}">
+                                    <else />
+                                    <input type="text" class="form-control" name="city" id="signup-userinfo-city" placeholder="请选择您所在城市">
+                                </present>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">当前状态</label>
+                            <div class="col-sm-9" id="signup-userinfo-status">
+                                <label class="radio-inline">
+                                    <input type="radio" name="status" id="signup-userinfo-senior" value="1"> 高中
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="status" id="signup-userinfo-university" value="2"> 大学
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="status" id="signup-userinfo-work" value="30"> 工作
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group ca-signup-hide ca-signup-choose-form" id="singnup-userinfo-form-school">
+                            <label for="signup-userinfo-school" class="col-sm-3 control-label">学校</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="school" id="signup-userinfo-school" placeholder="请输入您的当前学校名称">
+                            </div>
+                        </div>
+                        <div class="form-group ca-signup-hide ca-signup-choose-form" id="singnup-userinfo-form-college">
+                            <label for="signup-userinfo-college" class="col-sm-3 control-label">专业</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="college" id="signup-userinfo-college" placeholder="请输入您的专业">
+                            </div>
+                        </div>
+                        <div class="form-group ca-signup-hide ca-signup-choose-form" id="singnup-userinfo-form-student-type">
+                            <label class="col-sm-3 control-label">考生类型</label>
+                            <div class="col-sm-9">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="type_1" id="signup-userinfo-student-type-1" name="singnup-userinfo-student-type" value="艺体生"> 艺体生
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="type_2" id="signup-userinfo-student-type-2" name="singnup-userinfo-student-type" value="少数名族考生"> 少数名族考生
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="type_3" id="signup-userinfo-student-type-3" name="singnup-userinfo-student-type" value="国家专项计划"> 国家专项计划
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="type_4" id="signup-userinfo-student-type-4" name="singnup-userinfo-student-type" value="军校或国防生"> 军校或国防生
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <small class="ca-small-tips">都不是则不选</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group ca-signup-hide ca-signup-choose-form" id="singnup-userinfo-form-work">
+                            <label class="col-sm-3 control-label">工作年限</label>
+                            <div class="col-sm-9" id="singnup-userinfo-worktime">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="worktime" id="signup-userinfo-work-1" value="3"> 未满1年
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="worktime" id="signup-userinfo-work-2" value="4"> 1-3年
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="worktime" id="signup-userinfo-work-3" value="5"> 3-5年
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="worktime" id="signup-userinfo-work-4" value="6"> 5年以上
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="submit" class="btn btn-primary btn-block" id="singnup-userinfo-btn">完成</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="__PUBLIC__/custom/js/city-select.js"></script>
+<script>
+    var test=new Vcity.CitySelector({input:'signup-userinfo-city'});
+
+    var signup_user_type = 0;
+    // 显示更多信息-高中
+    $('#signup-userinfo-senior').click(function () {
+        $('.ca-signup-choose-form').addClass('ca-signup-hide');
+        $('#singnup-userinfo-form-school').removeClass('ca-signup-hide');
+        $('#singnup-userinfo-form-student-type').removeClass('ca-signup-hide');
+        signup_user_type = 1;
+        able_button($('#singnup-userinfo-btn'));
+    });
+
+
+    // 显示更多信息-大学
+    $('#signup-userinfo-university').click(function () {
+        $('.ca-signup-choose-form').addClass('ca-signup-hide');
+        $('#singnup-userinfo-form-school').removeClass('ca-signup-hide');
+        $('#singnup-userinfo-form-college').removeClass('ca-signup-hide');
+        $('#singnup-userinfo-form-student-type').removeClass('ca-signup-hide');
+        signup_user_type = 2;
+        able_button($('#singnup-userinfo-btn'));
+    });
+
+
+    // 显示更多信息-工作
+    $('#signup-userinfo-work').click(function () {
+        $('.ca-signup-choose-form').addClass('ca-signup-hide');
+        $('#singnup-userinfo-form-work').removeClass('ca-signup-hide');
+        signup_user_type = 3;
+        able_button($('#singnup-userinfo-btn'));
+    });
+
+
+    // 完善来访者信息 Signup/user.html
+    $('#singnup-userinfo-btn').click(function () {
+//        var $button = $(this);
+//        disable_button($button);
+//        var $error_message = $('#signup-userinfo-panel .ca-wrong-message');
+//        $error_message.hide();
+//        var post_data = {};
+//        var name = $('#signup-userinfo-name').val();
+//        if (!name.length > 0) {
+//            $error_message.text('请填写您的姓名');
+//            $error_message.show();
+//            able_button($button);
+//            return;
+//        }
+//        post_data.name = name;
+//        //console.log(post_data);
+//
+//        var gender = $('#signup-userinfo-gender input[type="radio"]:checked').val();
+//        if (gender != 1 && gender != 2) {
+//            $error_message.text('请选择您的性别');
+//            $error_message.show();
+//            able_button($button);
+//            return;
+//        }
+//        post_data.gender = gender;
+//        //console.log(post_data);
+//
+//        var email = $('#signup-userinfo-email').val();
+//        if (!reg_exp_email(email)) {
+//            $error_message.text('邮箱格式错误');
+//            $error_message.show();
+//            able_button($button);
+//            return;
+//        }
+//        post_data.email = email;
+//        //console.log(post_data);
+//
+//        var city = $('#signup-userinfo-city').val();
+//        if (city == '请选择您所在城市' || city == '') {
+//            $error_message.text('请选择您所在城市');
+//            $error_message.show();
+//            able_button($button);
+//            return;
+//        }
+//        post_data.city = city;
+//        //console.log(post_data);
+//
+//        var status = $('#signup-userinfo-status input[type="radio"]:checked').val();
+//        if (status != 1 && status != 2 && status != 30) {
+//            $error_message.text('请选择您当前学习或工作状态');
+//            $error_message.show();
+//            able_button($button);
+//            return;
+//        }
+//        post_data.status = status;
+//        //console.log(post_data);
+//
+//        if (signup_user_type == 1) {
+//            var school =  $('#signup-userinfo-school').val();
+//            if (!school.length > 0) {
+//                $error_message.text('请填写您当前学校名称');
+//                $error_message.show();
+//                able_button($button);
+//                return;
+//            }
+//            post_data.school = school;
+//            if($('#signup-userinfo-student-type-1').is(':checked') == true) {
+//                var student_type_1 = '1';
+//            } else {
+//                var student_type_1 = '0';
+//            }
+//            if($('#signup-userinfo-student-type-2').is(':checked') == true) {
+//                var student_type_2 = '1';
+//            } else {
+//                var student_type_2 = '0';
+//            }
+//            if($('#signup-userinfo-student-type-3').is(':checked') == true) {
+//                var student_type_3 = '1';
+//            } else {
+//                var student_type_3 = '0';
+//            }
+//            if($('#signup-userinfo-student-type-4').is(':checked') == true) {
+//                var student_type_4 = '1';
+//            } else {
+//                var student_type_4 = '0';
+//            }
+//            var student_type = student_type_1 + student_type_2 + student_type_3 + student_type_4;
+//            post_data.student_type = student_type;
+//        } else if (signup_user_type == 2) {
+//            var school =  $('#signup-userinfo-school').val();
+//            if (!school.length > 0) {
+//                $error_message.text('请填写您当前学校名称');
+//                $error_message.show();
+//                able_button($button);
+//                return;
+//            }
+//            post_data.school = school;
+//
+//            var college = $('#signup-userinfo-college').val();
+//            //console.log(college);
+//            if (!college.length > 0) {
+//                $error_message.text('请填写您的专业');
+//                $error_message.show();
+//                able_button($button);
+//                return;
+//            }
+//            post_data.college = college;
+//
+//            if($('#signup-userinfo-student-type-1').is(':checked') == true) {
+//                var student_type_1 = '1';
+//            } else {
+//                var student_type_1 = '0';
+//            }
+//            if($('#signup-userinfo-student-type-2').is(':checked') == true) {
+//                var student_type_2 = '1';
+//            } else {
+//                var student_type_2 = '0';
+//            }
+//            if($('#signup-userinfo-student-type-3').is(':checked') == true) {
+//                var student_type_3 = '1';
+//            } else {
+//                var student_type_3 = '0';
+//            }
+//            if($('#signup-userinfo-student-type-4').is(':checked') == true) {
+//                var student_type_4 = '1';
+//            } else {
+//                var student_type_4 = '0';
+//            }
+//            var student_type = student_type_1 + student_type_2 + student_type_3 + student_type_4;
+//            post_data.student_type = student_type;
+//        } else if (signup_user_type == 3) {
+//            status = $('#singnup-userinfo-worktime input[type="radio"]:checked').val();
+//            if (status != 3 && status != 4 && status != 5 && status != 6) {
+//                $error_message.text('请选择您的工作时间');
+//                $error_message.show();
+//                able_button($button);
+//                return;
+//            }
+//            post_data.status = status;
+//        }
+//        var url = $button.attr('url');
+//        $.post(url, post_data, function(data) {
+//            // console.log(data);
+//            if (data.status == 0) {
+//                $button.text('成功，跳转中...');
+//                window.location.href = data.url;
+//            } else if (data.status == 3000) {
+//                $error_message.text('注册失败，请重试');
+//                $error_message.show();
+//                able_button($button);
+//            } else if (data.status == 3001) {
+//                $error_message.text('注册失败，请重试');
+//                $error_message.show();
+//                able_button($button);
+//            } else if (data.status == 3002) {
+//                $error_message.text('姓名格式错误，请检查后重新提交');
+//                $error_message.show();
+//                able_button($button);
+//            } else if (data.status == 3003) {
+//                $error_message.text('性别格式错误，请检查后重新提交');
+//                $error_message.show();
+//                able_button($button);
+//            } else if (data.status == 3004) {
+//                $error_message.text('邮箱格式错误，请检查后重新提交');
+//                $error_message.show();
+//                able_button($button);
+//            } else if (data.status == 3005) {
+//                $error_message.text('地点格式错误，请检查后重新提交');
+//                $error_message.show();
+//                able_button($button);
+//            } else if (data.status == 3006) {
+//                $error_message.text('学习或工作状态格式错误，请检查后重新提交');
+//                $error_message.show();
+//                able_button($button);
+//            } else if (data.status == 3007) {
+//                $error_message.text('学校格式错误，请检查后重新提交');
+//                $error_message.show();
+//                able_button($button);
+//            }else if (data.status == 3008) {
+//                $error_message.text('学生类别格式错误，请检查后重新提交');
+//                $error_message.show();
+//                able_button($button);
+//            }else if (data.status == 3009) {
+//                $error_message.text('专业格式错误，请检查后重新提交');
+//                $error_message.show();
+//                able_button($button);
+//            } else if (data.status == 3011) {
+//                $error_message.text('注册失败，请重试');
+//                $error_message.show();
+//                able_button($button);
+//            } else {
+//                $error_message.text('注册失败，请重试');
+//                $error_message.show();
+//                able_button($button);
+//            }
+//        });
+    });
+
+    // 点击按钮后，禁用按钮
+    function disable_button($element) {
+        $element.attr('disabled', true);
+        $element.append('<i class="fa fa-cog fa-spin"></i>');
+        $element.addClass('disabled');
+    }
+
+
+    // 后台返回了结果，激活按钮
+    function able_button($element) {
+        $element.removeClass('disabled');
+        $element.find('i').remove();
+        $element.attr('disabled', false);
+    }
+
+
+    // 验证手机号
+    function reg_exp_phone(string) {
+        var pattern =  /^(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+        if (pattern.test(string)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    // 验证邮箱
+    function reg_exp_email(string) {
+        var pattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+        if(string != undefined && pattern.test(string)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    // 验证密码，6-20为不含引号字符串
+    function reg_exp_password(string) {
+        var pattern = /^[^\'\"]{6,20}$/;
+        if (pattern.test(string)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    // 验证6-20位纯数字
+    function reg_exp_number(string) {
+        var pattern = /^[0-9 ]{6,20}$/;
+        if (pattern.test(string)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+</script>
+<include file="./Template/Home/Common/footer.html" />

@@ -20,7 +20,6 @@ class BaseController extends Controller {
      * initialize. push account info to $_data
      */
     public function _initialize() {
-        //var_dump($this->get_user_info(36));
 
         if ($this->is_login()) {
 
@@ -30,7 +29,7 @@ class BaseController extends Controller {
                 case 1:
                     // login type of user
                     //  var_dump(I(session.id, 0));
-                    $data = $this->get_user_info(I(session.id, 0));
+                    $data = $this->get_user_info($_SESSION['id']);
                     if ($data) {
                         $this->_data['user']['account_id'] = $data['account']['account_id'];
                         $this->_data['user']['phone'] = $data['account']['phone'];
@@ -50,7 +49,7 @@ class BaseController extends Controller {
                     break;
                 case 2:
                     // login type of Teacher
-                    $data = $this->get_teacher_info(I(session.id, 0));
+                    $data = $this->get_teacher_info($_SESSION['id']);
                     if ($data) {
                         $this->_data['teacher']['account_id'] = $data['account']['account_id'];
                         $this->_data['teacher']['phone'] = $data['account']['phone'];

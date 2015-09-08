@@ -17,29 +17,11 @@ class BaseController extends Controller {
      * initialize redirect url
      */
 
-    public function _initialize() {
+    public function __construct() {
 
-        if ($this->is_login()) {
-            $login_type = $this->login_type();
-            if ($login_type) {
-
-                switch ($login_type) {
-                    case 1:
-                        $this->redirect('User/index', '', 0);
-                        break;
-                    case 2:
-                        $this->redirect('Teacher/index', '', 0);
-                        break;
-                    case 3:
-                        $this->redirect('Index/index', '', 0);
-                        break;
-                }
-            } else {
-                logout();
-                $this->redirect('Home/Login/index', '', 0);
-            }
-        } else {
-            logout();
+        parent::__construct();
+        if (!($this->is_login() && $this->login_type())) {
+            // not login. redirect to login page
             $this->redirect('Home/Login/index', '', 0);
         }
     }

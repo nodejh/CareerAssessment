@@ -14,37 +14,43 @@ class LoginController extends BaseController {
 
 
     /**
-     * 登录页面
+     * 初始化注册页面
+     * 如果已经登录，则跳转到相应个人中心
      */
-    public function index(){
-        $this->_data['title'] = '登录';
-
+    public function __construct() {
+        parent::__construct();
         if ($this->is_login()) {
             $login_type = $this->login_type();
             if ($login_type) {
 
                 switch ($login_type) {
                     case 1:
-                        $this->redirect('User/index', '', 0);
+                        $this->redirect('Admin/User/index', '', 0);
                         break;
                     case 2:
-                        $this->redirect('Teacher/index', '', 0);
+                        $this->redirect('Admin/Teacher/index', '', 0);
                         break;
                     case 3:
-                        $this->redirect('Index/index', '', 0);
+                        $this->redirect('Admin/Index/index', '', 0);
                         break;
                 }
-
             } else {
-                logout();
-                $this->display('index');
+                session_unset();
             }
-
         } else {
-            logout();
-            $this->assign($this->_data);
-            $this->display();
+            session_unset();
         }
+    }
+
+
+    /**
+     * 登录页面
+     */
+    public function index(){
+        $this->_data['title'] = '登录';
+        $this->assign($this->_data);
+        $this->display();
+
     }
 
 
@@ -55,6 +61,10 @@ class LoginController extends BaseController {
 
         $card = I('post.card', 0);
         $password = I('post.password', 0);
+
+        $this->_data['msg']['card'] = $card;
+        $this->_data['msg']['password'] = $password;
+
         if ($card && $password) {
 
             $Card = M('card');
@@ -71,10 +81,10 @@ class LoginController extends BaseController {
 
                     switch ($data_account['type']) {
                         case 1:
-                            $this->redirect('User/index', '', 0);
+                            $this->redirect('Admin/User/index', '', 0);
                             break;
                         case 2:
-                            $this->redirect('Teacher/index', '', 0);
+                            $this->redirect('Admin/Teacher/index', '', 0);
                     }
 
                 } else {
@@ -83,7 +93,7 @@ class LoginController extends BaseController {
                             $this->_data['error'] = '您尚未注册，请<a href="'.U('Sign/index').'">注册</a>后登录';
                             break;
                         case 2:
-                            $this->_data['error'] = '您尚未注册，请<a href="'.U('Sign/tindex').'">注册</a>后登录';
+                            $this->_data['error'] = '您尚未注册，请<a href="'.U('Sign/teacher').'">注册</a>后登录';
                             break;
                         default:
                             $this->_data['error'] = '您尚未注册，请<a href="'.U('Sign/index').'">注册</a>后登录';
@@ -114,6 +124,10 @@ class LoginController extends BaseController {
     public function phone() {
         $phone = I('post.phone', 0);
         $password = I('post.password', 0);
+
+        $this->_data['msg']['phone'] = $phone;
+        $this->_data['msg']['password'] = $password;
+
         if ($phone && $password) {
 
             $Account = M('account');
@@ -127,10 +141,10 @@ class LoginController extends BaseController {
 
                     switch ($data_account['type']) {
                         case 1:
-                            $this->redirect('User/index', '', 0);
+                            $this->redirect('Admin/User/index', '', 0);
                             break;
                         case 2:
-                            $this->redirect('Teacher/index', '', 0);
+                            $this->redirect('Admin/Teacher/index', '', 0);
                     }
 
                 } else {
@@ -154,6 +168,42 @@ class LoginController extends BaseController {
             $this->_data['title'] = '登录';
             $this->assign($this->_data);
             $this->display('index');
+        }
+    }
+
+
+    /**
+     * sign type
+     */
+    public function type() {
+        $this->_data['title'] = '请选择注册类型';
+
+        if ($this->is_login()) {
+            $login_type = $this->login_type();
+            if ($login_type) {
+
+                switch ($login_type) {
+                    case 1:
+                        $this->redirect('Admin/User/index', '', 0);
+                        break;
+                    case 2:
+                        $this->redirect('Admin/Teacher/index', '', 0);
+                        break;
+                    case 3:
+                        $this->redirect('Admin/Index/index', '', 0);
+                        break;
+                }
+
+            } else {
+                logout();
+                $this->assign($this->_data);
+                $this->display();
+            }
+
+        } else {
+            logout();
+            $this->assign($this->_data);
+            $this->display();
         }
     }
 

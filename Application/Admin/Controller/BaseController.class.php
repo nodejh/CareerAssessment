@@ -28,6 +28,11 @@ class BaseController extends Controller {
 
         } else {
 
+            if (isset($_SESSION['f'])) {
+                // first time to login. suggest to change the password
+                $this->_data['first'] = '1';
+            }
+
             switch ($this->login_type()) {
                 case 1:
                     // login type of user
@@ -35,6 +40,7 @@ class BaseController extends Controller {
                     if ($data) {
                         $this->_data['user']['account_id'] = $data['account']['account_id'];
                         $this->_data['user']['phone'] = $data['account']['phone'];
+                        $this->_data['user']['password'] = $data['account']['password'];
                         $this->_data['user']['card_id'] = $data['account']['card_id'];
                         $this->_data['user']['date'] = $data['account']['date'];
                         $this->_data['user']['name'] = $data['user']['name'];
@@ -55,6 +61,7 @@ class BaseController extends Controller {
                     if ($data) {
                         $this->_data['teacher']['account_id'] = $data['account']['account_id'];
                         $this->_data['teacher']['phone'] = $data['account']['phone'];
+                        $this->_data['teacher']['password'] = $data['account']['password'];
                         $this->_data['teacher']['card_id'] = $data['account']['card_id'];
                         $this->_data['teacher']['date'] = $data['account']['date'];
                         $this->_data['teacher']['name'] = $data['teacher']['name'];

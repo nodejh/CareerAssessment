@@ -50,7 +50,7 @@ class UserController extends BaseController {
 
         $this->_data['title'] = '修改密码';
         if ($_POST) {
-            if (isset($_POST['password']) && strlen($_POST['password']) > 6) {
+            if (isset($_POST['password']) && strlen($_POST['password']) > 5) {
                 $post['password'] = I('post.password', 0);
                 $post['password_confirm'] = I('password_confirm', 0);
 

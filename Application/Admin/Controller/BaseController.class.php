@@ -50,6 +50,10 @@ class BaseController extends Controller {
                         $this->_data['user']['school'] = $data['user']['school'];
                         $this->_data['user']['college'] = $data['user']['college'];
                         $this->_data['user']['student_type'] = $data['user']['student_type'];
+                        $this->_data['user']['type_1'] = $data['user']['type_1'];
+                        $this->_data['user']['type_2'] = $data['user']['type_2'];
+                        $this->_data['user']['type_3'] = $data['user']['type_3'];
+                        $this->_data['user']['type_4'] = $data['user']['type_4'];
                         $this->_data['user']['city'] = $data['user']['city'];
                     } else {
                         $this->_data['user'] = 0;
@@ -167,28 +171,26 @@ class BaseController extends Controller {
                         $data['user']['status'] = '未知';
                 }
 
-                if ($data['user']['student_type'] != NULL) {
-                    $student_type1 = substr($data['user']['student_type'], 0, 1);
-                    $student_type2 = substr($data['user']['student_type'], 1, 1);
-                    $student_type3 = substr($data['user']['student_type'], 2, 1);
-                    $student_type4 = substr($data['user']['student_type'], 3, 1);
-                    $data['user']['student_type'] = '';
-                    if ($student_type1 == '1') {
-                        $data['user']['student_type'] .= '艺体生,';
-                    }
-                    if ($student_type2 == '1') {
-                        $data['user']['student_type'] .= '少数名族考生,';
-                    }
-                    if ($student_type3 == '1') {
-                        $data['user']['student_type'] .= '国家专项计划,';
-                    }
-                    if ($student_type4 == '1') {
-                        $data['user']['student_type'] .= '军校或国防生,';
-                    }
-                    $data['user']['student_type'] = rtrim($data['user']['student_type'], ',');
+                $data['user']['type_1'] = '';
+                $data['user']['type_2'] = '';
+                $data['user']['type_3'] = '';
+                $data['user']['type_4'] = '';
 
-                } else {
-                    $data['user']['student_type'] = '';
+                if ($data['user']['student_type'] != NULL) {
+
+                    $data['user']['type_temp'] = explode(',', $data['user']['student_type']);
+                    foreach ($data['user']['type_temp'] as $temp) {
+                        if ($temp == '艺体生') {
+                            $data['user']['type_1'] = 'checked';
+                        } else if ($temp == '少数名族考生') {
+                            $data['user']['type_2'] = 'checked';
+                        } else if ($temp == '国家专项计划') {
+                            $data['user']['type_3'] = 'checked';
+                        } else if ($temp == '军校或国防生') {
+                            $data['user']['type_4'] = 'checked';
+                        }
+                    }
+
                 }
             }
 

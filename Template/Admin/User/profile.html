@@ -23,6 +23,7 @@
             </div>
         </present>
 
+
         <div class="col-xs-10 col-md-6">
             <form class="form-horizontal" id="signup-userinfo-panel" action="__APP__/Admin/User/profile" method="post">
 
@@ -30,6 +31,15 @@
                     <div class="alert alert-danger" role="alert">{$error}</div>
                 </present>
 
+                <present name="message">
+                    <br>
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <p>{$message}</p>
+                    </div>
+                </present>
                 <div class="form-group">
                     <label for="signup-userinfo-name" class="col-sm-3 control-label">姓名</label>
                     <div class="col-sm-9">
@@ -80,18 +90,12 @@
                 </div>
 
 
-
-
-
-
-
-
                 <div class="form-group">
                     <label class="col-sm-3 control-label">当前状态</label>
                     <div class="col-sm-9" id="signup-userinfo-status">
 
                         <switch name="user.status">
-                            <case value="1">
+                            <case value="高中">
                                 <label class="radio-inline">
                                     <input type="radio" name="status" id="profile-senior" value="1" checked> 高中
                                 </label>
@@ -102,7 +106,7 @@
                                     <input type="radio" name="status" id="profile-work" value="30"> 工作
                                 </label>
                             </case>
-                            <case value="2">
+                            <case value="大学">
                                 <label class="radio-inline">
                                     <input type="radio" name="status" id="profile-senior" value="1"> 高中
                                 </label>
@@ -113,7 +117,7 @@
                                     <input type="radio" name="status" id="profile-work" value="30"> 工作
                                 </label>
                             </case>
-                            <case value="3|4|5|6">
+                            <case value="工作未满1年|工作1-3年|工作3-5年|工作5年以上">
                                 <label class="radio-inline">
                                     <input type="radio" name="status" id="profile-senior" value="1"> 高中
                                 </label>
@@ -156,22 +160,22 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="type_1" id="signup-userinfo-student-type-1" name="singnup-userinfo-student-type" value="艺体生"> 艺体生
+                                    <input type="checkbox" name="type_1" id="signup-userinfo-student-type-1" name="singnup-userinfo-student-type" value="艺体生" {$user.type_1}> 艺体生
                                 </label>
                             </div>
                             <div class="col-sm-6">
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="type_2" id="signup-userinfo-student-type-2" name="singnup-userinfo-student-type" value="少数名族考生"> 少数名族考生
+                                    <input type="checkbox" name="type_2" id="signup-userinfo-student-type-2" name="singnup-userinfo-student-type" value="少数名族考生" {$user.type_2}> 少数名族考生
                                 </label>
                             </div>
                             <div class="col-sm-6">
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="type_3" id="signup-userinfo-student-type-3" name="singnup-userinfo-student-type" value="国家专项计划"> 国家专项计划
+                                    <input type="checkbox" name="type_3" id="signup-userinfo-student-type-3" name="singnup-userinfo-student-type" value="国家专项计划" {$user.type_3}> 国家专项计划
                                 </label>
                             </div>
                             <div class="col-sm-6">
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" name="type_4" id="signup-userinfo-student-type-4" name="singnup-userinfo-student-type" value="军校或国防生"> 军校或国防生
+                                    <input type="checkbox" name="type_4" id="signup-userinfo-student-type-4" name="singnup-userinfo-student-type" value="军校或国防生" {$user.type_4}> 军校或国防生
                                 </label>
                             </div>
                             <div class="col-sm-12">
@@ -185,7 +189,7 @@
                     <div class="col-sm-9" id="singnup-userinfo-worktime">
                         <div class="row">
                             <switch name="user.status">
-                                <case value="3">
+                                <case value="工作未满1年">
                                     <div class="col-sm-6">
                                         <label class="radio-inline">
                                             <input type="radio" name="worktime" id="signup-userinfo-work-1" value="3" checked> 未满1年
@@ -207,7 +211,7 @@
                                         </label>
                                     </div>
                                 </case>
-                                <case value="4">
+                                <case value="工作1-3年">
                                     <div class="col-sm-6">
                                         <label class="radio-inline">
                                             <input type="radio" name="worktime" id="signup-userinfo-work-1" value="3"> 未满1年
@@ -229,7 +233,7 @@
                                         </label>
                                     </div>
                                 </case>
-                                <case value="5">
+                                <case value="工作3-5年">
                                     <div class="col-sm-6">
                                         <label class="radio-inline">
                                             <input type="radio" name="worktime" id="signup-userinfo-work-1" value="3"> 未满1年
@@ -251,7 +255,7 @@
                                         </label>
                                     </div>
                                 </case>
-                                <case value="6">
+                                <case value="工作5年以上">
                                     <div class="col-sm-6">
                                         <label class="radio-inline">
                                             <input type="radio" name="worktime" id="signup-userinfo-work-1" value="3"> 未满1年

@@ -35,10 +35,109 @@ class UserController extends BaseController {
     public function profile() {
         $this->is_user();
 
-        $this->_data['title'] = '修改个人资料';
-        // var_dump($this->_data);
-        $this->assign($this->_data);
-        $this->display();
+         if ($_POST) {
+             $post['name'] = I('post.name', 0);
+             $post['gender'] = I('post.gender', 0);
+             $post['email'] = I('post.email', 0);
+             $post['city'] = I('post.city', 0);
+             $post['status'] = I('post.status', 0) == 30 ? I('post.worktime', 0) : I('post.status', 0);
+             $post['school'] = I('post.school', 0);
+             $post['college'] = I('post.college', 0);
+             $post['type_1'] = I('post.type_1', 0);
+             $post['type_2'] = I('post.type_2', 0);
+             $post['type_3'] = I('post.type_3', 0);
+             $post['type_4'] = I('post.type_4', 0);
+
+             if ($post['type_1'] || $post['type_2'] || $post['type_3'] || $post['type_4']) {
+                 $post['student_type'] = '';
+                 if ($post['type_1']) {
+                     $post['student_type'] .= $post['type_1'] . ',';
+                 }
+                 if ($post['type_2']) {
+                     $post['student_type'] .= $post['type_2'] . ',';
+                 }
+                 if ($post['type_3']) {
+                     $post['student_type'] .= $post['type_3'] . ',';
+                 }
+                 if ($post['type_4']) {
+                     $post['student_type'] .= $post['type_4'] . ',';
+                 }
+                 $post['student_type'] = rtrim($post['student_type'], ',');
+             }
+
+             $User = M('user');
+             $user_data['name'] = $post['name'];
+
+             if ($post['name']) {
+                 $user_update['name'] = $post['name'];
+             }
+             if ($post['gender']) {
+                 $user_update['gender'] = $post['gender'];
+             }
+             if ($post['email']) {
+                 $user_update['email'] = $post['email'];
+             }
+             if ($post['city']) {
+                 $user_update['city'] = $post['city'];
+             }
+             if ($post['status']) {
+                 $user_update['status'] = $post['status'];
+             }
+             if ($post['school']) {
+                 $user_update['school'] = $post['school'];
+             }
+             if ($post['college']) {
+                 $user_update['college'] = $post['college'];
+             }
+             if ($post['student_type']) {
+                 $user_update['student_type'] = $post['student_type'];
+             }
+
+             if (count($user_update )) {
+
+                 //判断 user 表中是否有该用户
+                 $user_where['account_id'] = $_SESSION['id'];
+
+                 $user_exist = $User->where($user_where)->find();
+                 
+                 if ($user_exist) {
+                     // user 表中有该用户
+                     $user_result = $User->where($user_where)->data($user_update)->save();
+                 } else {
+                     // user 表中没有该用户
+                     $user_data['account_id'] = $user_where['account_id'];
+                     $user_result = $User->data($user_update)->add();
+                 }
+
+                 var_dump($user_result);
+
+                 if ($user_result !== false) {
+                     $this->_data['title'] = '修改个人资料';
+                     $this->_data['message'] = '修改个人资料修成功,请<a href="'.U('profile').'">刷新</a>查看';
+                     $this->assign($this->_data);
+                     $this->display();
+
+                 } else {
+                     $this->_data['title'] = '修改个人资料';
+                     $this->_data['error'] = '修改个人资料失败，请重试';
+                     $this->assign($this->_data);
+                     $this->display();
+                 }
+
+             } else {
+                 $this->_data['title'] = '修改个人资料';
+                 $this->_data['error'] = '没有任何更新，请重试';
+                 $this->assign($this->_data);
+                 $this->display();
+             }
+
+
+
+         } else {
+             $this->_data['title'] = '修改个人资料';
+             $this->assign($this->_data);
+             $this->display();
+         }
     }
 
 

@@ -30,7 +30,7 @@ function first_signup() {
  * 注销登录
  * @return void
  */
-function logout () {
+function logout() {
     session_unset();
     session_destroy();
 }

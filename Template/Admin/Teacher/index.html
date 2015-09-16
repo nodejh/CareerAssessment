@@ -9,8 +9,8 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <p>您的用户号是：<strong class="ca-default-usernumber">{$user.phone}</strong>
-                    ，默认登录密码是：<strong class="ca-default-usernumber">{$user.password}</strong></p>
+                <p>您的用户号是：<strong class="ca-default-usernumber">{$teacher.phone}</strong>
+                    ，默认登录密码是：<strong class="ca-default-usernumber">{$teacher.password}</strong></p>
                 <p>建议您<a href="__APP__/Admin/Teacher/password">修改密码</a>。</p>
             </div>
         </present>
@@ -22,69 +22,145 @@
     <!-- /.row -->
     <div class="row">
         <div class="col-xs-10 col-sm-8 col-md-6">
-        <form class="form-horizontal" id="signup-teacherinfo-panel" action="__APP__/Admin/Teacher/index" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal" id="teacher-info-panel" action="__APP__/Admin/Teacher/index/" method="post" enctype="multipart/form-data">
+
             <present name="error">
                 <div class="alert alert-danger" role="alert">{$error}</div>
             </present>
-            <div class="form-group" id="signup-complete-panel">
+
+            <present name="message">
+                <br>
+                <div class="alert alert-success" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <p>{$message}</p>
+                </div>
+            </present>
+
+            <div class="form-group">
                 <label for="up_img_WU_FILE_0" class="col-sm-3 control-label" style="margin-left: -15px;">个人照片</label>
-                <div class="col-sm-9 signup-complete-preview">
+                <div class="col-sm-9 teacher-info-preview">
                     <input type="file" id="up_img_WU_FILE_0" name="avatar" required>
                     <span class="help-block">请上传至少200x200的高清个人照片</span>
-                    <img class="ca-avatar" id="imgShow_WU_FILE_0" src="__PUBLIC__/picture/default_avatar.png" alt="个人照片">
+                    <img class="ca-avatar" id="imgShow_WU_FILE_0" src="__ROOT__/Uploads/{$teacher.avatar}" alt="{$teacher.name}">
                 </div>
             </div>
             <div class="form-group">
-                <label for="signup-teacherinfo-name" class="col-sm-3 control-label">姓名</label>
+                <label for="teacher-info-name" class="col-sm-3 control-label">姓名</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" name="name" id="signup-teacherinfo-name" placeholder="请输入您的真实姓名" required>
+                    <input type="text" class="form-control" name="name" id="teacher-info-name" placeholder="请输入您的真实姓名" value="{$teacher.name}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">性别</label>
-                <div class="col-sm-9" id="signup-teacherinfo-gender">
-                    <label class="radio-inline">
-                        <input type="radio" name="gender" id="signup-teacherinfo-man" value="1" required> 男
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="gender" id="signup-teacherinfo-woman" value="2" required> 女
-                    </label>
+                <div class="col-sm-9" id="teacher-info-gender">
+
+                    <switch name="teacher.gender" >
+                        <case value="男">
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" id="teacher-info-man" value="1" checked> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" id="teacher-info-woman" value="2"> 女
+                            </label>
+                        </case>
+                        <case value="nv">
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" id="teacher-info-man" value="1"> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" id="teacher-info-woman" value="2" checked> 女
+                            </label>
+                        </case>
+                        <default />
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" id="teacher-info-man" value="1"> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" id="teacher-info-woman" value="2"> 女
+                            </label>
+                    </switch>
+
                 </div>
             </div>
             <div class="form-group">
-                <label for="signup-teacherinfo-email" class="col-sm-3 control-label">邮箱</label>
+                <label for="teacher-info-email" class="col-sm-3 control-label">邮箱</label>
                 <div class="col-sm-9">
-                    <input type="email" class="form-control" name="email" id="signup-teacherinfo-email" placeholder="请输入您的邮箱" required>
+                    <input type="email" class="form-control" name="email" id="teacher-info-email" placeholder="请输入您的邮箱" value="{$teacher.email}">
                 </div>
             </div>
             <div class="form-group">
-                <label for="signup-teacherinfo-city" class="col-sm-3 control-label">地点</label>
+                <label for="teacher-index-city" class="col-sm-3 control-label">地点</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" name="city" id="signup-teacherinfo-city" placeholder="请选择您所在城市" required>
+                    <input type="text" class="form-control" name="city" id="teacher-index-city" placeholder="请选择您所在城市" value="{$teacher.city}">
                 </div>
             </div>
-            <div class="form-group" id="singnup-teacherinfo-form-service-type">
+
+            <div class="form-group" id="teache-rinfo-form-service-type">
                 <label class="col-sm-3 control-label">服务类型</label>
                 <div class="col-sm-9">
                     <div class="row">
                         <div class="col-sm-4">
                             <label class="checkbox-inline">
-                                <input type="checkbox" id="signup-teacherinfo-service-type-1" name="type_1" value="高中" checked> 高中
+                                <input type="checkbox" id="signup-teacherinfo-service-type-1" name="type_1" value="高中" {$teacher.service_type_a}> 高中
                             </label>
                         </div>
                         <div class="col-sm-4">
                             <label class="checkbox-inline">
-                                <input type="checkbox" id="signup-teacherinfo-service-type-2" name="type_2" value="大学" checked> 大学
+                                <input type="checkbox" id="signup-teacherinfo-service-type-2" name="type_2" value="大学" {$teacher.service_type_b}> 大学
                             </label>
                         </div>
                         <div class="col-sm-4">
                             <label class="checkbox-inline">
-                                <input type="checkbox" id="signup-teacherinfo-service-type-3" name="type_3" value="工作" checked> 工作
+                                <input type="checkbox" id="signup-teacherinfo-service-type-3" name="type_3" value="工作" {$teacher.service_type_c}> 工作
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label for="teacher-info-name" class="col-sm-3 control-label">个人简介</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control" rows="3">{$teacher.introduction}</textarea>
+                </div>
+            </div>
+
+            <notempty name="teacher.certificate_a">
+                <div class="form-group" id="div-img-a">
+                    <label for="up_img_WU_FILE_0" class="col-sm-3 control-label" style="margin-left: -15px;">证书照片</label>
+                    <div class="col-sm-9">
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-sm-12 teacher-info-preview">
+                                    <input type="file" id="up_img_WU_FILE_1" name="img_a">
+                                    <span class="help-block">请上传您的心理咨询师证书照片</span>
+                                    <img class="ca-avatar" id="imgShow_WU_FILE_1" src="__ROOT__/Uploads/{$teacher.certificate_a}" alt="心理咨询师证书">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </notempty>
+
+            <notempty name="teacher.certificate_b">
+                <div class="form-group" id="div-img-b">
+                    <label for="up_img_WU_FILE_1" class="col-sm-3 control-label" style="margin-left: -15px;">证书照片</label>
+                    <div class="col-sm-9">
+                        <div class="col-sm-9">
+                            <div class="row">
+                                <div class="col-sm-12 teacher-info-preview">
+                                    <input type="file" id="up_img_WU_FILE_2" name="img_b">
+                                    <span class="help-block">请上传您的职业生涯规划师师证书照片</span>
+                                    <img class="ca-avatar" id="imgShow_WU_FILE_2" src="__ROOT__/Uploads/{$teacher.certificate_b}" alt="职业生涯规划师师证书">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </notempty>
+
             <div class="form-group">
                 <div class="col-sm-offset-3 col-sm-9">
                     <button type="submit" class="btn btn-primary btn-block" id="singnup-teacherinfo-btn">提交</button>
@@ -98,5 +174,37 @@
 <!-- /#page-wrapper -->
 
 
+<script src="__PUBLIC__/custom/js/city-select.js"></script>
+<script src="__PUBLIC__/custom/js/upload-preview.js"></script>
+<script>
+//    var test=new Vcity.CitySelector({input:'teacher-index-city'});
 
+    // 控制心理咨询师和生涯规划师的显示和隐藏
+    function change_dom() {
+        if ($('#box-certificate-a').is(':checked') == true) {
+            $('#div-time-a').show();
+            $('#div-img-a').show();
+        } else {
+            $('#div-time-a').hide();
+            $('#div-img-a').hide();
+        }
+        if ($('#box-certificate-b').is(':checked') == true) {
+            $('#div-time-b').show();
+            $('#div-img-b').show();
+        } else {
+            $('#div-time-b').hide();
+            $('#div-img-b').hide();
+        }
+    }
+
+    function file_click(){
+        var WARP = document.getElementById('teacher-info-panel');
+        var WARP_LI = WARP.getElementsByClassName('teacher-info-preview');
+        for(var i=0; i<WARP_LI.length;i++){
+            new uploadPreview({ UpBtn: "up_img_WU_FILE_"+i, ImgShow: "imgShow_WU_FILE_"+i});
+        }
+    }
+    window.onload = file_click;
+
+</script>
 <include file="./Template/Admin/Common/footer.html" />

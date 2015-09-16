@@ -69,6 +69,7 @@ class BaseController extends Controller {
                         $this->_data['teacher']['card_id'] = $data['account']['card_id'];
                         $this->_data['teacher']['date'] = $data['account']['date'];
                         $this->_data['teacher']['name'] = $data['teacher']['name'];
+                        $this->_data['teacher']['email'] = $data['teacher']['email'];
                         $this->_data['teacher']['avatar'] = $data['teacher']['avatar'];
                         $this->_data['teacher']['gender'] = $data['teacher']['gender'];
                         $this->_data['teacher']['service_type'] = $data['teacher']['service_type'];
@@ -77,8 +78,9 @@ class BaseController extends Controller {
                         $this->_data['teacher']['city'] = $data['teacher']['city'];
                         $this->_data['teacher']['certificate_a'] = $data['teacher']['certificate_a'];
                         $this->_data['teacher']['certificate_b'] = $data['teacher']['certificate_b'];
-                        $this->_data['teacher']['time_a'] = $data['teacher']['time_a'];
-                        $this->_data['teacher']['time_b'] = $data['teacher']['time_b'];
+                        $this->_data['teacher']['service_type_a'] = $data['teacher']['service_type_a'];
+                        $this->_data['teacher']['service_type_b'] = $data['teacher']['service_type_b'];
+                        $this->_data['teacher']['service_type_c'] = $data['teacher']['service_type_c'];
                     } else {
                         $this->_data['teacher'] = 0;
                     }
@@ -226,6 +228,25 @@ class BaseController extends Controller {
                         break;
                     default:
                         $data['teacher']['gender'] = '未知';
+                }
+            }
+            $data['teacher']['service_type_a'] = '';
+            $data['teacher']['service_type_b'] = '';
+            $data['teacher']['service_type_c'] = '';
+
+            if ($data['teacher']['service_type'] != null) {
+                $service_array = explode(',', $data['teacher']['service_type']);
+            }
+
+            foreach($service_array as $service) {
+                if ($service == '高中') {
+                    $data['teacher']['service_type_a'] = 'checked';
+                }
+                if ($service == '大学') {
+                    $data['teacher']['service_type_b'] = 'checked';
+                }
+                if ($service == '工作') {
+                    $data['teacher']['service_type_c'] = 'checked';
                 }
             }
 

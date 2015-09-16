@@ -1,0 +1,35 @@
+<include file="./Template/Admin/Common/header.html" />
+<include file="./Template/Admin/Common/nav_teacher.html" />
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">我的课程</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+
+        <present name="first">
+            <br>
+            <div class="alert alert-success" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <p>您的用户号是：<strong class="ca-default-usernumber">{$teacher.phone}</strong>
+                    ，默认登录密码是：<strong class="ca-default-usernumber">{$teacher.password}</strong></p>
+                <p>建议您<a href="__APP__/Admin/Teacher/password">修改密码</a>。</p>
+            </div>
+        </present>
+
+        <div class="col-xs-10 col-md-4">
+
+        </div>
+    </div>
+
+</div>
+<!-- /#page-wrapper -->
+
+
+<include file="./Template/Admin/Common/footer.html" />

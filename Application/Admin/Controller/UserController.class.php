@@ -39,7 +39,7 @@ class UserController extends BaseController {
              $post['name'] = I('post.name', 0);
              $post['gender'] = I('post.gender', 0);
              $post['email'] = I('post.email', 0);
-             $post['city'] = I('post.city', 0);
+             $post['city'] = I('post.city', 0) == '请选择您所在城市' ? 0 : I('post.city', 0);
              $post['status'] = I('post.status', 0) == 30 ? I('post.worktime', 0) : I('post.status', 0);
              $post['school'] = I('post.school', 0);
              $post['college'] = I('post.college', 0);

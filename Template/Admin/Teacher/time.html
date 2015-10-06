@@ -25,88 +25,6 @@
     <div class="row">
         <div class="col-lg-12">
 
-            <!--<table class="table table-bordered" id="free-time-1">-->
-            <!--<thead>-->
-            <!--<tr>-->
-            <!--<th>时间</th>-->
-            <!--<th id="Monday">周一</th>-->
-            <!--<th id="Tuesday">周二</th>-->
-            <!--<th id="Wednesday">周三</th>-->
-            <!--<th id="Thursday">周四</th>-->
-            <!--<th id="Friday">周五</th>-->
-            <!--<th id="Saturday">周六</th>-->
-            <!--<th id="Sunday">周日</th>-->
-            <!--</tr>-->
-            <!--</thead>-->
-            <!--<tbody>-->
-            <!--<tr>-->
-            <!--<th scope="row">9:00-10:30</th>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-            <!--<th scope="row">10:30-12:00</th>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-            <!--<td colspan="7"></td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-            <!--<th scope="row">14:30-16:00</th>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-            <!--<th scope="row">16:00-17:30</th>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-            <!--<td colspan="7"></td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-            <!--<th scope="row">19:00-20:30</th>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-            <!--<th scope="row">20:30-22:00</th>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--<td class="ca-no-free-time">否</td>-->
-            <!--</tr>-->
-            <!--</tbody>-->
-            <!--</table>-->
             <div>
                 <p class="text-muted">请点击选择您的空闲时间</p>
             </div>
@@ -114,8 +32,13 @@
                 {$html}
             </div>
 
-            <button type="button" class="btn btn-primary" id="time-button">保存</button>
+            <button type="button" class="btn btn-primary" id="time-button" url="{$save_time_url}">保存</button>
         </div>
+    </div>
+
+    <!-- 隐藏元素，用来保存可预约时间与预约表 -->
+    <div class="ca-hide">
+        <div id="time-free-time">{$teacher.free_time}</div>
     </div>
 
 </div>

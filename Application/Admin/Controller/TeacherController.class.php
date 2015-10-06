@@ -17,7 +17,7 @@ class TeacherController extends BaseController {
      */
     public function index(){
         $this->is_teacher();
-        var_dump($this->_data['teacher']);
+        //var_dump($this->_data['teacher']);
         if ($_POST) {
 
         } else {
@@ -85,6 +85,9 @@ class TeacherController extends BaseController {
      */
      public function time() {
          $this->is_teacher();
+         //var_dump($this->_data['teacher']);
+         // TODO 预约者姓名(把这部分写在 base)
+         $this->_data['teacher']['appoint_name'] = 'appoint_name';
          $this->_data['title'] = '我的空闲时间';
          $today_week = date('N', time());
 
@@ -112,9 +115,37 @@ class TeacherController extends BaseController {
                  break;
          }
 
+         $this->_data['save_time_url'] = U('save_time');
          $this->assign($this->_data);
          $this->display();
      }
+
+
+    /**
+     * 保存空闲时间
+     */
+    public function save_time() {
+        if ($_POST && isset($_POST['time'])) {
+
+            $Teacher = M('teacher');
+            $where['account_id'] = $_SESSION['id'];
+            $data['free_time'] = I('post.time', null);
+            $update_result = $Teacher->where($where)->save($data);
+            if ($update_result || $update_result === 0) {
+                $result['status'] = 0;
+                $this->ajaxReturn($result);
+            } else {
+                $result['status'] = 1001;
+                $result['message'] = '更新失败';
+                $this->ajaxReturn($result);
+            }
+
+        } else {
+            $result['status'] = 1000;
+            $result['message'] = '非法请求';
+            $this->ajaxReturn($result);
+        }
+    }
 
 
     /**
@@ -124,8 +155,113 @@ class TeacherController extends BaseController {
         $this->is_teacher();
         $this->_data['title'] = '我的预约表';
 
+        $Appoint = M('appoint');
+        $appoint_where['teacher_id'] = $_SESSION['id'];
+        $appoint_result = $Appoint->where($appoint_where)->select();
+
+        $User = M('user');
+        foreach ($appoint_result as $k => $v) {
+
+            $user_where['account_id'] = $v['user_id'];
+            $user_result = $User->where($user_where)->find();
+
+            $appoint_result[$k]['name'] = $user_result['name'];
+            $appoint_result[$k]['email'] = $user_result['email'];
+            $appoint_result[$k]['gender'] = $user_result['gender'];
+            $appoint_result[$k]['status'] = $user_result['status'];
+            $appoint_result[$k]['school'] = $user_result['school'];
+            $appoint_result[$k]['college'] = $user_result['college'];
+            $appoint_result[$k]['student_type'] = $user_result['student_type'];
+            $appoint_result[$k]['city'] = $user_result['city'];
+
+            $timeArray = explode('-', $v['time']);
+
+            $appoint_result[$k]['date'] = $timeArray[1] . '-' . $timeArray[2] . '-' . $timeArray[3];
+            $appoint_result[$k]['time'] = $timeArray[0];
+
+            switch ($timeArray[0]) {
+                case 'a':
+                    $appoint_result[$k]['time'] = '9:00-10:30';
+                    break;
+                case 'b':
+                    $appoint_result[$k]['time'] = '10:30-12:00';
+                    break;
+                case 'c':
+                    $appoint_result[$k]['time'] = '14:30-16:00';
+                    break;
+                case 'd':
+                    $appoint_result[$k]['time'] = '16:00-17:30';
+                    break;
+                case 'e':
+                    $appoint_result[$k]['time'] = '19:00-20:30';
+                    break;
+                case 'f':
+                    $appoint_result[$k]['time'] = '20:30-22:00';
+                    break;
+            }
+
+            switch ($v['gender']) {
+                case 0:
+                    $appoint_result[$k]['gender'] = '未知';
+                    break;
+                case 1:
+                    $appoint_result[$k]['gender'] = '男';
+                    break;
+                case 2:
+                    $appoint_result[$k]['gender'] = '女';
+                    break;
+                default:
+                    $appoint_result[$k]['gender'] = '未知';
+            }
+
+            switch ($v['status']) {
+                case 0:
+                    $appoint_result[$k]['status'] = '待确认';
+                    break;
+                case 1:
+                    $appoint_result[$k]['status'] = '待咨询';
+                    break;
+                case 2:
+                    $appoint_result[$k]['status'] = '已结束';
+                    break;
+            }
+        }
+
+        $this->_data['appoint_user'] = $appoint_result;
+        $this->_data['appoint_user_count'] = $Appoint->where($appoint_where)->count('id');
         $this->assign($this->_data);
         $this->display();
+    }
+
+
+    /**
+     * 确认预约
+     */
+    public function appoint_ok() {
+        $this->is_teacher();
+        if($_GET && $_GET['id']) {
+            $id = I('get.id', 0);
+
+            if ($id) {
+                $Appoint = M('appoint');
+                $appoint_where['id'] = $id;
+                $appoint_data['status'] = 1;
+                $appoint_result = $Appoint->where($appoint_where)->data($appoint_data)->save();
+
+                if ($appoint_result) {
+                    $this->_data['title'] = '我的预约表';
+
+                    $this->assign($this->_data);
+                    $this->redirect('appoint', '', 0);
+
+                } else {
+
+                    $this->_data['title'] = '我的预约表';
+                    $this->assign($this->_data);
+                    $this->redirect('appoint', '', 0);
+                }
+            }
+        }
     }
 
 
@@ -174,10 +310,125 @@ class TeacherController extends BaseController {
 
 
     /**
+     * 预约信息
+     */
+    //private function get_appoint_info() {
+    //    $Appoint = M('appoint');
+    //    $appoint_where['accound_id'] = $_SESSION['id'];
+    //    $appoint_result = $Appoint->where($appoint_where)->select();
+    //
+    //    $User = M('user');
+    //    foreach ($appoint_result as $k => $v) {
+    //        $user_where['account_id'] = $v['user_id'];
+    //        $user_result = $User->where($user_where)->find();
+    //        $appoint_result[$k]['name'] = $user_result['name'];
+    //        $appoint_result[$k]['email'] = $user_result['email'];
+    //        $appoint_result[$k]['gender'] = $user_result['gender'];
+    //        $appoint_result[$k]['status'] = $user_result['status'];
+    //        $appoint_result[$k]['school'] = $user_result['school'];
+    //        $appoint_result[$k]['college'] = $user_result['college'];
+    //        $appoint_result[$k]['student_type'] = $user_result['student_type'];
+    //        $appoint_result[$k]['city'] = $user_result['city'];
+    //    }
+    //
+    //    return $appoint_result;
+    //}
+
+
+    /**
      * @return string
      */
     private function set_week_1() {
         $html = '';
+        $date_1 = date('Y-m-d', time());
+        $date_2 = date('Y-m-d', strtotime('+1 day'));
+        $date_3 = date('Y-m-d', strtotime('+2 day'));
+        $date_4 = date('Y-m-d', strtotime('+3 day'));
+        $date_5 = date('Y-m-d', strtotime('+4 day'));
+        $date_6 = date('Y-m-d', strtotime('+5 day'));
+        $date_7 = date('Y-m-d', strtotime('+6 day'));
+        $html .= '<table class="table table-bordered ca-table-week" id="week_1">' .
+            '<thead>'.
+            '<tr>'.
+            '<th>时间</th>'.
+            '<th>星期一<br>('.$date_1.')</th>'.
+            '<th>星期二<br>('.$date_2.')</th>'.
+            '<th>星期三<br>('.$date_3.')</th>'.
+            '<th>星期四<br>('.$date_4.')</th>'.
+            '<th>星期五<br>('.$date_5.')</th>'.
+            '<th>星期六<br>('.$date_6.')</th>'.
+            '<th>星期日<br>('.$date_7.')</th>'.
+            '</tr>'.
+            '</thead>'.
+            '<tbody>'.
+            '<tr>'.
+            '<th scope="row">9:00-10:30</th>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_1.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_2.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_3.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">10:30-12:00</th>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_1.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_2.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_3.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<td colspan="7"></td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">14:30-16:00</th>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_1.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_2.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_3.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">16:00-17:30</th>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_1.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_2.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_3.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<td colspan="7"></td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">19:00-20:30</th>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_1.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_2.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_3.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">20:30-22:00</th>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_1.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_2.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_3.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '</tbody>'.
+            '</table>';
         return $html;
     }
 
@@ -187,6 +438,95 @@ class TeacherController extends BaseController {
      */
     private function set_week_2() {
         $html = '';
+        $date_1 = date('Y-m-d', strtotime('-1 day'));
+        $date_2 = date('Y-m-d', time());
+        $date_3 = date('Y-m-d', strtotime('+1 day'));
+        $date_4 = date('Y-m-d', strtotime('+2 day'));
+        $date_5 = date('Y-m-d', strtotime('+3 day'));
+        $date_6 = date('Y-m-d', strtotime('+4 day'));
+        $date_7 = date('Y-m-d', strtotime('+5 day'));
+        $html .= '<table class="table table-bordered ca-table-week" id="week_1">' .
+            '<thead>'.
+            '<tr>'.
+            '<th>时间</th>'.
+            '<th class="ca-time-ago">星期一<br>('.$date_1.')</th>'.
+            '<th>星期二<br>('.$date_2.')</th>'.
+            '<th>星期三<br>('.$date_3.')</th>'.
+            '<th>星期四<br>('.$date_4.')</th>'.
+            '<th>星期五<br>('.$date_5.')</th>'.
+            '<th>星期六<br>('.$date_6.')</th>'.
+            '<th>星期日<br>('.$date_7.')</th>'.
+            '</tr>'.
+            '</thead>'.
+            '<tbody>'.
+            '<tr>'.
+            '<th scope="row">9:00-10:30</th>'.
+            '<td class="ca-time-ago" value="a-'.$date_1.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_2.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_3.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">10:30-12:00</th>'.
+            '<td class="ca-time-ago" value="b-'.$date_1.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_2.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_3.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<td colspan="7"></td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">14:30-16:00</th>'.
+            '<td class="ca-time-ago" value="c-'.$date_1.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_2.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_3.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">16:00-17:30</th>'.
+            '<td class="ca-time-ago" value="d-'.$date_1.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_2.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_3.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<td colspan="7"></td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">19:00-20:30</th>'.
+            '<td class="ca-time-ago" value="e-'.$date_1.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_2.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_3.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">20:30-22:00</th>'.
+            '<td class="ca-time-ago" value="f-'.$date_1.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_2.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_3.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '</tbody>'.
+            '</table>';
         return $html;
     }
 
@@ -294,6 +634,95 @@ class TeacherController extends BaseController {
      */
     private function set_week_4() {
         $html = '';
+        $date_1 = date('Y-m-d', strtotime('-3 day'));
+        $date_2 = date('Y-m-d', strtotime('-2 day'));
+        $date_3 = date('Y-m-d', strtotime('-1 day'));
+        $date_4 = date('Y-m-d', time());
+        $date_5 = date('Y-m-d', strtotime('+1 day'));
+        $date_6 = date('Y-m-d', strtotime('+2 day'));
+        $date_7 = date('Y-m-d', strtotime('+3 day'));
+        $html .= '<table class="table table-bordered ca-table-week" id="week_1">' .
+            '<thead>'.
+            '<tr>'.
+            '<th>时间</th>'.
+            '<th class="ca-time-ago">星期一<br>('.$date_1.')</th>'.
+            '<th class="ca-time-ago">星期二<br>('.$date_2.')</th>'.
+            '<th class="ca-time-ago">星期三<br>('.$date_3.')</th>'.
+            '<th>星期四<br>('.$date_4.')</th>'.
+            '<th>星期五<br>('.$date_5.')</th>'.
+            '<th>星期六<br>('.$date_6.')</th>'.
+            '<th>星期日<br>('.$date_7.')</th>'.
+            '</tr>'.
+            '</thead>'.
+            '<tbody>'.
+            '<tr>'.
+            '<th scope="row">9:00-10:30</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">10:30-12:00</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<td colspan="7"></td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">14:30-16:00</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">16:00-17:30</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<td colspan="7"></td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">19:00-20:30</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">20:30-22:00</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_4.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '</tbody>'.
+            '</table>';
         return $html;
     }
 
@@ -303,6 +732,95 @@ class TeacherController extends BaseController {
      */
     private function set_week_5() {
         $html = '';
+        $date_1 = date('Y-m-d', strtotime('-4 day'));
+        $date_2 = date('Y-m-d', strtotime('-3 day'));
+        $date_3 = date('Y-m-d', strtotime('-2 day'));
+        $date_4 = date('Y-m-d', strtotime('-1 day'));
+        $date_5 = date('Y-m-d', time());
+        $date_6 = date('Y-m-d', strtotime('+1 day'));
+        $date_7 = date('Y-m-d', strtotime('+2 day'));
+        $html .= '<table class="table table-bordered ca-table-week" id="week_1">' .
+            '<thead>'.
+            '<tr>'.
+            '<th>时间</th>'.
+            '<th class="ca-time-ago">星期一<br>('.$date_1.')</th>'.
+            '<th class="ca-time-ago">星期二<br>('.$date_2.')</th>'.
+            '<th class="ca-time-ago">星期三<br>('.$date_3.')</th>'.
+            '<th class="ca-time-ago">星期四<br>('.$date_4.')</th>'.
+            '<th>星期五<br>('.$date_5.')</th>'.
+            '<th>星期六<br>('.$date_6.')</th>'.
+            '<th>星期日<br>('.$date_7.')</th>'.
+            '</tr>'.
+            '</thead>'.
+            '<tbody>'.
+            '<tr>'.
+            '<th scope="row">9:00-10:30</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">10:30-12:00</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<td colspan="7"></td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">14:30-16:00</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">16:00-17:30</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<td colspan="7"></td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">19:00-20:30</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">20:30-22:00</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_5.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '</tbody>'.
+            '</table>';
         return $html;
     }
 
@@ -312,6 +830,95 @@ class TeacherController extends BaseController {
      */
     private function set_week_6() {
         $html = '';
+        $date_1 = date('Y-m-d', strtotime('-4 day'));
+        $date_2 = date('Y-m-d', strtotime('-4 day'));
+        $date_3 = date('Y-m-d', strtotime('-3 day'));
+        $date_4 = date('Y-m-d', strtotime('-2 day'));
+        $date_5 = date('Y-m-d', strtotime('-1 day'));
+        $date_6 = date('Y-m-d', time());
+        $date_7 = date('Y-m-d', strtotime('+1 day'));
+        $html .= '<table class="table table-bordered ca-table-week" id="week_1">' .
+            '<thead>'.
+            '<tr>'.
+            '<th>时间</th>'.
+            '<th class="ca-time-ago">星期一<br>('.$date_1.')</th>'.
+            '<th class="ca-time-ago">星期二<br>('.$date_2.')</th>'.
+            '<th class="ca-time-ago">星期三<br>('.$date_3.')</th>'.
+            '<th class="ca-time-ago">星期四<br>('.$date_4.')</th>'.
+            '<th class="ca-time-ago">星期五<br>('.$date_5.')</th>'.
+            '<th>星期六<br>('.$date_6.')</th>'.
+            '<th>星期日<br>('.$date_7.')</th>'.
+            '</tr>'.
+            '</thead>'.
+            '<tbody>'.
+            '<tr>'.
+            '<th scope="row">9:00-10:30</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">10:30-12:00</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<td colspan="7"></td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">14:30-16:00</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">16:00-17:30</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<td colspan="7"></td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">19:00-20:30</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">20:30-22:00</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_6.'">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '</tbody>'.
+            '</table>';
         return $html;
     }
 
@@ -321,6 +928,95 @@ class TeacherController extends BaseController {
      */
     private function set_week_7() {
         $html = '';
+        $date_1 = date('Y-m-d', strtotime('-5 day'));
+        $date_2 = date('Y-m-d', strtotime('-4 day'));
+        $date_3 = date('Y-m-d', strtotime('-4 day'));
+        $date_4 = date('Y-m-d', strtotime('-3 day'));
+        $date_5 = date('Y-m-d', strtotime('-2 day'));
+        $date_6 = date('Y-m-d', strtotime('-1 day'));
+        $date_7 = date('Y-m-d', time());
+        $html .= '<table class="table table-bordered ca-table-week" id="week_1">' .
+            '<thead>'.
+            '<tr>'.
+            '<th>时间</th>'.
+            '<th class="ca-time-ago">星期一<br>('.$date_1.')</th>'.
+            '<th class="ca-time-ago">星期二<br>('.$date_2.')</th>'.
+            '<th class="ca-time-ago">星期三<br>('.$date_3.')</th>'.
+            '<th class="ca-time-ago">星期四<br>('.$date_4.')</th>'.
+            '<th class="ca-time-ago">星期五<br>('.$date_5.')</th>'.
+            '<th class="ca-time-ago">星期六<br>('.$date_6.')</th>'.
+            '<th>星期日<br>('.$date_7.')</th>'.
+            '</tr>'.
+            '</thead>'.
+            '<tbody>'.
+            '<tr>'.
+            '<th scope="row">9:00-10:30</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="a-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">10:30-12:00</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="b-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<td colspan="7"></td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">14:30-16:00</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="c-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">16:00-17:30</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="d-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<td colspan="7"></td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">19:00-20:30</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="e-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '<tr>'.
+            '<th scope="row">20:30-22:00</th>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-time-ago">不可预约</td>'.
+            '<td class="ca-td-time ca-no-free-time" value="f-'.$date_7.'">不可预约</td>'.
+            '</tr>'.
+            '</tbody>'.
+            '</table>';
         return $html;
     }
 }

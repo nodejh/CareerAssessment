@@ -73,11 +73,15 @@ class LoginController extends BaseController {
             $data_card = $Card->where($where_card)->bind(':card', $card)->find();
             if (encrypt($password) == $data_card['password']) {
 
+                // 会员卡密码正确，查看是否已经将信息写入到 account 表。如果没有，则写入。
                 $Account = M('account');
                 $where_account['card_id'] = ':card_id';
+
                 $data_account = $Account->where($where_account)->bind(':card_id', $data_card['card_id'])->find();
 
                 if ($data_account) {
+                    //account 表中已经写入该会员信息
+
                     login($data_account['account_id'], $data_card['type']);
 
                     switch ($data_account['type']) {
@@ -89,19 +93,34 @@ class LoginController extends BaseController {
                     }
 
                 } else {
-                    switch ($data_card['type']) {
-                        case 1:
-                            $this->_data['error'] = '您尚未注册，请<a href="'.U('Sign/index').'">注册</a>后登录';
-                            break;
-                        case 2:
-                            $this->_data['error'] = '您尚未注册，请<a href="'.U('Sign/teacher').'">注册</a>后登录';
-                            break;
-                        default:
-                            $this->_data['error'] = '您尚未注册，请<a href="'.U('Sign/index').'">注册</a>后登录';
+                    //account 表中没有写入该会员信息
+
+                    $data['card'] = $card;
+                    $data['password'] = $password;
+                    $data['type'] = $data_card['type'];
+                    $data['register_time'] = time();
+                    $insert_account = $Account->add($data);
+
+                    if ($insert_account) {
+
+                        login($insert_account, $data_card['type']);
+
+                        switch ($data_card['type']) {
+                            case 1:
+                                $this->redirect('Admin/User/index', '', 0);
+                                break;
+                            case 2:
+                                $this->redirect('Admin/Teacher/index', '', 0);
+                        }
+
+                    } else {
+                        $this->_data['error'] = '登陆失败，请重试';
+                        $this->_data['title'] = '登录';
+                        $this->assign($this->_data);
+                        $this->display('index');
                     }
-                    $this->_data['title'] = '登录';
-                    $this->assign($this->_data);
-                    $this->display('index');
+
+
                 }
 
             } else {

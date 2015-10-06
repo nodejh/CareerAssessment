@@ -23,56 +23,56 @@ class BaseController extends Controller {
 
         if ($this->is_login()) {
 
-            $login_type = $this->login_type();
+            //$login_type = $this->login_type();
 
-            switch ($login_type) {
-                case 1:
-                    // login type of user
-                    $data = $this->get_user_info($_SESSION['id']);
-                    if ($data) {
-                        $this->_data['user']['account_id'] = $data['account']['account_id'];
-                        $this->_data['user']['phone'] = $data['account']['phone'];
-                        $this->_data['user']['card_id'] = $data['account']['card_id'];
-                        $this->_data['user']['date'] = $data['account']['date'];
-                        $this->_data['user']['name'] = $data['user']['name'];
-                        $this->_data['user']['email'] = $data['user']['email'];
-                        $this->_data['user']['gender'] = $data['user']['gender'];
-                        $this->_data['user']['status'] = $data['user']['status'];
-                        $this->_data['user']['school'] = $data['user']['school'];
-                        $this->_data['user']['college'] = $data['user']['college'];
-                        $this->_data['user']['student_type'] = $data['user']['student_type'];
-                        $this->_data['user']['city'] = $data['user']['city'];
-                    } else {
-                        $this->_data['user'] = 0;
-                    }
-                    break;
-                case 2:
-                    // login type of Teacher
-                    $data = $this->get_teacher_info($_SESSION['id']);
-                    if ($data) {
-                        $this->_data['teacher']['account_id'] = $data['account']['account_id'];
-                        $this->_data['teacher']['phone'] = $data['account']['phone'];
-                        $this->_data['teacher']['card_id'] = $data['account']['card_id'];
-                        $this->_data['teacher']['date'] = $data['account']['date'];
-                        $this->_data['teacher']['name'] = $data['teacher']['name'];
-                        $this->_data['teacher']['avatar'] = $data['teacher']['avatar'];
-                        $this->_data['teacher']['gender'] = $data['teacher']['gender'];
-                        $this->_data['teacher']['service_type'] = $data['teacher']['service_type'];
-                        $this->_data['teacher']['free_time'] = $data['teacher']['free_time'];
-                        $this->_data['teacher']['introduction'] = $data['teacher']['introduction'];
-                        $this->_data['teacher']['city'] = $data['teacher']['city'];
-                        $this->_data['teacher']['certificate_a'] = $data['teacher']['certificate_a'];
-                        $this->_data['teacher']['certificate_b'] = $data['teacher']['certificate_b'];
-                        $this->_data['teacher']['time_a'] = $data['teacher']['time_a'];
-                        $this->_data['teacher']['time_b'] = $data['teacher']['time_b'];
-                    } else {
-                        $this->_data['teacher'] = 0;
-                    }
-                    break;
-                case 3:
-                    // login type of admin
-                    break;
-            }
+            //switch ($login_type) {
+            //    case 1:
+            //        // login type of user
+            //        $data = $this->get_user_info($_SESSION['id']);
+            //        if ($data) {
+            //            $this->_data['user']['account_id'] = $data['account']['account_id'];
+            //            $this->_data['user']['phone'] = $data['account']['phone'];
+            //            $this->_data['user']['card_id'] = $data['account']['card_id'];
+            //            $this->_data['user']['date'] = $data['account']['date'];
+            //            $this->_data['user']['name'] = $data['user']['name'];
+            //            $this->_data['user']['email'] = $data['user']['email'];
+            //            $this->_data['user']['gender'] = $data['user']['gender'];
+            //            $this->_data['user']['status'] = $data['user']['status'];
+            //            $this->_data['user']['school'] = $data['user']['school'];
+            //            $this->_data['user']['college'] = $data['user']['college'];
+            //            $this->_data['user']['student_type'] = $data['user']['student_type'];
+            //            $this->_data['user']['city'] = $data['user']['city'];
+            //        } else {
+            //            $this->_data['user'] = 0;
+            //        }
+            //        break;
+            //    case 2:
+            //        // login type of Teacher
+            //        $data = $this->get_teacher_info($_SESSION['id']);
+            //        if ($data) {
+            //            $this->_data['teacher']['account_id'] = $data['account']['account_id'];
+            //            $this->_data['teacher']['phone'] = $data['account']['phone'];
+            //            $this->_data['teacher']['card_id'] = $data['account']['card_id'];
+            //            $this->_data['teacher']['date'] = $data['account']['date'];
+            //            $this->_data['teacher']['name'] = $data['teacher']['name'];
+            //            $this->_data['teacher']['avatar'] = $data['teacher']['avatar'];
+            //            $this->_data['teacher']['gender'] = $data['teacher']['gender'];
+            //            $this->_data['teacher']['service_type'] = $data['teacher']['service_type'];
+            //            $this->_data['teacher']['free_time'] = $data['teacher']['free_time'];
+            //            $this->_data['teacher']['introduction'] = $data['teacher']['introduction'];
+            //            $this->_data['teacher']['city'] = $data['teacher']['city'];
+            //            $this->_data['teacher']['certificate_a'] = $data['teacher']['certificate_a'];
+            //            $this->_data['teacher']['certificate_b'] = $data['teacher']['certificate_b'];
+            //            $this->_data['teacher']['time_a'] = $data['teacher']['time_a'];
+            //            $this->_data['teacher']['time_b'] = $data['teacher']['time_b'];
+            //        } else {
+            //            $this->_data['teacher'] = 0;
+            //        }
+            //        break;
+            //    case 3:
+            //        // login type of admin
+            //        break;
+            //}
         }
     }
 

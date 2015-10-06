@@ -193,6 +193,83 @@ class UserController extends BaseController {
 
 
     /**
+     * 预约表
+     */
+    public function appoint() {
+
+        $this->is_user();
+
+        $Appoint = M('appoint');
+        $appoint_where['user_id'] = $_SESSION['id'];
+        $appoint_result = $Appoint->where($appoint_where)->select();
+
+
+        //var_dump($appoint_result);
+
+        $Teacher = M('teacher');
+        foreach ($appoint_result as $k => $v) {
+            $teacher_where['account_id'] = $v['teacher_id'];
+            $teacher_result = $Teacher->where($teacher_where)->find();
+            $appoint_result[$k]['teacher_name'] = $teacher_result['name'];
+            $appoint_result[$k]['teacher_email'] = $teacher_result['email'];
+
+            switch ($v['status']) {
+                case 0:
+                    $appoint_result[$k]['status'] = '待咨询师确认';
+                    break;
+                case 1:
+                    $appoint_result[$k]['status'] = '咨询师已确认';
+                    break;
+                case 2:
+                    $appoint_result[$k]['status'] = '已完成';
+                    break;
+            }
+
+            $timeArr = explode(',', $v['time']);
+            $appoint_result[$k]['time'] = '';
+            foreach($timeArr as $kk => $vv) {
+                $tempArr = explode('-', $vv);
+                var_dump($tempArr);
+
+                switch ($tempArr[0]) {
+                    case 'a':
+                        $t = '9:00-10:30';
+                        break;
+                    case 'b':
+                        $t = '10:30-12:00';
+                        break;
+                    case 'c':
+                        $t = '14:30-16:00';
+                        break;
+                    case 'd':
+                        $t = '16:00-17:30';
+                        break;
+                    case 'e':
+                        $t = '19:00-20:30';
+                        break;
+                    case 'f':
+                        $t = '20:30-22:00';
+                        break;
+                }
+
+                $appoint_result[$k]['time'] .= $tempArr[1] . '-' . $tempArr[2] . '-' . $tempArr[3] . $t . '/';
+            }
+            $appoint_result[$k]['time'] = rtrim($appoint_result[$k]['time'], '/');
+        }
+
+
+        $this->_data['appoint'] = $appoint_result;
+        $this->_data['title'] = '我的预约表';
+        $appoint_confirm_count_where['user_id'] = $_SESSION['id'];
+        $appoint_confirm_count_where['status'] = 1;
+        $this->_data['appoint_confirm_count'] = $Appoint->where($appoint_confirm_count_where)->count('id');
+        $this->assign($this->_data);
+        $this->display();
+
+    }
+
+
+    /**
      * 判断是 type 否为 user
      * 如果不是，则跳转到相应 type
      */

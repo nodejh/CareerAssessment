@@ -209,6 +209,7 @@ class BaseController extends Controller {
      * @return array teacher info; 0 failed
      */
     private function get_teacher_info($id) {
+        // teacer info
         $Account = M('account');
         $Teacher = M('teacher');
         $where['account_id'] = ':account_id';
@@ -249,6 +250,7 @@ class BaseController extends Controller {
                     $data['teacher']['service_type_c'] = 'checked';
                 }
             }
+
 
             return $data;
 

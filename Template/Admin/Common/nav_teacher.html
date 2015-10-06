@@ -212,7 +212,7 @@
                 <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                 </li>
                 <li class="divider"></li>
-                <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li><a href="__APP__/Home/Index/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                 </li>
             </ul>
             <!-- /.dropdown-user -->
@@ -235,7 +235,14 @@
                     <a href="__APP__/Admin/Teacher/time"><i class="fa fa-calendar fa-fw"></i> 我的空闲时间</a>
                 </li>
                 <li>
-                    <a href="__APP__/Admin/Teacher/appoint"><i class="fa fa-list fa-fw"></i> 我的预约表</a>
+                    <a href="__APP__/Admin/Teacher/appoint"><i class="fa fa-list fa-fw"></i>
+                        我的预约表
+                    <present name="appoint_user_count">
+                        <gt name="appoint_user_count" value="0">value
+                            <span class="badge">{$appoint_user_count}</span>
+                        </gt>
+                    </present>
+                    </a>
                 </li>
                 <li>
                     <a href="__APP__/Admin/Teacher/course"><i class="fa fa-calendar-o fa-fw"></i> 我的课程</a>

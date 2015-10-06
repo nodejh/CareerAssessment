@@ -17,6 +17,7 @@ class IndexController extends BaseController {
      * Home Page
      */
     public function index(){
+
         $this->_data['title'] = '个人中心';
         
         $Teacher = M('teacher');
@@ -92,13 +93,116 @@ class IndexController extends BaseController {
 
 
     /**
-     * 咨询师详情
+     * 预约咨询师
      */
-    public function teacher() {
+    public function appoint() {
         if ($_GET) {
-            $id = $_GET['id'];
+            $id = I('get.id', 0);
+            if ($id) {
+                $Teacher = M('teacher');
+                $where['account_id'] = $id;
+                $teacher_result = $Teacher->where($where)->find();
+
+                if ($teacher_result) {
+                    $this->_data['html'] = set_week();
+                    $this->_data['appoint'] = $teacher_result;
+                    $this->_data['url'] = U('save_appoint');
+                    $this->assign($this->_data);
+                    $this->display();
+                } else {
+                    $this->redirect('index', '', 0);
+                }
+
+            } else {
+                $this->redirect('index', '', 0);
+            }
         }
     }
+
+
+    /**
+     * 预约操作
+     */
+    public function save_appoint() {
+        if ($_POST && isset($_POST['time'])) {
+            $post['user_id'] = I('post.user_id', 0);
+            $post['teacher_id'] = I('post.teacher_id', 0);
+            $post['time'] = I('post.time', 0);
+
+            // TODO 判断是否已经预约
+            if ($post['user_id'] && $post['teacher_id'] && $post['time']) {
+                $Appoint = M('appoint');
+                $data['user_id'] = $post['user_id'];
+                $data['teacher_id'] = $post['teacher_id'];
+                $data['time'] = $post['time'];
+                $data['save_time'] = time();
+                $data['status'] = 0;
+                $appoint_result = $Appoint->data($data)->add();
+
+                if ($appoint_result) {
+                    $result['status'] = '0';
+                    $result['message'] = '预约成功';
+                    $result['url'] = U('Admin/User/appoint');
+                    $this->ajaxReturn($result);
+                } else {
+                    $result['status'] = '1001';
+                    $result['message'] = '写入数据库失败';
+                    $this->ajaxReturn($result);
+                }
+            } else {
+                $result['status'] = '1002';
+                $result['message'] = '失败';
+                $this->ajaxReturn($result);
+            }
+        } else {
+            $result['status'] = '1003';
+            $result['message'] = '失败';
+            $this->ajaxReturn($result);
+        }
+    }
+
+
+    /**
+     * 修改预约
+     */
+    public function change_appoint() {
+        if ($_POST && isset($_POST['time'])) {
+            $post['user_id'] = I('post.user_id', 0);
+            $post['teacher_id'] = I('post.teacher_id', 0);
+            $post['time'] = I('post.time', 0);
+
+            // TODO 判断是否已经预约
+            if ($post['user_id'] && $post['teacher_id'] && $post['time']) {
+                $Appoint = M('appoint');
+                $data['user_id'] = $post['user_id'];
+                $data['teacher_id'] = $post['teacher_id'];
+                $data['time'] = $post['time'];
+                $data['save_time'] = time();
+                $data['status'] = 0;
+                $appoint_result = $Appoint->data($data)->add();
+
+                if ($appoint_result) {
+                    $result['status'] = '0';
+                    $result['message'] = '预约成功';
+                    $result['url'] = U('Admin/User/appoint');
+                    $this->ajaxReturn($result);
+                } else {
+                    $result['status'] = '1001';
+                    $result['message'] = '写入数据库失败';
+                    $this->ajaxReturn($result);
+                }
+            } else {
+                $result['status'] = '1002';
+                $result['message'] = '失败';
+                $this->ajaxReturn($result);
+            }
+        } else {
+            $result['status'] = '1003';
+            $result['message'] = '失败';
+            $this->ajaxReturn($result);
+        }
+    }
+
 
 
     public function logout() {

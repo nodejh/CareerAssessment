@@ -23,8 +23,32 @@
             </div>
         </present>
 
-        <div class="col-xs-10 col-md-4">
+        <div class="col-xs-10 col-md-8">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>姓名</th>
+                        <th>性别</th>
+                        <th>日期</th>
+                        <th>时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <volist name="appoint_user" id="vo">
+                    <tr>
+                        <td>{$vo.name}</td>
+                        <td>{$vo.gender}</td>
+                        <td>{$vo.date}</td>
+                        <td>{$vo.time}</td>
+                        <td>{$vo.status}</td>
+                        <td><a href="__APP__/Admin/Teacher/appoint_ok/id/{$vo.id}">确认</a></td>
+                    </tr>
+                </volist>
 
+                </tbody>
+            </table>
         </div>
     </div>
 

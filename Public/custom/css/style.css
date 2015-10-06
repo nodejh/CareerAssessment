@@ -6,6 +6,17 @@
 .container-fluid {
     margin-top: 70px;
 }
+
+
+/* common */
+.ca-hide {
+    display: none;
+}
+.ca-margin-top {
+    margin-top: 70px;
+}
+
+
 /* home */
 .ca-select {
     margin-top: 70px;
@@ -45,6 +56,7 @@
 }
 
 
+/* city select module */
 .citySelector{font:12px/1.5 tahoma,arial,\5b8b\4f53;background:#fff;text-align:left;}
 .cityslide{width:250px;list-style:none;margin:0;padding:0;border:1px solid #85BEE5;border-right-color:#3485C0;border-bottom-color:#3485C0;box-shadow:2px 2px 3px rgba(0,0,0,0.3);margin-top:-2px;}
 .cityslide li{list-style:none;overflow:hidden;height:26px;padding:4px 5px;}
@@ -101,4 +113,16 @@ p.tip{color:#666;line-height:20px;padding:5px;margin:0;text-indent:3px;}
     color: #ADAAAA;
     background-color: #eee;
 }
-.ca-wrap{z-index:1;background-color:#000;opacity:0.1;filter:alpha(opacity:10);position:absolute;left:0;top:0;}
+.ca-can-appoint {
+    cursor: pointer;
+}
+.ca-cannot-appoint {
+    cursor: auto;
+    color: #ADAAAA;
+    background-color: #eee;
+}
+.ca-appoint {
+    color: #fff;
+    background-color: #449D44;
+    cursor: pointer;
+}

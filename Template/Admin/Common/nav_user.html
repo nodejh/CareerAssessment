@@ -235,10 +235,17 @@
                     <a href="__APP__/Admin/User/password"><i class="fa fa-cog fa-fw"></i> 修改密码</a>
                 </li>
                 <li>
-                    <a href="__APP__/Admin/User/index"><i class="fa fa-calendar fa-fw"></i> 我的咨询预约表</a>
+                    <a href="__APP__/Admin/User/appoint"><i class="fa fa-calendar fa-fw"></i> 我的咨询预约表
+                        <present name="appoint_confirm_count">
+                            <gt name="appoint_confirm_count" value="0">
+                                <span class="badge">{$appoint_confirm_count}</span>
+                            </gt>
+                        </present>
+                    </a>
                 </li>
                 <li>
-                    <a href="__APP__/Admin/User/index"><i class="fa fa-calendar-o fa-fw"></i> 我的课程预约表</a>
+                    <a href="__APP__/Admin/User/index"><i class="fa fa-calendar-o fa-fw"></i> 我的课程预约表
+                    </a>
                 </li>
                 <li>
                     <a href="__APP__/Admin/User/index"><i class="fa fa-check-square-o fa-fw"></i> 我的评分</a>

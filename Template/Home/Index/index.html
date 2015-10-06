@@ -88,8 +88,9 @@
                             <small>服务态度</small>
                         </p>
                         <p>
-                            <a href="#" class="btn btn-primary" role="button">预约</a>
-                            <a href="__APP__/Home/Index/teacher/{$vo.account_id}" class="btn btn-default" role="button">详情</a></p>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#home-index-details-{$vo.account_id}" data-id="{$vo.account_id}">详情</button>
+                            <a href="__APP__/Home/Index/appoint/id/{$vo.account_id}" class="btn btn-primary" role="button">预约</a>
+                            <a href="__APP__/Home/Index/course/{$vo.account_id}" class="btn btn-primary" role="button">课程</a></p>
                     </div>
                 </div>
 
@@ -97,6 +98,40 @@
         </volist>
     </div>
 </div> <!-- /container -->
+
+
+
+<!-- 咨询师详情 -->
+<volist name="list" id="vo">
+    <div class="modal fade" id="home-index-details-{$vo.account_id}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+        <div class="thumbnail">
+            <img src="__ROOT__/Uploads/{$vo.avatar}" alt="{$vo.name}">
+            <div class="caption">
+                <h4>{$vo.name} <small> {$vo.city}</small></h4>
+                <p>
+                    <small>专业程度</small>
+                    <br>
+                    <small>服务态度</small>
+                </p>
+                <p>
+                    <a href="#" class="btn btn-primary" role="button">预约</a>
+                    <a href="__APP__/Home/Index/teacher/{$vo.account_id}" class="btn btn-primary" role="button">课程</a></p>
+            </div>
+        </div>
+
+            </div>
+        </div>
+
+    </div>
+</volist>
+
+
+
+<!-- Large modal -->
+
+
 
 
 <script src="__PUBLIC__/custom/js/city-select.js"></script>

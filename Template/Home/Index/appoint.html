@@ -1,0 +1,50 @@
+<include file="./Template/Home/Common/header.html" />
+<include file="./Template/Home/Common/navbar.html" />
+
+
+
+<div class="container ca-margin-top">
+    <div class="row">
+        <div class="col-xs-10">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">预约规则</h3>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>每天最多预约一次</li>
+                        <li>1个月总预约次数不超过8次</li>
+                        <li>每天最多预约一次</li>
+                        <li>总预约次数超过3次（包括3次）需要缴纳预约费用，收费后方可预约</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!--咨询师简介-->
+            <div>
+                咨询师：<span id="appoint-teacher-name" data-id="{$appoint.account_id}">{$appoint.name}</span>
+            </div>
+            <div>
+                <p class="text-muted">请点击选择预约时间</p>
+            </div>
+            <div>
+                {$html}
+            </div>
+            <button type="button" class="form-control btn-primary" id="home-btn-appoint" data-url="{$url}"> 预约</button>
+        </div>
+    </div>
+</div>
+
+
+<!-- 隐藏元素，用来保存可预约时间与预约表 -->
+<div class="ca-hide">
+    <div id="time-free-time">{$appoint.free_time}</div>
+    <!--<div id="time-appoint-name">{$teacher.appoint_name}</div>-->
+</div>
+
+
+
+<script src="__PUBLIC__/custom/js/appoint.js"></script>
+
+<include file="./Template/Home/Common/footer.html" />

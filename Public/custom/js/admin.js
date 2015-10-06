@@ -7,14 +7,18 @@
    * 初始化页面
    */
   function initialize() {
+    // 主页
     set_img_height();
+
+    // 咨询师页面
+    teacher_time_inilialize();
     select_time();
     save_time();
   }
 
 
   /**
-   * 图片高度
+   * user 个人中心咨询师列表的咨询师头像图片高度
    */
   function set_img_height() {
     // 图片高度
@@ -23,6 +27,27 @@
     $('.thumbnail img').height(imgHeight);
   }
 
+
+  /**
+   * time 咨询师时间表初始化：设置空闲时间和预约者姓名
+   */
+  function teacher_time_inilialize() {
+    var freeTime = $('#time-free-time').text();
+    var freeTimeArray = freeTime.split(',');
+
+    var $caTdTime = $('td.ca-td-time');
+    var $appointUser = $('#time-appoint-name').find('span');
+
+    $caTdTime.each(function () {
+      for (var i in freeTimeArray) {
+        //var time = $(this).attr('value');
+        if ($(this).attr('value') == freeTimeArray[i]) {
+          $(this).removeClass('ca-no-free-time').addClass('ca-free-time');
+          $(this).text('可预约');
+        }
+      }
+    });
+  }
 
   /**
    * 选择/取消选择空闲时间
@@ -43,22 +68,23 @@
 
 
   /**
-   * 覆盖页面
+   * 获取所有空闲时间
+   * @returns {Array} ["e-2015-09-21", "e-2015-09-22", "f-2015-09-21"]
    */
-  function set_wrap_page() {
-    var bodyWidth = document.documentElement.clientWidth;
-    var bodyHeight =Math.max(document.documentElement.clientHeight,document.body.scrollHeight);
-    $("<div class='ca-wrap'</div>").appendTo("body");
-    $(".ca-wrap").width(bodyWidth);
-    $(".wrap").height(bodyHeight);
-  }
-
-
-  /**
-   *
-   */
-  function delete_wrap_page() {
-    $(".ca-wrap").remove();
+  function get_all_free_time() {
+    var $caFreeTime = $('.ca-free-time');
+    var allFreeTime = '';
+    if ($caFreeTime.length > 0) {
+      $caFreeTime.each(function () {
+        allFreeTime += $(this).attr('value') + ',';
+      });
+    } else {
+      allFreeTime = null;
+    }
+    if (allFreeTime != null) {
+      allFreeTime = allFreeTime.substring(0, allFreeTime.length-1);
+    }
+    return allFreeTime;
   }
 
 
@@ -67,11 +93,19 @@
    */
   function save_time() {
     $('#time-button').click(function () {
-      set_wrap_page();
+      var allFreeTime = get_all_free_time();
+      var url = $(this).attr('url');
 
-
-
-      delete_wrap_page();
+      var data = {'time': allFreeTime};
+      $.post(url, data, function (result) {
+        if (result.status == 0) {
+          alert('更新时间表成功');
+          location.reload();
+        } else {
+          alert('保存失败，请重试');
+          location.reload();
+        }
+      });
     });
   }
 

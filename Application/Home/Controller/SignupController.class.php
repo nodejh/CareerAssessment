@@ -75,14 +75,20 @@ class SignupController extends BaseController {
                         $row_account = $Account->bind($account_bind)->add();
 
                         if ($row_account) {
-                            login($row_account, 1);
-                            $this->redirect('Admin/User/index', '', 0);
+                            $row_user = M('user')->data(array('account_id'=>$row_account))->add();
+                            if ($row_user) {
+                                login($row_account, 1);
+                                $this->redirect('Admin/User/index', '', 0);
+                            } else {
+                                $this->_data['error'] = '注册失败，请重试';
+                                $this->assign($this->_data);
+                                $this->display();
+                            }
                         } else {
                             $this->_data['error'] = '注册失败，请重试';
                             $this->assign($this->_data);
                             $this->display();
                         }
-
 
                     } else {
                         // 该手机号已注册
@@ -97,7 +103,7 @@ class SignupController extends BaseController {
                     $this->display();
                 }
             } else {
-                $this->_data['error'] = '两次密码不一致，';
+                $this->_data['error'] = '两次密码不一致';
                 $this->assign($this->_data);
                 $this->display();
             }
@@ -141,8 +147,15 @@ class SignupController extends BaseController {
                         $row_account = $Account->bind($account_bind)->add();
 
                         if ($row_account) {
-                            login($row_account, 2);
-                            $this->redirect('Admin/Teacher/index', '', 0);
+                            $row_teacher = M('teacher')->data(array('account_id'=>$row_account))->add();
+                            if ($row_teacher) {
+                                login($row_account, 2);
+                                $this->redirect('Admin/Teacher/index', '', 0);
+                            } else {
+                                $this->_data['error'] = '注册失败，请重试';
+                                $this->assign($this->_data);
+                                $this->display();
+                            }
 
                         } else {
                             $this->_data['error'] = '注册失败，请重试';
@@ -164,7 +177,7 @@ class SignupController extends BaseController {
                     $this->display();
                 }
             } else {
-                $this->_data['error'] = '两次密码不一致，';
+                $this->_data['error'] = '两次密码不一致';
                 $this->assign($this->_data);
                 $this->display();
             }

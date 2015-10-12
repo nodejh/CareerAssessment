@@ -121,7 +121,7 @@ class BaseController extends Controller {
         $data['account'] = $Account->where($where)->bind(':account_id',$id)->find();
         $data['user'] = $User->where($where)->bind(':account_id', $id)->find();
 
-        if ($data['account'] && $data['user']) {
+        if ($data['account'] || $data['user']) {
 
             switch ($data['user']['gender']) {
                 case 1:
@@ -157,29 +157,29 @@ class BaseController extends Controller {
                     $data['user']['status'] = '未知';
             }
 
-            if ($data['user']['student_type'] != NULL) {
-                $student_type1 = substr($data['user']['student_type'], 0, 1);
-                $student_type2 = substr($data['user']['student_type'], 1, 1);
-                $student_type3 = substr($data['user']['student_type'], 2, 1);
-                $student_type4 = substr($data['user']['student_type'], 3, 1);
-                $data['user']['student_type'] = '';
-                if ($student_type1 == '1') {
-                    $data['user']['student_type'] .= '艺体生,';
-                }
-                if ($student_type2 == '1') {
-                    $data['user']['student_type'] .= '少数名族考生,';
-                }
-                if ($student_type3 == '1') {
-                    $data['user']['student_type'] .= '国家专项计划,';
-                }
-                if ($student_type4 == '1') {
-                    $data['user']['student_type'] .= '军校或国防生,';
-                }
-                $data['user']['student_type'] = rtrim($data['user']['student_type'], ',');
-
-            } else {
-                $data['user']['student_type'] = '';
-            }
+            //if ($data['user']['student_type'] != NULL) {
+            //    $student_type1 = substr($data['user']['student_type'], 0, 1);
+            //    $student_type2 = substr($data['user']['student_type'], 1, 1);
+            //    $student_type3 = substr($data['user']['student_type'], 2, 1);
+            //    $student_type4 = substr($data['user']['student_type'], 3, 1);
+            //    $data['user']['student_type'] = '';
+            //    if ($student_type1 == '1') {
+            //        $data['user']['student_type'] .= '艺体生,';
+            //    }
+            //    if ($student_type2 == '1') {
+            //        $data['user']['student_type'] .= '少数名族考生,';
+            //    }
+            //    if ($student_type3 == '1') {
+            //        $data['user']['student_type'] .= '国家专项计划,';
+            //    }
+            //    if ($student_type4 == '1') {
+            //        $data['user']['student_type'] .= '军校或国防生,';
+            //    }
+            //    $data['user']['student_type'] = rtrim($data['user']['student_type'], ',');
+            //
+            //} else {
+            //    $data['user']['student_type'] = '';
+            //}
 
             return $data;
         } else {

@@ -152,7 +152,7 @@ class UserController extends BaseController {
 
                  $user_exist = $User->where($user_where)->find();
 
-var_dump($user_update);
+                    var_dump($user_update);
 
                  if ($user_exist) {
                      // user 表中有该用户

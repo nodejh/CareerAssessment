@@ -35,18 +35,24 @@ class UserController extends BaseController {
     public function profile() {
         $this->is_user();
 
+        //var_dump($this->_data['user']);
+        //exit();
+
          if ($_POST) {
+             //var_dump($_POST);
+             //die();
+
              $post['name'] = I('post.name', 0);
              $post['gender'] = I('post.gender', 0);
              $post['email'] = I('post.email', 0);
              $post['city'] = I('post.city', 0) == '请选择您所在城市' ? 0 : I('post.city', 0);
-             $post['status'] = I('post.status', 0) == 30 ? I('post.worktime', 0) : I('post.status', 0);
-             $post['school'] = I('post.school', 0);
+             $post['school_primary'] = I('post.school_primary', 0);
+             $post['school_junior'] = I('post.school_junior', 0);
+             $post['school_senior'] = I('post.school_senior', 0);
+             $post['school_university'] = I('post.school_university', 0);
              $post['college'] = I('post.college', 0);
-             $post['type_1'] = I('post.type_1', 0);
-             $post['type_2'] = I('post.type_2', 0);
-             $post['type_3'] = I('post.type_3', 0);
-             $post['type_4'] = I('post.type_4', 0);
+             $post['test_status'] = I('post.test_status', 0);
+             $post['status'] = I('post.status', 0);
 
              if ($post['type_1'] || $post['type_2'] || $post['type_3'] || $post['type_4']) {
                  $post['student_type'] = '';
@@ -80,9 +86,6 @@ class UserController extends BaseController {
              if ($post['city']) {
                  $user_update['city'] = $post['city'];
              }
-             if ($post['status']) {
-                 $user_update['status'] = $post['status'];
-             }
              if ($post['school']) {
                  $user_update['school'] = $post['school'];
              }
@@ -93,23 +96,72 @@ class UserController extends BaseController {
                  $user_update['student_type'] = $post['student_type'];
              }
 
-             if (count($user_update )) {
+             switch ($post['test_status']) {
+                 case '小学':
+                     $user_update['status'] = '小学';
+                     $user_update['school'] = $post['school_primary'];
+                     if ($user_update['college']) {
+                         $user_update['college'] = null;
+                     }
+                     if ($user_update['student_type']) {
+                         $user_data['student_type'] = null;
+                     }
+                     break;
+                 case '初中':
+                     $user_update['status'] = '初中';
+                     $user_update['school'] = $post['school_junior'];
+                     if ($user_update['college']) {
+                         $user_update['college'] = null;
+                     }
+                     if ($user_update['student_type']) {
+                         $user_data['student_type'] = null;
+                     }
+                     break;
+                 case '高中':
+                     $user_update['status'] = '高中';
+                     $user_update['school'] = $post['school_senior'];
+                     if ($user_update['college']) {
+                         $user_update['college'] = null;
+                     }
+                     break;
+                 case '大学及以上':
+                     $user_update['status'] = '大学及以上';
+                     $user_update['school'] = $post['school_university'];
+                     break;
+                 case '工作':
+                     $user_update['status'] = $post['status'];
+                     if ($user_update['school']) {
+                         $user_update['school'] = null;
+                     }
+                     if ($user_update['college']) {
+                         $user_update['college'] = null;
+                     }
+                     if ($user_update['student_type']) {
+                         $user_update['student_type'] = null;
+                     }
+                     break;
+                 default:
+
+             }
+
+
+             if (count($user_update)) {
 
                  //判断 user 表中是否有该用户
                  $user_where['account_id'] = $_SESSION['id'];
 
                  $user_exist = $User->where($user_where)->find();
-                 
+
+var_dump($user_update);
+
                  if ($user_exist) {
                      // user 表中有该用户
                      $user_result = $User->where($user_where)->data($user_update)->save();
                  } else {
                      // user 表中没有该用户
-                     $user_data['account_id'] = $user_where['account_id'];
+                     $user_update['account_id'] = $user_where['account_id'];
                      $user_result = $User->data($user_update)->add();
                  }
-
-                 var_dump($user_result);
 
                  if ($user_result !== false) {
                      $this->_data['title'] = '修改个人资料';
@@ -135,6 +187,8 @@ class UserController extends BaseController {
 
          } else {
              $this->_data['title'] = '修改个人资料';
+             //$this->_data['user'] = $this->get_user_info($_SESSION['id']);
+             //var_dump($this->_data);
              $this->assign($this->_data);
              $this->display();
          }

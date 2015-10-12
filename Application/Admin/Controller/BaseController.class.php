@@ -28,33 +28,31 @@ class BaseController extends Controller {
 
         } else {
 
-            if (isset($_SESSION['f'])) {
-                // first time to login. suggest to change the password
-                $this->_data['first'] = '1';
-            }
+            //if (isset($_SESSION['f'])) {
+            //    // first time to login. suggest to change the password
+            //    $this->_data['first'] = '1';
+            //}
 
             switch ($this->login_type()) {
                 case 1:
                     // login type of user
                     $data = $this->get_user_info($_SESSION['id']);
+                    var_dump($data);
                     if ($data) {
-                        $this->_data['user']['account_id'] = $data['account']['account_id'];
-                        $this->_data['user']['phone'] = $data['account']['phone'];
-                        $this->_data['user']['password'] = $data['account']['password'];
-                        $this->_data['user']['card_id'] = $data['account']['card_id'];
-                        $this->_data['user']['date'] = $data['account']['date'];
-                        $this->_data['user']['name'] = $data['user']['name'];
-                        $this->_data['user']['email'] = $data['user']['email'];
-                        $this->_data['user']['gender'] = $data['user']['gender'];
-                        $this->_data['user']['status'] = $data['user']['status'];
-                        $this->_data['user']['school'] = $data['user']['school'];
-                        $this->_data['user']['college'] = $data['user']['college'];
-                        $this->_data['user']['student_type'] = $data['user']['student_type'];
-                        $this->_data['user']['type_1'] = $data['user']['type_1'];
-                        $this->_data['user']['type_2'] = $data['user']['type_2'];
-                        $this->_data['user']['type_3'] = $data['user']['type_3'];
-                        $this->_data['user']['type_4'] = $data['user']['type_4'];
-                        $this->_data['user']['city'] = $data['user']['city'];
+                        if (
+                            //is_null($data['phone']) ||
+                            is_null($data['name'])
+                            //is_null($data['email'])
+                            //is_null($data['gender']) ||
+                            //is_null($data['status']) ||
+                            //is_null($data['city'])
+                        ) {
+
+                            $this->_data['nav']['profile'] = 1; // 未完善信息，需要完善信息
+                        } else {
+                            $this->_data['nav']['profile'] = 0;
+                        }
+                        $this->_data['user'] = $data;
                     } else {
                         $this->_data['user'] = 0;
                     }
@@ -129,50 +127,23 @@ class BaseController extends Controller {
      * @param number:id user's account_id
      * @return array user info; 0 failed
      */
-    private function get_user_info ($id) {
+    protected function get_user_info ($id) {
         $Account = M('account');
         $User = M('user');
         $where['account_id'] = ':account_id';
         $data['account'] = $Account->where($where)->bind(':account_id',$id)->find();
         $data['user'] = $User->where($where)->bind(':account_id', $id)->find();
 
-        if ($data['account'] || $data['user']) {
+        if ($data['account']) {
+
+            $result['account_id'] = $data['account']['account_id'];
+            $result['phone'] = $data['account']['phone'];
+            $result['card_id'] = $data['account']['card_id'];
+            $result['account_id'] = $data['account']['account_id'];
 
             if ($data['user']) {
-                switch ($data['user']['gender']) {
-                    case 1:
-                        $data['user']['gender'] = '男';
-                        break;
-                    case 2:
-                        $data['user']['gender'] = '女';
-                        break;
-                    default:
-                        $data['user']['gender'] = '未知';
-                }
 
-                switch ($data['user']['status']) {
-                    case 1:
-                        $data['user']['status'] = '高中';
-                        break;
-                    case 2:
-                        $data['user']['status'] = '大学';
-                        break;
-                    case 3:
-                        $data['user']['status'] = '工作未满1年';
-                        break;
-                    case 4:
-                        $data['user']['status'] = '工作1-3年';
-                        break;
-                    case 5:
-                        $data['user']['status'] = '工作3-5年';
-                        break;
-                    case 6:
-                        $data['user']['status'] = '工作5年以上';
-                        break;
-                    default:
-                        $data['user']['status'] = '未知';
-                }
-
+                // 判断是否xx考生类型，如果是，则返回给前台checked
                 $data['user']['type_1'] = '';
                 $data['user']['type_2'] = '';
                 $data['user']['type_3'] = '';
@@ -194,9 +165,29 @@ class BaseController extends Controller {
                     }
 
                 }
+            } else {
+                $data['user'] = [];
             }
 
-            return $data;
+            $result['account_id'] = $data['account']['account_id'];
+            $result['phone'] = $data['account']['phone'];
+            $result['password'] = $data['account']['password'];
+            $result['card_id'] = $data['account']['card_id'];
+            $result['register_time'] = $data['account']['register_time'];
+            $result['name'] = $data['user']['name'];
+            $result['email'] = $data['user']['email'];
+            $result['gender'] = $data['user']['gender'];
+            $result['status'] = $data['user']['status'];
+            $result['school'] = $data['user']['school'];
+            $result['college'] = $data['user']['college'];
+            $result['student_type'] = $data['user']['student_type'];
+            $result['city'] = $data['user']['city'];
+            $result['type_1'] = $data['user']['type_1'];
+            $result['type_2'] = $data['user']['type_2'];
+            $result['type_3'] = $data['user']['type_3'];
+            $result['type_4'] = $data['user']['type_4'];
+
+            return $result;
         } else {
             return 0;
         }
@@ -208,7 +199,7 @@ class BaseController extends Controller {
      * @param number:id teacher's account_id
      * @return array teacher info; 0 failed
      */
-    private function get_teacher_info($id) {
+    protected function get_teacher_info($id) {
         // teacer info
         $Account = M('account');
         $Teacher = M('teacher');

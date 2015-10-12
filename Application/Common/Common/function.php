@@ -16,14 +16,14 @@ function login($id, $type) {
 }
 
 
-/**
- * common user first signup
- * set a session, to mark it
- * once the user change the password, unset the session['f']
- */
-function first_signup() {
-    $_SESSION['f'] = '1';
-}
+///**
+// * common user first signup
+// * set a session, to mark it
+// * once the user change the password, unset the session['f']
+// */
+//function first_signup() {
+//    $_SESSION['f'] = '1';
+//}
 
 
 /**
@@ -46,20 +46,20 @@ function encrypt($string) {
     return $cipher;
 }
 
-
-/**
- * @description 生成默认密码
- * @return string
- */
-function get_default_password() {
-    $number = '0123456789';
-    $password = '';
-    for ($i=0; $i<8; $i++) {
-        $rand = rand(0, 9);
-        $password .= substr($number, $rand, 1);
-    }
-    return encrypt($password);
-}
+//
+///**
+// * @description 生成默认密码
+// * @return string
+// */
+//function get_default_password() {
+//    $number = '0123456789';
+//    $password = '';
+//    for ($i=0; $i<8; $i++) {
+//        $rand = rand(0, 9);
+//        $password .= substr($number, $rand, 1);
+//    }
+//    return encrypt($password);
+//}
 
 
 /**

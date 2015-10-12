@@ -1,5 +1,6 @@
-<include file="./Template/Admin/Common/header.html" />
-<include file="./Template/Admin/Common/nav_user.html" />
+<include file="./Template/Admin/Common/user/header.html" />
+<include file="./Template/Admin/Common/user/nav.html" />
+
 
 <div id="page-wrapper">
     <div class="row">
@@ -11,20 +12,7 @@
     <!-- /.row -->
     <div class="row">
 
-        <present name="first">
-            <br>
-            <div class="alert alert-success" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <p>您的用户号是：<strong class="ca-default-usernumber">{$user.phone}</strong>
-                    ，默认登录密码是：<strong class="ca-default-usernumber">{$user.password}</strong></p>
-                <p>建议您<a href="__APP__/Admin/User/password">修改密码</a>。</p>
-            </div>
-        </present>
-
-
-        <div class="col-xs-10 col-md-6">
+        <div class="col-xs-10 col-md-8">
             <form class="form-horizontal" id="signup-userinfo-panel" action="__APP__/Admin/User/profile" method="post">
 
                 <present name="error">
@@ -42,265 +30,218 @@
                 </present>
 
                 <div class="form-group">
-                    <label for="signup-userinfo-name" class="col-sm-3 control-label">姓名</label>
+                    <label for="pforile-name" class="col-sm-3 control-label">姓名</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="name" id="signup-userinfo-name" placeholder="请输入您的真实姓名" value="{$user.name}">
+                        <input type="text" class="form-control" name="name" id="pforile-name" placeholder="请输入您的真实姓名" value="{$user.name}">
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">性别</label>
-                    <div class="col-sm-9" id="signup-userinfo-gender">
+                    <div class="col-sm-9">
                         <switch name="user.gender">
                             <case value="男">
                                 <label class="radio-inline">
-                                    <input type="radio" name="gender" id="signup-userinfo-man" value="1" checked> 男
+                                    <input type="radio" name="gender" value="男" checked> 男
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="gender" id="signup-userinfo-woman" value="2"> 女
+                                    <input type="radio" name="gender" value="女"> 女
                                 </label>
                             </case>
                             <case value="女">
                                 <label class="radio-inline">
-                                    <input type="radio" name="gender" id="signup-userinfo-man" value="1"> 男
+                                    <input type="radio" name="gender" value="男"> 男
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="gender" id="signup-userinfo-woman" value="2" checked> 女
+                                    <input type="radio" name="gender" value="女" checked> 女
                                 </label>
                             </case>
                             <default />
-                            <label class="radio-inline">
-                                <input type="radio" name="gender" id="signup-userinfo-man" value="1"> 男
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="gender" id="signup-userinfo-woman" value="2"> 女
-                            </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender" value="男" checked> 男
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender" value="女"> 女
+                                </label>
                         </switch>
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <label for="signup-userinfo-email" class="col-sm-3 control-label">邮箱</label>
+                    <label for="pforile-email" class="col-sm-3 control-label">邮箱</label>
                     <div class="col-sm-9">
-                        <input type="email" class="form-control" name="email" id="signup-userinfo-email" placeholder="请输入您的邮箱" value="{$user.email}">
+                        <input type="email" class="form-control" name="email" id="pforile-email" placeholder="请输入您的邮箱" value="{$user.email}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="signup-userinfo-city" class="col-sm-3 control-label">地点</label>
+                    <label for="profile-city" class="col-sm-3 control-label">地点</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="city" id="signup-userinfo-city" placeholder="请选择您所在城市" value="{$user.city}">
+                        <input type="text" class="form-control" name="city" id="profile-city" placeholder="请选择您所在城市" value="{$user.city}">
                     </div>
                 </div>
 
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">当前状态</label>
-                    <div class="col-sm-9" id="signup-userinfo-status">
+                    <div class="col-sm-9">
+                        <ul id="myTab" class="nav nav-tabs">
+                            <input class="ca-hide" id="profile-test-status" name="test_status" value="小学">
 
                         <switch name="user.status">
+                            <case value="小学">
+                                <li class="active"><a href="#profile-primary" data-toggle="tab">小学</a></li>
+                                <li><a href="#profile-junior" data-toggle="tab">初中</a></li>
+                                <li><a href="#profile-senior" data-toggle="tab">高中</a></li>
+                                <li><a href="#profile-university" data-toggle="tab">大学及以上</a></li>
+                                <li><a href="#profile-work" data-toggle="tab">工作</a></li>
+                            </case>
+                            <case value="初中">
+                                <li><a href="#profile-primary" data-toggle="tab">小学</a></li>
+                                <li class="active"><a href="#profile-junior" data-toggle="tab">初中</a></li>
+                                <li><a href="#profile-senior" data-toggle="tab">高中</a></li>
+                                <li><a href="#profile-university" data-toggle="tab">大学及以上</a></li>
+                                <li><a href="#profile-work" data-toggle="tab">工作</a></li>
+                            </case>
                             <case value="高中">
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" id="profile-senior" value="1" checked> 高中
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" id="profile-university" value="2"> 大学
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" id="profile-work" value="30"> 工作
-                                </label>
+                                <li><a href="#profile-primary" data-toggle="tab">小学</a></li>
+                                <li><a href="#profile-junior" data-toggle="tab">初中</a></li>
+                                <li class="active"><a href="#profile-senior" data-toggle="tab">高中</a></li>
+                                <li><a href="#profile-university" data-toggle="tab">大学及以上</a></li>
+                                <li><a href="#profile-work" data-toggle="tab">工作</a></li>
                             </case>
-                            <case value="大学">
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" id="profile-senior" value="1"> 高中
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" id="profile-university" value="2" checked > 大学
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" id="profile-work" value="30"> 工作
-                                </label>
+                            <case value="大学及以上">
+                                <li><a href="#profile-primary" data-toggle="tab">小学</a></li>
+                                <li><a href="#profile-junior" data-toggle="tab">初中</a></li>
+                                <li><a href="#profile-senior" data-toggle="tab">高中</a></li>
+                                <li class="active"><a href="#profile-university" data-toggle="tab">大学及以上</a></li>
+                                <li><a href="#profile-work" data-toggle="tab">工作</a></li>
                             </case>
-                            <case value="工作未满1年|工作1-3年|工作3-5年|工作5年以上">
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" id="profile-senior" value="1"> 高中
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" id="profile-university" value="2"> 大学
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" id="profile-work" value="30" checked> 工作
-                                </label>
+                            <case value="工作未满1年|工作1至3年|工作3至5年|工作5年以上">
+                                <li><a href="#profile-primary" data-toggle="tab">小学</a></li>
+                                <li><a href="#profile-junior" data-toggle="tab">初中</a></li>
+                                <li><a href="#profile-senior" data-toggle="tab">高中</a></li>
+                                <li><a href="#profile-university" data-toggle="tab">大学及以上</a></li>
+                                <li class="active"><a href="#profile-work" data-toggle="tab">工作</a></li>
                             </case>
                             <default />
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" id="profile-senior" value="1"> 高中
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" id="profile-university" value="2"> 大学
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="status" id="profile-work" value="30"> 工作
-                                </label>
+                                <li class="active"><a href="#profile-primary" data-toggle="tab">小学</a></li>
+                                <li><a href="#profile-junior" data-toggle="tab">初中</a></li>
+                                <li><a href="#profile-senior" data-toggle="tab">高中</a></li>
+                                <li><a href="#profile-university" data-toggle="tab">大学及以上</a></li>
+                                <li><a href="#profile-work" data-toggle="tab">工作</a></li>
                         </switch>
-                    </div>
-                </div>
+                        </ul>
 
-                <div class="form-group ca-signup-hide ca-signup-choose-form" id="singnup-userinfo-form-school">
-                    <label for="signup-userinfo-school" class="col-sm-3 control-label">学校</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" name="school" id="signup-userinfo-school" placeholder="请输入您的当前学校名称" value="{$user.school}">
-                    </div>
-                </div>
-                <div class="form-group ca-signup-hide ca-signup-choose-form" id="singnup-userinfo-form-college">
-                    <label for="signup-userinfo-college" class="col-sm-3 control-label">专业</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" name="college" id="signup-userinfo-college" placeholder="请输入您的专业" value="{$user.college}">
-                    </div>
-                </div>
-                <div class="form-group ca-signup-hide ca-signup-choose-form" id="singnup-userinfo-form-student-type">
-                    <label class="col-sm-3 control-label">考生类型</label>
-                    <div class="col-sm-9">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="type_1" id="signup-userinfo-student-type-1" name="singnup-userinfo-student-type" value="艺体生" {$user.type_1}> 艺体生
-                                </label>
+                        <div id="myTabContent" class="tab-content">
+                            <div class="tab-pane fade in active" id="profile-primary">
+                                <p>
+                                    <br>
+                                    <input type="text" class="form-control" name="school_primary" placeholder="请输入您的当前学校名称" value="{$user.school}">
+                                </p>
                             </div>
-                            <div class="col-sm-6">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="type_2" id="signup-userinfo-student-type-2" name="singnup-userinfo-student-type" value="少数名族考生" {$user.type_2}> 少数名族考生
-                                </label>
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="type_3" id="signup-userinfo-student-type-3" name="singnup-userinfo-student-type" value="国家专项计划" {$user.type_3}> 国家专项计划
-                                </label>
-                            </div>
-                            <div class="col-sm-6">
-                                <label class="checkbox-inline">
-                                    <input type="checkbox" name="type_4" id="signup-userinfo-student-type-4" name="singnup-userinfo-student-type" value="军校或国防生" {$user.type_4}> 军校或国防生
-                                </label>
-                            </div>
-                            <div class="col-sm-12">
-                                <small class="ca-small-tips">{$user.student.type}</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group ca-signup-hide ca-signup-choose-form" id="singnup-userinfo-form-work">
-                    <label class="col-sm-3 control-label">工作年限</label>
-                    <div class="col-sm-9" id="singnup-userinfo-worktime">
-                        <div class="row">
-                            <switch name="user.status">
-                                <case value="工作未满1年">
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-1" value="3" checked> 未满1年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-2" value="4"> 1-3年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-3" value="5"> 3-5年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-4" value="6"> 5年以上
-                                        </label>
-                                    </div>
-                                </case>
-                                <case value="工作1-3年">
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-1" value="3"> 未满1年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-2" value="4" checked> 1-3年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-3" value="5"> 3-5年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-4" value="6"> 5年以上
-                                        </label>
-                                    </div>
-                                </case>
-                                <case value="工作3-5年">
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-1" value="3"> 未满1年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-2" value="4"> 1-3年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-3" value="5" checked> 3-5年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-4" value="6"> 5年以上
-                                        </label>
-                                    </div>
-                                </case>
-                                <case value="工作5年以上">
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-1" value="3"> 未满1年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-2" value="4"> 1-3年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-3" value="5"> 3-5年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-4" value="6" checked> 5年以上
-                                        </label>
-                                    </div>
-                                </case>
-                                <default />
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-1" value="3"> 未满1年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-2" value="4"> 1-3年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-3" value="5"> 3-5年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="worktime" id="signup-userinfo-work-4" value="6"> 5年以上
-                                        </label>
-                                    </div>
-                            </switch>
 
+                            <div class="tab-pane fade" id="profile-junior">
+                                <p>
+                                    <br>
+                                    <input type="text" class="form-control" name="school_junior" placeholder="请输入您的当前学校名称" value="{$user.school}">
+                                </p>
+                            </div>
+
+                            <div class="tab-pane fade" id="profile-senior">
+                                <p>
+                                    <br>
+                                    <input type="text" class="form-control" name="school_senior" placeholder="请输入您的当前学校名称" value="{$user.school}">
+                                    <br>
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="type_1" value="艺体生" {$user.type_1}> 艺体生
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="type_2" value="少数名族考生" {$user.type_2}> 少数名族考生
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="type_3" value="国家专项计划" {$user.type_3}>国家专项计划
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="type_4" {$user.type_4}> 军校或国防生
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <small class="ca-small-tips">{$user.student.type}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+
+                            <div class="tab-pane fade" id="profile-university">
+                                <p>
+                                    <br>
+                                    <input type="text" class="form-control" name="school_university" id="signup-userinfo-school" placeholder="请输入您的当前学校名称" value="{$user.school}">
+                                    <br>
+                                    <input type="text" class="form-control" name="college" id="signup-userinfo-college" placeholder="请输入您的专业" value="{$user.college}">
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="type_1" value="艺体生" {$user.type_1}> 艺体生
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="type_2" value="少数名族考生" {$user.type_2}> 少数名族考生
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="type_3" value="国家专项计划" {$user.type_3}> 国家专项计划
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="checkbox-inline">
+                                                    <input type="checkbox" name="type_4" value="军校或国防生" {$user.type_4}> 军校或国防生
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <small class="ca-small-tips">{$user.student.type}</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+
+                            <div class="tab-pane fade" id="profile-work">
+                                <p>
+                                    <div class="col-sm-6">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="status" value="工作未满1年"> 工作未满1年
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="status" value="工作1至3年"> 工作1至3年
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="status" value="工作1至3年"> 工作1至3年
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="radio-inline">
+                                            <input type="radio" name="status" value="工作5年以上"> 工作5年以上
+                                        </label>
+                                    </div>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -308,7 +249,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <button type="submit" class="btn btn-primary btn-block">完成</button>
+                        <button type="submit" class="btn btn-primary btn-block">确认修改</button>
                     </div>
                 </div>
             </form>
@@ -318,71 +259,83 @@
 </div>
 <!-- /#page-wrapper -->
 
+
+<include file="./Template/Admin/Common/user/footer.html" />
+
 <script src="__PUBLIC__/custom/js/city-select.js"></script>
 <script>
-    var test=new Vcity.CitySelector({input:'signup-userinfo-city'});
+    var test=new Vcity.CitySelector({input:'profile-city'});
 
-    // 初始化页面的显示和隐藏
-    if ($('#profile-senior').is(':checked') == true) {
-        show_senior();
-    }
+    $('#myTab li').click(function () {
+       var val = $(this).text();
+        $('#profile-test-status').attr('value', val);
 
-    if ($('#profile-university').is(':checked') == true) {
-        show_university();
-    }
-
-    if ($('#profile-work').is(':checked') == true) {
-        show_work();
-    }
-
-    // 显示更多信息-高中
-    $('#profile-senior').click(function () {
-        show_senior();
     });
 
 
-    // 显示更多信息-大学
-    $('#profile-university').click(function () {
-        show_university();
-    });
-
-
-    // 显示更多信息-工作
-    $('#profile-work').click(function () {
-        show_work();
-    });
-
-
-    /**
-     * 显示更多信息-高中
-     */
-    function show_senior() {
-        $('.ca-signup-choose-form').addClass('ca-signup-hide');
-        $('#singnup-userinfo-form-school').removeClass('ca-signup-hide');
-        $('#singnup-userinfo-form-student-type').removeClass('ca-signup-hide');
-    }
-
-
-    /**
-     * 显示更多信息-大学
-     */
-    function show_university() {
-        $('.ca-signup-choose-form').addClass('ca-signup-hide');
-        $('#singnup-userinfo-form-school').removeClass('ca-signup-hide');
-        $('#singnup-userinfo-form-college').removeClass('ca-signup-hide');
-        $('#singnup-userinfo-form-student-type').removeClass('ca-signup-hide');
-    }
-
-
-    /**
-     * 显示更多信息-工作
-     */
-    function show_work() {
-        $('.ca-signup-choose-form').addClass('ca-signup-hide');
-        $('#singnup-userinfo-form-work').removeClass('ca-signup-hide');
-    }
+//
+//    // 初始化页面的显示和隐藏
+//    if ($('#profile-senior').is(':checked') == true) {
+//        show_senior();
+//    }
+//
+//    if ($('#profile-university').is(':checked') == true) {
+//        show_university();
+//    }
+//
+//    if ($('#profile-work').is(':checked') == true) {
+//        show_work();
+//    }
+//
+//    // 显示更多信息-高中
+//    $('#profile-senior').click(function () {
+//        show_senior();
+//    });
+//
+//
+//    // 显示更多信息-大学
+//    $('#profile-university').click(function () {
+//        show_university();
+//    });
+//
+//
+//    // 显示更多信息-工作
+//    $('#profile-work').click(function () {
+//        show_work();
+//    });
+//
+//
+//    /**
+//     * 显示更多信息-高中
+//     */
+//    function show_senior() {
+//        $('.ca-signup-choose-form').addClass('ca-signup-hide');
+//        $('#singnup-userinfo-form-school').removeClass('ca-signup-hide');
+//        $('#singnup-userinfo-form-student-type').removeClass('ca-signup-hide');
+//    }
+//
+//
+//    /**
+//     * 显示更多信息-大学
+//     */
+//    function show_university() {
+//        $('.ca-signup-choose-form').addClass('ca-signup-hide');
+//        $('#singnup-userinfo-form-school').removeClass('ca-signup-hide');
+//        $('#singnup-userinfo-form-college').removeClass('ca-signup-hide');
+//        $('#singnup-userinfo-form-student-type').removeClass('ca-signup-hide');
+//    }
+//
+//
+//    /**
+//     * 显示更多信息-工作
+//     */
+//    function show_work() {
+//        $('.ca-signup-choose-form').addClass('ca-signup-hide');
+//        $('#singnup-userinfo-form-work').removeClass('ca-signup-hide');
+//    }
 
 </script>
 
 
-<include file="./Template/Admin/Common/footer.html" />
+
+<include file="./Template/Admin/Common/user/foot.html" />

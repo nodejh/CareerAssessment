@@ -95,7 +95,7 @@ class LoginController extends BaseController {
                 } else {
                     //account 表中没有写入该会员信息
 
-                    $data['card'] = $card;
+                    $data['card_id'] = $data_card['card_id'];
                     $data['password'] = $password;
                     $data['type'] = $data_card['type'];
                     $data['register_time'] = time();

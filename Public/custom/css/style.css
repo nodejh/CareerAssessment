@@ -19,6 +19,7 @@
     cursor: pointer;
 }
 
+
 /* home */
 .ca-select {
     margin-top: 70px;
@@ -128,7 +129,14 @@ p.tip{color:#666;line-height:20px;padding:5px;margin:0;text-indent:3px;}
     background-color: #449D44;
     cursor: pointer;
 }
-
+.ca-bg-red {
+    background-color: red;
+    color: #fff;
+}
+.ca-bg-yellow {
+    background-color: yellow;
+    color: #fff;
+}
 
 /* profile */
 .ca-profile-tab {

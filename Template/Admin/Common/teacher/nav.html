@@ -246,11 +246,10 @@
                 <li>
                     <a href="__APP__/Admin/Teacher/appoint"><i class="fa fa-list fa-fw"></i>
                         我的预约表
-                        <present name="appoint_user_count">
-                            <gt name="appoint_user_count" value="0">value
-                                <span class="badge">{$appoint_user_count}</span>
-                            </gt>
-                        </present>
+                        <if condition="$nav.appoint gt 0 ">
+                            <span class="label label-danger">{$nav.appoint}</span>
+                            <else />
+                        </if>
                     </a>
                 </li>
                 <li>

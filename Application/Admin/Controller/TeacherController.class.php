@@ -246,16 +246,11 @@ class TeacherController extends BaseController {
         $this->is_teacher();
         $this->_data['title'] = '我的预约表';
 
-        $Appoint = M('appoint');
-        $appoint_where['teacher_id'] = $_SESSION['id'];
-        $appoint_result = $Appoint->where($appoint_where)->select();
-
         $User = M('user');
-        foreach ($appoint_result as $k => $v) {
-
+        foreach ($this->_data['teacher']['appoint_list'] as $k => $v) {
             $user_where['account_id'] = $v['user_id'];
             $user_result = $User->where($user_where)->find();
-
+            $appoint_result[$k]['user_account_id'] = $user_result['account_id'];
             $appoint_result[$k]['name'] = $user_result['name'];
             $appoint_result[$k]['email'] = $user_result['email'];
             $appoint_result[$k]['gender'] = $user_result['gender'];
@@ -264,94 +259,130 @@ class TeacherController extends BaseController {
             $appoint_result[$k]['college'] = $user_result['college'];
             $appoint_result[$k]['student_type'] = $user_result['student_type'];
             $appoint_result[$k]['city'] = $user_result['city'];
-
-            $timeArray = explode('-', $v['time']);
-
-            $appoint_result[$k]['date'] = $timeArray[1] . '-' . $timeArray[2] . '-' . $timeArray[3];
-            $appoint_result[$k]['time'] = $timeArray[0];
-
-            switch ($timeArray[0]) {
-                case 'a':
-                    $appoint_result[$k]['time'] = '9:00-10:30';
-                    break;
-                case 'b':
-                    $appoint_result[$k]['time'] = '10:30-12:00';
-                    break;
-                case 'c':
-                    $appoint_result[$k]['time'] = '14:30-16:00';
-                    break;
-                case 'd':
-                    $appoint_result[$k]['time'] = '16:00-17:30';
-                    break;
-                case 'e':
-                    $appoint_result[$k]['time'] = '19:00-20:30';
-                    break;
-                case 'f':
-                    $appoint_result[$k]['time'] = '20:30-22:00';
-                    break;
-            }
-
-            switch ($v['gender']) {
-                case 0:
-                    $appoint_result[$k]['gender'] = '未知';
-                    break;
-                case 1:
-                    $appoint_result[$k]['gender'] = '男';
-                    break;
-                case 2:
-                    $appoint_result[$k]['gender'] = '女';
-                    break;
-                default:
-                    $appoint_result[$k]['gender'] = '未知';
-            }
-
-            switch ($v['status']) {
-                case 0:
-                    $appoint_result[$k]['status'] = '待确认';
-                    break;
-                case 1:
-                    $appoint_result[$k]['status'] = '待咨询';
-                    break;
-                case 2:
-                    $appoint_result[$k]['status'] = '已结束';
-                    break;
-            }
+            $appoint_result[$k]['save_time'] = $this->_data['teacher']['appoint_list'][$k]['save_time'];
+            $appoint_result[$k]['appoint_id'] = $this->_data['teacher']['appoint_list'][$k]['appoint_id'];
+            $appoint_result[$k]['status'] = $this->_data['teacher']['appoint_list'][$k]['status'];
         }
 
-        $this->_data['appoint_user'] = $appoint_result;
-        $this->_data['appoint_user_count'] = $Appoint->where($appoint_where)->count('id');
+        $this->_data['appoint_info'] = $appoint_result;
+        //var_dump($this->_data);
+        //die();
         $this->assign($this->_data);
         $this->display();
     }
 
+    //
+    ///**
+    // * 确认预约
+    // */
+    //public function appoint_ok() {
+    //    $this->is_teacher();
+    //    if($_GET && $_GET['id']) {
+    //        $id = I('get.id', 0);
+    //
+    //        if ($id) {
+    //            $Appoint = M('appoint');
+    //            $appoint_where['id'] = $id;
+    //            $appoint_data['status'] = 1;
+    //            $appoint_result = $Appoint->where($appoint_where)->data($appoint_data)->save();
+    //
+    //            if ($appoint_result) {
+    //                $this->_data['title'] = '我的预约表';
+    //
+    //                $this->assign($this->_data);
+    //                $this->redirect('appoint', '', 0);
+    //
+    //            } else {
+    //
+    //                $this->_data['title'] = '我的预约表';
+    //                $this->assign($this->_data);
+    //                $this->redirect('appoint', '', 0);
+    //            }
+    //        }
+    //    }
+    //}
+
 
     /**
-     * 确认预约
+     * 确认预约时间
      */
-    public function appoint_ok() {
+    public function appoint_confirm() {
         $this->is_teacher();
-        if($_GET && $_GET['id']) {
-            $id = I('get.id', 0);
+        $id = I('post.id', 0);
+        $time = I('post.time', 0);
+        var_dump($id);
+        var_dump($time);
+        if($id && $time) {
+            $Appoint = M('appoint');
+            $appoint_where['appoint_id'] = $id;
+            $appoint_data['status'] = 1;
+            $appoint_data['time'] = $time;
+            $appoint_data['confirm_time'] = time();
+            $appoint_result = $Appoint->where($appoint_where)->data($appoint_data)->save();
 
-            if ($id) {
-                $Appoint = M('appoint');
-                $appoint_where['id'] = $id;
-                $appoint_data['status'] = 1;
-                $appoint_result = $Appoint->where($appoint_where)->data($appoint_data)->save();
+            // TODO ajax 返回无效
+            if ($appoint_result) {
+                //$this->_data['title'] = '我的预约表';
+                //
+                //$this->assign($this->_data);
+                //$this->redirect('appoint', '', 0);
+                $result['status'] = 0;
+                $result['message'] = 'success';
+                $this->ajaxReturn($result);
 
-                if ($appoint_result) {
-                    $this->_data['title'] = '我的预约表';
+            } else {
+                $result['status'] = -1;
+                $result['message'] = 'fail';
+                $this->ajaxReturn($result);
+                //$this->_data['title'] = '我的预约表';
+                //$this->assign($this->_data);
+                //$this->redirect('appoint', '', 0);
+            }
+        }
+    }
 
-                    $this->assign($this->_data);
-                    $this->redirect('appoint', '', 0);
 
-                } else {
+    /**
+     * 预约详情
+     */
+    function appoint_details() {
+        $this->is_teacher();
+        $appoint_id = I('get.appoint_id', 0);
+        if ($appoint_id) {
 
-                    $this->_data['title'] = '我的预约表';
-                    $this->assign($this->_data);
-                    $this->redirect('appoint', '', 0);
+            $result = [];
+            foreach($this->_data['teacher']['appoint_list'] as $k => $v) {
+                if ($v['appoint_id'] == $appoint_id) {
+                    $User = M('user');
+                    $where['account_id'] = $v['user_id'];
+                    $user_info = $User->where($where)->find();
+                    $result['appoint']['appoint_id'] = $appoint_id;
+                    $result['appoint']['user_id'] = $v['user_id'];
+                    $result['appoint']['teacher_id'] = $v['teacher_id'];
+                    $result['appoint']['time'] = $v['time'];
+                    $result['appoint']['status'] = $v['status'];
+                    $result['appoint']['save_time'] = $v['save_time'];
+                    $result['appoint']['status'] = $v['status'];
+                    $result['user']['name'] = $user_info['name'];
+                    $result['user']['gender'] = $user_info['gender'];
+                    $result['user']['email'] = $user_info['email'];
+                    $result['user']['city'] = $user_info['city'];
+                    $result['user']['status'] = $user_info['status'];
+                    $result['user']['school'] = $user_info['school'];
+                    $result['user']['college'] = $user_info['college'];
+                    $result['user']['student_type'] = $user_info['student_type'];
+                    break;
                 }
             }
+
+            $this->_data['appoint_info'] = $result;
+            $this->_data['html'] = set_week();
+            $this->_data['appoint_confirm_url'] = U('appoint_confirm');
+            $this->assign($this->_data);
+            $this->display();
+
+        } else {
+            $this->redirect('appoint', '', 0);
         }
     }
 

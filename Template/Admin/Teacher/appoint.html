@@ -11,39 +11,33 @@
     <!-- /.row -->
     <div class="row">
 
-        <present name="first">
-            <br>
-            <div class="alert alert-success" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <p>您的用户号是：<strong class="ca-default-usernumber">{$teacher.phone}</strong>
-                    ，默认登录密码是：<strong class="ca-default-usernumber">{$teacher.password}</strong></p>
-                <p>建议您<a href="__APP__/Admin/Teacher/password">修改密码</a>。</p>
-            </div>
-        </present>
-
         <div class="col-xs-10 col-md-8">
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>姓名</th>
-                        <th>性别</th>
-                        <th>日期</th>
                         <th>时间</th>
                         <th>状态</th>
                         <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
-                <volist name="appoint_user" id="vo">
+                <volist name="appoint_info" id="vo">
                     <tr>
-                        <td>{$vo.name}</td>
-                        <td>{$vo.gender}</td>
-                        <td>{$vo.date}</td>
-                        <td>{$vo.time}</td>
-                        <td>{$vo.status}</td>
-                        <td><a href="__APP__/Admin/Teacher/appoint_ok/id/{$vo.id}">确认</a></td>
+                        <td>
+                            <a href="__APP__/Admin/Teacher/appoint_user/user_id/{$vo.user_account_id}">{$vo.name}</a>
+                        </td>
+                        <td>{$vo.save_time|date="y-m-d H:i:s",###}</td>
+                        <td>
+                            <switch name="vo.status" >
+                                <case value="0">待确认</case>
+                                <case value="1">等待咨询</case>
+                                <case value="2">已完成</case>
+                            </switch>
+                        </td>
+                        <td>
+                            <a href="__APP__/Admin/Teacher/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">预约详情</a>
+                        </td>
                     </tr>
                 </volist>
 

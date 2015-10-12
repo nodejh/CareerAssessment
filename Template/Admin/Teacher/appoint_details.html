@@ -1,0 +1,153 @@
+<include file="./Template/Admin/Common/teacher/header.html" />
+<include file="./Template/Admin/Common/teacher/nav.html" />
+
+
+
+
+<div id="page-wrapper">
+    <div class="row">
+
+        <div class="col-lg-12">
+            <h1 class="page-header">预约详情</h1>
+        </div>
+
+
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-10 col-sm-4 col-xs-offset-1 col-sm-offset-0">
+                    <div class="thumbnail">
+                        <div class="caption">
+                            <h4>{$appoint_info.user.name} <small>  {$appoint_info.user.gender}  {$appoint_info.user.city}</small></h4>
+                            <p>
+                                ------------
+                                来访者详情
+                            </p>
+                            <p>
+                                ------------
+                                评测结果
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-10 col-sm-8 col-xs-offset-1 col-sm-offset-0">
+                    <span>请点击选择咨询时间，并按“提交”按钮确认</span>
+                    {$html}
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-6">
+                        <button type="button" class="form-control btn-primary ca-hide" id="btn-appoint"> 提交</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<include file="./Template/Admin/Common/user/footer.html" />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        appoint_time_inilialize();
+
+        /**
+         * 预约时间表初始化
+         */
+        function appoint_time_inilialize() {
+            var appointTime = '{$appoint_info.appoint.time}';
+            var appointTimeArray = appointTime.split(',');
+            var appoint_status = '{$appoint_info.appoint.status}';
+            $caTd = $('td');
+
+            if (appoint_status == 0) {
+                $caTd.each(function () {
+                    for (var i in appointTimeArray) {
+                        if ($(this).attr('value') == appointTimeArray[i]) {
+                            $(this).addClass('ca-appoint');
+                        }
+                    }
+                    $(this).text('').removeClass('ca-no-free-time');
+                });
+                $('#btn-appoint').removeClass('ca-hide');
+                click_to_confirm_appoint();
+                confirm_time();
+
+            } else if (appoint_status == 1) {
+                $caTd.each(function () {
+                    $(this).text('').removeClass('ca-no-free-time');
+                    for (var i in appointTimeArray) {
+                        if ($(this).attr('value') == appointTimeArray[i]) {
+                            $(this).addClass('ca-bg-red');
+                            $(this).text('等待咨询')
+                        }
+                    }
+                });
+
+            } else if (appoint_status == 2) {
+                $caTd.each(function () {
+                    $(this).text('').removeClass('ca-no-free-time');
+                    for (var i in appointTimeArray) {
+                        if ($(this).attr('value') == appointTimeArray[i]) {
+                            $(this).addClass('ca-bg-yellow');
+                            $(this).text('已完成')
+                        }
+                    }
+                });
+            }
+        }
+
+
+
+        /**
+         * 选择预约时间
+         */
+        function click_to_confirm_appoint() {
+            $('.ca-appoint').click(function () {
+               $('.ca-appoint').each(function () {
+                 $(this).text('').removeClass('ca-bg-red');
+               });
+               var text = $(this).text();
+                // TODO 这里 text 始终为空？
+                if (text == '') {
+                    $(this).text('选定为咨询定时间').addClass('ca-bg-red');
+                } else {
+                    $(this).text('').removeClass('ca-bg-red');
+                }
+            });
+        }
+
+
+        /**
+         * 确认预约时间
+         */
+        function confirm_time() {
+            var data = {};
+            data.id = '{$appoint_info.appoint.appoint_id}';
+            var url = '{$appoint_confirm_url}';
+            $('#btn-appoint').click(function () {
+               data.time = $('.ca-bg-red').attr('value');
+//                console.log(data);
+//                console.log(url);
+                $.post(url, data, function (res) {
+                    //console.log(res);
+                    if (res.status == 0) {
+                        alert('确认时间成功！');
+                        location.reload();
+                    } else {
+                        alert('确认失败，请重试');
+                        location.reload();
+                    }
+                });
+            });
+        }
+
+
+    });
+
+
+</script>
+
+<include file="./Template/Admin/Common/teacher/foot.html" />

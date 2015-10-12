@@ -89,8 +89,14 @@ class BaseController extends Controller {
                         } else {
                             $this->_data['nav']['free_time'] = 0;
                         }
-
-
+                        // 有新来访者预约预约，消息提醒，显示所有未确定的预约总数
+                        $appoint_number = 0;
+                        foreach ($data['appoint_list'] as $v) {
+                            if ($v['status'] == 0) {
+                                $appoint_number += 1;
+                            }
+                        }
+                        $this->_data['nav']['appoint'] = $appoint_number;
                         $this->_data['teacher'] = $data;
 
                     } else {
@@ -149,7 +155,7 @@ class BaseController extends Controller {
         $data['user'] = $User->where($where)->bind(':account_id', $id)->find();
 
         $Appoint = M('appoint');
-        $appoint_where['account_id'] = $id;
+        $appoint_where['user_id'] = $id;
         $data['appoint'] = $Appoint->where($appoint_where)->select();
         //var_dump($data['appoint']);
         //die();
@@ -228,6 +234,11 @@ class BaseController extends Controller {
         $data['account'] = $Account->where($where)->bind(':account_id', $id)->find();
         $data['teacher'] = $Teacher->where($where)->bind(':account_id', $id)->find();
 
+        // appoint info
+        $Appoint = M('appoint');
+        $appoint_where['teacher_id'] = $id;
+        $data['appoint'] = $Appoint->where($appoint_where)->select();
+
         if ($data['account'] || $data['teacher']) {
 
             $data['teacher']['service_type_a'] = '';
@@ -277,6 +288,7 @@ class BaseController extends Controller {
             $result['service_type_c'] = $data['teacher']['service_type_c'];
             $result['service_type_d'] = $data['teacher']['service_type_d'];
             $result['service_type_e'] = $data['teacher']['service_type_e'];
+            $result['appoint_list'] = $data['appoint']; //所有预约列表
 
             return $result;
 

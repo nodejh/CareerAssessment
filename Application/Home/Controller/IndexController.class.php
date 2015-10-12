@@ -17,8 +17,10 @@ class IndexController extends BaseController {
      * Home Page
      */
     public function index(){
-        var_dump($this->_data);
+        //var_dump($this->_data);
+        //die();
         $this->_data['title'] = '个人中心';
+        // TODO 列出推荐的咨询师
         $Teacher = M('teacher');
         $list = $Teacher->order('teacher_id desc')->limit(16)->select();
         $this->_data['list'] = $list;

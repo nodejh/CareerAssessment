@@ -17,7 +17,7 @@ class TeacherController extends BaseController {
      */
     public function index(){
         $this->is_teacher();
-        var_dump($this->_data['teacher']);
+        //var_dump($this->_data['teacher']);
         if ($_POST) {
             // 上传图片
             $upload = new \Think\Upload();

@@ -13,6 +13,7 @@
     // 咨询师页面
     teacher_time_inilialize();
     select_time();
+    select_all_time();
     save_time();
   }
 
@@ -57,15 +58,40 @@
     $('.ca-table-week td.ca-td-time').click(function () {
       var text = $(this).text();
       if (text == '可预约') {
-        $(this).text('不可预约');
-        $(this).removeClass('ca-free-time').addClass('ca-no-free-time');
+        //$(this).text('不可预约');
+        $(this)
+          .removeClass('ca-free-time')
+          .addClass('ca-no-free-time')
+          .text('不可预约');
       } else if (text == '不可预约') {
-        $(this).text('可预约');
-        $(this).removeClass('ca-no-free-time').addClass('ca-free-time');
+        //$(this).text('可预约');
+        $(this)
+          .removeClass('ca-no-free-time')
+          .addClass('ca-free-time')
+          .text('可预约');
       }
     });
   }
 
+  /**
+   * 全选/取消全选 预约时间
+   */
+  function select_all_time() {
+    $('#time-select-all').click(function () {
+      //console.log($(this).is(':checked'));
+      if ($(this).is(':checked')) {
+        $('.ca-table-week td.ca-td-time')
+          .removeClass('ca-no-free-time')
+          .addClass('ca-free-time')
+          .text('可预约');
+      } else {
+        $('.ca-table-week td.ca-td-time')
+          .removeClass('ca-free-time')
+          .addClass('ca-no-free-time')
+          .text('不可预约');
+      }
+    });
+  }
 
   /**
    * 获取所有空闲时间

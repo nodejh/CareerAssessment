@@ -15,7 +15,9 @@
 .ca-margin-top {
     margin-top: 70px;
 }
-
+.ca-cursor-point {
+    cursor: pointer;
+}
 
 /* home */
 .ca-select {

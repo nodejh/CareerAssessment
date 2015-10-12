@@ -236,7 +236,12 @@
                     <a href="__APP__/Admin/Teacher/password"><i class="fa fa-cog fa-fw"></i> 修改密码</a>
                 </li>
                 <li>
-                    <a href="__APP__/Admin/Teacher/time"><i class="fa fa-calendar fa-fw"></i> 我的空闲时间</a>
+                    <a href="__APP__/Admin/Teacher/time"><i class="fa fa-calendar fa-fw"></i>
+                        我的空闲时间
+                        <if condition="$nav.free_time eq 1"> <span class="label label-danger">请选择空闲时间</span>
+                            <else />
+                        </if>
+                    </a>
                 </li>
                 <li>
                     <a href="__APP__/Admin/Teacher/appoint"><i class="fa fa-list fa-fw"></i>

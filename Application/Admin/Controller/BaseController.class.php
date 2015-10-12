@@ -75,6 +75,11 @@ class BaseController extends Controller {
                         } else {
                             $this->_data['nav']['profile'] = 0;
                         }
+                        if (!$data['free_time']) {
+                            $this->_data['nav']['free_time'] = 1;
+                        } else {
+                            $this->_data['nav']['free_time'] = 0;
+                        }
                         $this->_data['teacher'] = $data;
                     } else {
                         $this->_data['teacher'] = 0;

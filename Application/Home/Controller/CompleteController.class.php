@@ -219,7 +219,6 @@ class CompleteController extends BaseController {
 
                     $info = $upload->uploadOne($_FILES['avatar']);
                     if (!$info) {
-
                         $this->_data['error'] = $upload->getError();
                         $this->assign($this->_data);
                         $this->display();

@@ -17,8 +17,99 @@ class TeacherController extends BaseController {
      */
     public function index(){
         $this->is_teacher();
-        //var_dump($this->_data['teacher']);
+        var_dump($this->_data['teacher']);
         if ($_POST) {
+            // 上传图片
+            $upload = new \Think\Upload();
+            $upload->maxSize = 3145728 ;// 设置附件上传大小
+            $upload->exts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+            $upload->rootPath = './Uploads/'; // 设置附件上传根目录
+            $upload->savePath = 'avatar/';
+
+            // TODO 这里每post交一次，都要上传一张图片；应改为如果没有更新图片，则不上传
+            $info = $upload->uploadOne($_FILES['avatar']);
+            if (!$info) {
+                $this->_data['error'] = $upload->getError();
+                $this->assign($this->_data);
+                $this->display();
+
+            } else {
+                $post['avatar'] = $info['savepath'].$info['savename'];
+                $post['name'] = I('post.name', 0);
+                $post['gender'] = I('post.gender', 0);
+                $post['email'] = I('post.email', 0);
+                $post['city'] = I('post.city', 0);
+                $post['service_type_a'] = I('post.service_type_a', 0);
+                $post['service_type_b'] = I('post.service_type_b', 0);
+                $post['service_type_c'] = I('post.service_type_c', 0);
+                $post['service_type_d'] = I('post.service_type_d', 0);
+                $post['service_type_e'] = I('post.service_type_e', 0);
+                $post['introduction'] = I('post.introduction', 0);
+                if ($post['service_type_a'] || $post['service_type_b'] || $post['service_type_c'] || $post['service_type_d'] || $post['service_type_e']) {
+                    $post['service_type'] = '';
+                    if ($post['service_type_a']) {
+                        $post['service_type'] .= $post['service_type_a'] . ',';
+                    }
+                    if ($post['service_type_b']) {
+                        $post['service_type'] .= $post['service_type_b'] . ',';
+                    }
+                    if ($post['service_type_c']) {
+                        $post['service_type'] .= $post['service_type_c'] . ',';
+                    }
+                    if ($post['service_type_d']) {
+                        $post['service_type'] .= $post['service_type_d'] . ',';
+                    }
+                    if ($post['service_type_e']) {
+                        $post['service_type'] .= $post['service_type_e'] . ',';
+                    }
+                    $post['service_type'] = rtrim($post['service_type'], ',');
+                }
+
+                // 将信息写入数据库
+                $Teacher = M('teacher');
+                $where_update['account_id'] = $_SESSION['id'];
+
+                $data = [];
+                if ($post['avatar']) {
+                    $data['avatar'] = $post['avatar'];
+                }
+                if ($post['name']) {
+                    $data['name'] = $post['name'];
+                }
+                if ($post['gender']) {
+                    $data['gender'] = $post['gender'];
+                }
+                if ($post['email']) {
+                    $data['email'] = $post['email'];
+                }
+                if ($post['city']) {
+                    $data['city'] = $post['city'];
+                }
+                if ($post['introduction']) {
+                    $data['introduction'] = $post['introduction'];
+                }
+                if ($post['service_type']) {
+                    $data['service_type'] = $post['service_type'];
+                }
+                if (count($data) > 0) {
+                    $row_teacher = $Teacher->data($data)->where($where_update)->save();
+                    if ($row_teacher !== false) {
+                        $this->_data['title'] = '修改个人资料';
+                        $this->_data['message'] = '修改个人资料修成功,请<a href="'.U('index').'">刷新</a>查看';
+                        $this->assign($this->_data);
+                        $this->display();
+                    } else {
+                        $this->_data['error'] = '修改个人资料修失败，请重试';
+                        $this->assign($this->_data);
+                        $this->display();
+                    }
+                } else {
+                    $this->_data['title'] = '修改个人资料';
+                    $this->_data['message'] = '头像修改成功,请<a href="'.U('index').'">刷新</a>查看';
+                    $this->assign($this->_data);
+                    $this->display();
+                }
+            }
 
         } else {
             $this->_data['title'] = '个人中心';

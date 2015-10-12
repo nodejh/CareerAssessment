@@ -38,6 +38,7 @@ class BaseController extends Controller {
                     // login type of user
                     $data = $this->get_user_info($_SESSION['id']);
                     //var_dump($data);
+                    //TODO 当未填写哪些信息的时候，显示 “请完善个人资料”
                     if ($data) {
                         if (
                             //is_null($data['phone']) ||
@@ -74,11 +75,11 @@ class BaseController extends Controller {
                         $this->_data['teacher']['free_time'] = $data['teacher']['free_time'];
                         $this->_data['teacher']['introduction'] = $data['teacher']['introduction'];
                         $this->_data['teacher']['city'] = $data['teacher']['city'];
-                        $this->_data['teacher']['certificate_a'] = $data['teacher']['certificate_a'];
-                        $this->_data['teacher']['certificate_b'] = $data['teacher']['certificate_b'];
                         $this->_data['teacher']['service_type_a'] = $data['teacher']['service_type_a'];
                         $this->_data['teacher']['service_type_b'] = $data['teacher']['service_type_b'];
                         $this->_data['teacher']['service_type_c'] = $data['teacher']['service_type_c'];
+                        $this->_data['teacher']['service_type_d'] = $data['teacher']['service_type_d'];
+                        $this->_data['teacher']['service_type_e'] = $data['teacher']['service_type_e'];
                     } else {
                         $this->_data['teacher'] = 0;
                     }
@@ -209,19 +210,6 @@ class BaseController extends Controller {
 
         if ($data['account'] || $data['teacher']) {
 
-            if ($data['teacher']) {
-
-                switch ($data['teacher']['gender']) {
-                    case 1:
-                        $data['teacher']['gender'] = '男';
-                        break;
-                    case 2:
-                        $data['teacher']['gender'] = '女';
-                        break;
-                    default:
-                        $data['teacher']['gender'] = '未知';
-                }
-            }
             $data['teacher']['service_type_a'] = '';
             $data['teacher']['service_type_b'] = '';
             $data['teacher']['service_type_c'] = '';
@@ -229,20 +217,23 @@ class BaseController extends Controller {
             if ($data['teacher']['service_type'] != null) {
                 $service_array = explode(',', $data['teacher']['service_type']);
             }
-
             foreach($service_array as $service) {
-                if ($service == '高中') {
+                if ($service == '小学') {
                     $data['teacher']['service_type_a'] = 'checked';
                 }
-                if ($service == '大学') {
+                if ($service == '初中') {
                     $data['teacher']['service_type_b'] = 'checked';
                 }
-                if ($service == '工作') {
+                if ($service == '高中') {
                     $data['teacher']['service_type_c'] = 'checked';
                 }
+                if ($service == '大学及以上') {
+                    $data['teacher']['service_type_d'] = 'checked';
+                }
+                if ($service == '工作') {
+                    $data['teacher']['service_type_e'] = 'checked';
+                }
             }
-
-
             return $data;
 
         } else {

@@ -132,50 +132,66 @@
                         </switch>
                         </ul>
 
-                        <div id="myTabContent" class="tab-content">
+                        <div id="myTabContent" class="tab-content ca-profile-tab">
                             <div class="tab-pane fade in active" id="profile-primary">
                                 <p>
-                                    <br>
-                                    <input type="text" class="form-control" name="school_primary" placeholder="请输入您的当前学校名称" value="{$user.school}">
+                                    <div class="form-group">
+                                        <label for="pforile-email" class="col-sm-3 control-label">当前学校</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="school_primary" placeholder="请输入您的当前学校名称" value="{$user.school}">
+                                        </div>
+                                    </div>
                                 </p>
                             </div>
 
                             <div class="tab-pane fade" id="profile-junior">
                                 <p>
-                                    <br>
-                                    <input type="text" class="form-control" name="school_junior" placeholder="请输入您的当前学校名称" value="{$user.school}">
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">当前学校</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="school_junior" placeholder="请输入您的当前学校名称" value="{$user.school}">
+                                        </div>
+                                    </div>
                                 </p>
                             </div>
 
                             <div class="tab-pane fade" id="profile-senior">
                                 <p>
-                                    <br>
-                                    <input type="text" class="form-control" name="school_senior" placeholder="请输入您的当前学校名称" value="{$user.school}">
-                                    <br>
-                                    <div class="col-sm-12">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" name="type_1" value="艺体生" {$user.type_1}> 艺体生
-                                                </label>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" name="type_2" value="少数名族考生" {$user.type_2}> 少数名族考生
-                                                </label>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" name="type_3" value="国家专项计划" {$user.type_3}>国家专项计划
-                                                </label>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" name="type_4" {$user.type_4}> 军校或国防生
-                                                </label>
-                                            </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">当前学校</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="school_senior" placeholder="请输入您的当前学校名称" value="{$user.school}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">考生类型</label>
+                                        <div class="col-sm-9">
                                             <div class="col-sm-12">
-                                                <small class="ca-small-tips">{$user.student.type}</small>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" name="type_1" value="艺体生" {$user.type_1}> 艺体生
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" name="type_2" value="少数名族考生" {$user.type_2}> 少数名族考生
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" name="type_3" value="国家专项计划" {$user.type_3}>国家专项计划
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" name="type_4" {$user.type_4}> 军校或国防生
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <small class="ca-small-tips">{$user.student.type}</small>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -184,61 +200,83 @@
 
                             <div class="tab-pane fade" id="profile-university">
                                 <p>
-                                    <br>
-                                    <input type="text" class="form-control" name="school_university" id="signup-userinfo-school" placeholder="请输入您的当前学校名称" value="{$user.school}">
-                                    <br>
-                                    <input type="text" class="form-control" name="college" id="signup-userinfo-college" placeholder="请输入您的专业" value="{$user.college}">
-                                    <div class="col-sm-12">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" name="type_1" value="艺体生" {$user.type_1}> 艺体生
-                                                </label>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" name="type_2" value="少数名族考生" {$user.type_2}> 少数名族考生
-                                                </label>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" name="type_3" value="国家专项计划" {$user.type_3}> 国家专项计划
-                                                </label>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label class="checkbox-inline">
-                                                    <input type="checkbox" name="type_4" value="军校或国防生" {$user.type_4}> 军校或国防生
-                                                </label>
-                                            </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">当前学校</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="school_university" id="signup-userinfo-school" placeholder="请输入您的当前学校名称" value="{$user.school}">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">所学专业</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="college" id="signup-userinfo-college" placeholder="请输入您的专业" value="{$user.college}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">考生类型</label>
+                                        <div class="col-sm-9">
                                             <div class="col-sm-12">
-                                                <small class="ca-small-tips">{$user.student.type}</small>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" name="type_1" value="艺体生" {$user.type_1}> 艺体生
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" name="type_2" value="少数名族考生" {$user.type_2}> 少数名族考生
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" name="type_3" value="国家专项计划" {$user.type_3}> 国家专项计划
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <label class="checkbox-inline">
+                                                            <input type="checkbox" name="type_4" value="军校或国防生" {$user.type_4}> 军校或国防生
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <small class="ca-small-tips">{$user.student.type}</small>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
                                 </p>
                             </div>
 
                             <div class="tab-pane fade" id="profile-work">
                                 <p>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="status" value="工作未满1年"> 工作未满1年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="status" value="工作1至3年"> 工作1至3年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="status" value="工作1至3年"> 工作1至3年
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <label class="radio-inline">
-                                            <input type="radio" name="status" value="工作5年以上"> 工作5年以上
-                                        </label>
+                                    <div class="form-group">
+                                        <label class="col-sm-3 control-label">工作时间</label>
+                                        <div class="col-sm-9">
+                                            <div class="col-sm-6">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="status" value="工作未满1年"> 工作未满1年
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="status" value="工作1至3年"> 工作1至3年
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="status" value="工作1至3年"> 工作1至3年
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="status" value="工作5年以上"> 工作5年以上
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </p>
                             </div>

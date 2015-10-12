@@ -152,7 +152,7 @@ class UserController extends BaseController {
 
                  $user_exist = $User->where($user_where)->find();
 
-                    var_dump($user_update);
+                    //var_dump($user_update);
 
                  if ($user_exist) {
                      // user 表中有该用户
@@ -211,14 +211,12 @@ class UserController extends BaseController {
 
                     $Account = M('account');
                     $account_where['account_id'] = $_SESSION['id'];
-                    $account_data['password'] = $post['password'];
+                    $account_data['password'] = encrypt($post['password']);
                     $account_result = $Account->where($account_where)->data($account_data)->save();
 
                     if ($account_result) {
 
                         $this->_data['message'] = '修改密码成功！';
-                        unset($_SESSION['f']);
-                        unset($this->_data['first']);
                         $this->assign($this->_data);
                         $this->display();
 

@@ -37,7 +37,7 @@ class BaseController extends Controller {
                 case 1:
                     // login type of user
                     $data = $this->get_user_info($_SESSION['id']);
-                    var_dump($data);
+                    //var_dump($data);
                     if ($data) {
                         if (
                             //is_null($data['phone']) ||

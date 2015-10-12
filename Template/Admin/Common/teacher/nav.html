@@ -225,7 +225,11 @@
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <li>
-                    <a href="__APP__/Admin/Teacher/index"><i class="fa fa-user fa-fw"></i> 修改个人资料
+                    <a href="__APP__/Admin/Teacher/index"><i class="fa fa-user fa-fw"></i>
+                        修改个人资料
+                        <if condition="$nav.profile eq 1"> <span class="label label-danger">请完善个人资料</span>
+                            <else />
+                        </if>
                     </a>
                 </li>
                 <li>

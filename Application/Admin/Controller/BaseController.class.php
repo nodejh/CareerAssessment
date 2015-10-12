@@ -62,24 +62,20 @@ class BaseController extends Controller {
                     // login type of Teacher
                     $data = $this->get_teacher_info($_SESSION['id']);
                     if ($data) {
-                        $this->_data['teacher']['account_id'] = $data['account']['account_id'];
-                        $this->_data['teacher']['phone'] = $data['account']['phone'];
-                        $this->_data['teacher']['password'] = $data['account']['password'];
-                        $this->_data['teacher']['card_id'] = $data['account']['card_id'];
-                        $this->_data['teacher']['date'] = $data['account']['date'];
-                        $this->_data['teacher']['name'] = $data['teacher']['name'];
-                        $this->_data['teacher']['email'] = $data['teacher']['email'];
-                        $this->_data['teacher']['avatar'] = $data['teacher']['avatar'];
-                        $this->_data['teacher']['gender'] = $data['teacher']['gender'];
-                        $this->_data['teacher']['service_type'] = $data['teacher']['service_type'];
-                        $this->_data['teacher']['free_time'] = $data['teacher']['free_time'];
-                        $this->_data['teacher']['introduction'] = $data['teacher']['introduction'];
-                        $this->_data['teacher']['city'] = $data['teacher']['city'];
-                        $this->_data['teacher']['service_type_a'] = $data['teacher']['service_type_a'];
-                        $this->_data['teacher']['service_type_b'] = $data['teacher']['service_type_b'];
-                        $this->_data['teacher']['service_type_c'] = $data['teacher']['service_type_c'];
-                        $this->_data['teacher']['service_type_d'] = $data['teacher']['service_type_d'];
-                        $this->_data['teacher']['service_type_e'] = $data['teacher']['service_type_e'];
+
+                        if (
+                            //is_null($data['phone']) ||
+                            is_null($data['name']) ||
+                            //is_null($data['email'])
+                            //is_null($data['gender']) ||
+                            is_null($data['avatar'])
+                            //is_null($data['city'])
+                        ) {
+                            $this->_data['nav']['profile'] = 1; // 未完善信息，需要完善信息
+                        } else {
+                            $this->_data['nav']['profile'] = 0;
+                        }
+                        $this->_data['teacher'] = $data;
                     } else {
                         $this->_data['teacher'] = 0;
                     }
@@ -213,6 +209,8 @@ class BaseController extends Controller {
             $data['teacher']['service_type_a'] = '';
             $data['teacher']['service_type_b'] = '';
             $data['teacher']['service_type_c'] = '';
+            $data['teacher']['service_type_d'] = '';
+            $data['teacher']['service_type_e'] = '';
 
             if ($data['teacher']['service_type'] != null) {
                 $service_array = explode(',', $data['teacher']['service_type']);
@@ -234,7 +232,29 @@ class BaseController extends Controller {
                     $data['teacher']['service_type_e'] = 'checked';
                 }
             }
-            return $data;
+
+            $result['account_id'] = $data['account']['account_id'];
+            $result['phone'] = $data['account']['phone'];
+            $result['password'] = $data['account']['password'];
+            $result['card_id'] = $data['account']['card_id'];
+            $result['register_time'] = $data['account']['register_time'];
+            $result['name'] = $data['teacher']['name'];
+            $result['email'] = $data['teacher']['email'];
+            $result['gender'] = $data['teacher']['gender'];
+            $result['service_type'] = $data['teacher']['service_type'];
+            $result['certificate'] = $data['teacher']['certificate'];
+            $result['avatar'] = $data['teacher']['avatar'];
+            $result['recommendation'] = $data['teacher']['recommendation'];
+            $result['free_time'] = $data['teacher']['free_time'];
+            $result['introduction'] = $data['teacher']['introduction'];
+            $result['city'] = $data['teacher']['city'];
+            $result['service_type_a'] = $data['teacher']['service_type_a'];
+            $result['service_type_b'] = $data['teacher']['service_type_b'];
+            $result['service_type_c'] = $data['teacher']['service_type_c'];
+            $result['service_type_d'] = $data['teacher']['service_type_d'];
+            $result['service_type_e'] = $data['teacher']['service_type_e'];
+
+            return $result;
 
         } else {
             return 0;

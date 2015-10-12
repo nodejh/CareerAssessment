@@ -38,8 +38,9 @@ class BaseController extends Controller {
                     // login type of user
                     $data = $this->get_user_info($_SESSION['id']);
                     //var_dump($data);
-                    //TODO 当未填写哪些信息的时候，显示 “请完善个人资料”
                     if ($data) {
+
+                        //TODO 当未填写哪些信息的时候，显示 “请完善个人资料”
                         if (
                             //is_null($data['phone']) ||
                             is_null($data['name'])
@@ -53,6 +54,14 @@ class BaseController extends Controller {
                         } else {
                             $this->_data['nav']['profile'] = 0;
                         }
+                        // 咨询师已确认某预约，消息提醒
+                        $appoint_confirm_number = 0;
+                        foreach ($data['appoint_list'] as $v) {
+                            if ($v['status'] == 1) {
+                                $appoint_confirm_number += 1;
+                            }
+                        }
+                        $this->_data['nav']['appoint'] = $appoint_confirm_number;
                         $this->_data['user'] = $data;
                     } else {
                         $this->_data['user'] = 0;
@@ -80,7 +89,10 @@ class BaseController extends Controller {
                         } else {
                             $this->_data['nav']['free_time'] = 0;
                         }
+
+
                         $this->_data['teacher'] = $data;
+
                     } else {
                         $this->_data['teacher'] = 0;
                     }
@@ -136,6 +148,12 @@ class BaseController extends Controller {
         $data['account'] = $Account->where($where)->bind(':account_id',$id)->find();
         $data['user'] = $User->where($where)->bind(':account_id', $id)->find();
 
+        $Appoint = M('appoint');
+        $appoint_where['account_id'] = $id;
+        $data['appoint'] = $Appoint->where($appoint_where)->select();
+        //var_dump($data['appoint']);
+        //die();
+
         if ($data['account']) {
 
             $result['account_id'] = $data['account']['account_id'];
@@ -188,6 +206,7 @@ class BaseController extends Controller {
             $result['type_2'] = $data['user']['type_2'];
             $result['type_3'] = $data['user']['type_3'];
             $result['type_4'] = $data['user']['type_4'];
+            $result['appoint_list'] = $data['appoint']; //所有预约列表
 
             return $result;
         } else {

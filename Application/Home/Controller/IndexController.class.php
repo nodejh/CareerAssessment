@@ -103,11 +103,18 @@ class IndexController extends BaseController {
                 $Teacher = M('teacher');
                 $where['account_id'] = $id;
                 $teacher_result = $Teacher->where($where)->find();
+                $Option = M('option');
+                $option_result = $Option->select();
 
-                if ($teacher_result) {
+                if ($teacher_result && $option_result) {
                     $this->_data['html'] = set_week();
                     $this->_data['appoint'] = $teacher_result;
                     $this->_data['url'] = U('save_appoint');
+                    $this->_data['appoint']['time_per_day'] = $option_result[0]['value']; //每天最多预约次数
+                    $this->_data['appoint']['number_per_appoint'] = $option_result[1]['value']; //每次预约最多能选择的时间段
+                    $this->_data['appoint']['number_per_month'] = $option_result[2]['value']; //每个月最多预约次数
+                    //var_dump($this->_data);
+                    //die();
                     $this->assign($this->_data);
                     $this->display();
                 } else {
@@ -204,6 +211,12 @@ class IndexController extends BaseController {
         }
     }
 
+    /**
+     * TODO 预约状态，包括预约次数，是否可继续预约等
+     */
+    public function appoint_status() {
+
+    }
 
 
     public function logout() {

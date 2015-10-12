@@ -1,0 +1,81 @@
+<include file="./Template/Admin/Common/user/header.html" />
+<include file="./Template/Admin/Common/user/nav.html" />
+
+
+
+
+<div id="page-wrapper">
+    <div class="row">
+
+        <div class="col-lg-12">
+            <h1 class="page-header">预约详情</h1>
+        </div>
+
+
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-10 col-sm-4 col-xs-offset-1 col-sm-offset-0">
+                    <div class="thumbnail">
+                        <img src="__ROOT__/Uploads/{$appoint_info.teacher.avatar}" alt="{$appoint_info.teacher.name}">
+                        <div class="caption">
+                            <h4>{$appoint_info.teacher.name} <small> {$appoint_info.teacher.city}</small></h4>
+                            <p>
+                                <small>专业程度</small>
+                                <br>
+                                <small>服务态度</small>
+                            </p>
+                            <p>
+                                {$appoint_info.teacher.introduction}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-10 col-sm-8 col-xs-offset-1 col-sm-offset-0">
+                    {$html}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<include file="./Template/Admin/Common/user/footer.html" />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        initialize();
+
+        /**
+         * 页面初始化
+         */
+        function initialize() {
+            appoint_time_inilialize();
+        }
+
+
+        /**
+         * 预约时间表初始化
+         */
+        function appoint_time_inilialize() {
+            var appointTime = '{$appoint_info.appoint.time}';
+            var appointTimeArray = appointTime.split(',');
+
+            $caTd = $('td');
+            $caTd.each(function () {
+                for (var i in appointTimeArray) {
+                    if ($(this).attr('value') == appointTimeArray[i]) {
+                        $(this).addClass('ca-appoint');
+                    }
+                }
+                $(this).text('').removeClass('ca-no-free-time');
+            });
+        }
+    });
+
+
+</script>
+
+<include file="./Template/Admin/Common/user/foot.html" />

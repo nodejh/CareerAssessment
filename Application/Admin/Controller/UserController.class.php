@@ -248,76 +248,133 @@ class UserController extends BaseController {
      * 预约表
      */
     public function appoint() {
-
         $this->is_user();
 
-        $Appoint = M('appoint');
-        $appoint_where['user_id'] = $_SESSION['id'];
-        $appoint_result = $Appoint->where($appoint_where)->select();
-
-
-        //var_dump($appoint_result);
-
         $Teacher = M('teacher');
-        foreach ($appoint_result as $k => $v) {
+        foreach ($this->_data['user']['appoint_list'] as $k => $v) {
             $teacher_where['account_id'] = $v['teacher_id'];
             $teacher_result = $Teacher->where($teacher_where)->find();
-            $appoint_result[$k]['teacher_name'] = $teacher_result['name'];
-            $appoint_result[$k]['teacher_email'] = $teacher_result['email'];
+            //$appoint_result[$k]['teacher_name'] = $teacher_result['name'];
+            //$appoint_result[$k]['teacher_email'] = $teacher_result['email'];
+            $appoint_info[$k] = $teacher_result;
+            $appoint_info[$k]['status'] = $v['status'];
+            $appoint_info[$k]['appoint_id'] = $v['appoint_id'];
+            //switch ($v['status']) {
+            //    case 0:
+            //        $appoint_result[$k]['status'] = '待咨询师确认';
+            //        break;
+            //    case 1:
+            //        $appoint_result[$k]['status'] = '咨询师已确认';
+            //        break;
+            //    case 2:
+            //        $appoint_result[$k]['status'] = '已完成';
+            //        break;
+            //}
 
-            switch ($v['status']) {
-                case 0:
-                    $appoint_result[$k]['status'] = '待咨询师确认';
-                    break;
-                case 1:
-                    $appoint_result[$k]['status'] = '咨询师已确认';
-                    break;
-                case 2:
-                    $appoint_result[$k]['status'] = '已完成';
-                    break;
-            }
-
-            $timeArr = explode(',', $v['time']);
-            $appoint_result[$k]['time'] = '';
-            foreach($timeArr as $kk => $vv) {
-                $tempArr = explode('-', $vv);
-                var_dump($tempArr);
-
-                switch ($tempArr[0]) {
-                    case 'a':
-                        $t = '9:00-10:30';
-                        break;
-                    case 'b':
-                        $t = '10:30-12:00';
-                        break;
-                    case 'c':
-                        $t = '14:30-16:00';
-                        break;
-                    case 'd':
-                        $t = '16:00-17:30';
-                        break;
-                    case 'e':
-                        $t = '19:00-20:30';
-                        break;
-                    case 'f':
-                        $t = '20:30-22:00';
-                        break;
-                }
-
-                $appoint_result[$k]['time'] .= $tempArr[1] . '-' . $tempArr[2] . '-' . $tempArr[3] . $t . '/';
-            }
-            $appoint_result[$k]['time'] = rtrim($appoint_result[$k]['time'], '/');
+            //$timeArr = explode(',', $v['time']);
+            //$appoint_result[$k]['time'] = '';
+            //foreach($timeArr as $kk => $vv) {
+            //    $tempArr = explode('-', $vv);
+            //    var_dump($tempArr);
+            //
+            //    switch ($tempArr[0]) {
+            //        case 'a':
+            //            $t = '9:00-10:30';
+            //            break;
+            //        case 'b':
+            //            $t = '10:30-12:00';
+            //            break;
+            //        case 'c':
+            //            $t = '14:30-16:00';
+            //            break;
+            //        case 'd':
+            //            $t = '16:00-17:30';
+            //            break;
+            //        case 'e':
+            //            $t = '19:00-20:30';
+            //            break;
+            //        case 'f':
+            //            $t = '20:30-22:00';
+            //            break;
+            //    }
+            //
+            //    $appoint_result[$k]['time'] .= $tempArr[1] . '-' . $tempArr[2] . '-' . $tempArr[3] . $t . '/';
+            //}
+            //$appoint_result[$k]['time'] = rtrim($appoint_result[$k]['time'], '/');
         }
 
+        //var_dump($appoint_teacher_info);
+        //die();
 
-        $this->_data['appoint'] = $appoint_result;
+        $this->_data['appoint_info'] = $appoint_info;
         $this->_data['title'] = '我的预约表';
-        $appoint_confirm_count_where['user_id'] = $_SESSION['id'];
-        $appoint_confirm_count_where['status'] = 1;
-        $this->_data['appoint_confirm_count'] = $Appoint->where($appoint_confirm_count_where)->count('id');
+        //$appoint_confirm_count_where['user_id'] = $_SESSION['id'];
+        //$appoint_confirm_count_where['status'] = 1;
+        //$this->_data['appoint_confirm_count'] = $Appoint->where($appoint_confirm_count_where)->count('id');
         $this->assign($this->_data);
         $this->display();
+    }
 
+
+    /**
+     * 删除预约
+     */
+    public function appoint_delete() {
+        $this->is_user();
+        $id = I('get.appoint_id', 0);
+        if ($id) {
+            $Appoint = M('appoint');
+            $where['appoint_id'] = $id;
+            $delete_result = $Appoint->where($where)->delete();
+            if ($delete_result) {
+                $this->redirect('appoint', '', 0);
+            } else {
+                $this->redirect('appoint', '', 0);
+            }
+        } else {
+            $this->redirect('appoint', '', 0);
+        }
+    }
+
+
+    /**
+     * 预约详情
+     */
+    public function appoint_details() {
+        $this->is_user();
+        //var_dump($this->_data['user']['appoint_list']);
+        //die();
+        $appoint_id = I('get.appoint_id', 0);
+        $result = [];
+        foreach($this->_data['user']['appoint_list'] as $k => $v) {
+            if ($v['appoint_id'] == $appoint_id) {
+                $Teacher = M('teacher');
+                $where['account_id'] = $v['teacher_id'];
+                $teacher_info = $Teacher->where($where)->find();
+
+                $result['appoint']['appoint_id'] = $appoint_id;
+                $result['appoint']['user_id'] = $v['user_id'];
+                $result['appoint']['teacher_id'] = $v['teacher_id'];
+                $result['appoint']['time'] = $v['time'];
+                $result['appoint']['save_time'] = $v['save_time'];
+                $result['appoint']['status'] = $v['status'];
+                $result['teacher']['avatar'] = $teacher_info['avatar'];
+                $result['teacher']['gender'] = $teacher_info['gender'];
+                $result['teacher']['email'] = $teacher_info['email'];
+                $result['teacher']['city'] = $teacher_info['city'];
+                $result['teacher']['name'] = $teacher_info['name'];
+                $result['teacher']['service_type'] = $teacher_info['service_type'];
+                $result['teacher']['free_time'] = $teacher_info['free_time'];
+                $result['teacher']['certificate'] = $teacher_info['certificate'];
+                $result['teacher']['introduction'] = $teacher_info['introduction'];
+                break;
+            }
+        }
+
+        $this->_data['appoint_info'] = $result;
+        $this->_data['html'] = set_week();
+        $this->assign($this->_data);
+        $this->display();
     }
 
 

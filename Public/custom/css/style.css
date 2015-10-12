@@ -139,3 +139,9 @@ p.tip{color:#666;line-height:20px;padding:5px;margin:0;text-indent:3px;}
     border-right: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
 }
+
+/* user/appoint */
+.ca-appoint-list-avatar {
+    width: 30px;
+    height: 30px;
+}

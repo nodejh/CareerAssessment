@@ -12,23 +12,41 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>咨询师</th>
-                        <th>预约时间</th>
+                        <th>咨询师头像</th>
+                        <th>咨询师姓名</th>
                         <th>预约状态</th>
                         <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
-                <volist name="appoint" id="vo">
+                <volist name="appoint_info" id="vo">
                     <tr>
-                        <td>{$vo.teacher_name}</td>
-                        <td>{$vo.time}</td>
-                        <td>{$vo.status}</td>
+                        <td>
+                            <img class="ca-appoint-list-avatar" src="__ROOT__/Uploads/{$vo.avatar}" alt="{$vo.name}">
+                        </td>
+                        <td>{$vo.name}</td>
                         <td>
                             <switch name="vo.status" >
-                                <case value="待咨询师确认"><a href="__APP__/Home/Index/change_appoint">修改</a></case>
-                                <case value="咨询师已确认">详情</case>
+                                <case value="0">待咨询师确认</case>
+                                <case value="1">等待咨询</case>
+                                <case value="2">已完成</case>
                             </switch>
+                        </td>
+                        <td>
+                            <switch name="vo.status" >
+                                <case value="0">
+                                    <a href="__APP__/Admin/User/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">详情</a>
+                                    <a href="__APP__/Admin/User/appoint_change/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">修改</a>
+                                    <a href="__APP__/Admin/User/appoint_delete/appoint_id/{$vo.appoint_id}" class="btn btn-default btn-sm" role="button">删除</a>
+                                </case>
+                                <default />
+                                    <a href="__APP__/Admin/User/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">详情</a>
+                                    <a href="#" class="btn btn-primary btn-sm" role="button" disabled>修改</a>
+                                    <a href="#" class="btn btn-default btn-sm" role="button" disabled>删除</a>
+                            </switch>
+
+
+
                         </td>
                     </tr>
                 </volist>

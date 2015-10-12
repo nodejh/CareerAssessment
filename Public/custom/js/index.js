@@ -7,7 +7,7 @@
    * 初始化页面
    */
   function initialize() {
-    set_img_height();
+    //set_img_height();
     set_select();
   }
 

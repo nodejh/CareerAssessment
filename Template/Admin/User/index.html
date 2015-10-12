@@ -33,9 +33,9 @@
                             <small>服务态度</small>
                         </p>
                         <p>
-                            <a href="__APP__/Home/Index/appoint/id/{$vo.account_id}" class="btn btn-primary btn-sm" role="button">预约</a>
-                            <a href="#" class="btn btn-default btn-sm" role="button">详情</a>
-                            <a href="#" class="btn btn-default btn-sm" role="button">课程</a>
+                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#home-index-details-{$vo.account_id}" data-id="{$vo.account_id}">详情</button>
+                        <a href="__APP__/Home/Index/appoint/id/{$vo.account_id}" class="btn btn-primary btn-sm" role="button">预约</a>
+                        <a href="__APP__/Home/Course/teacher/{$vo.account_id}" class="btn btn-primary btn-sm" role="button">课程</a>
                         </p>
                     </div>
                 </div>

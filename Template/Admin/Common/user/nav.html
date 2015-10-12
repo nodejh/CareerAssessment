@@ -241,11 +241,11 @@
                 </li>
                 <li>
                     <a href="__APP__/Admin/User/appoint"><i class="fa fa-calendar fa-fw"></i> 我的咨询预约表
-                        <present name="appoint_confirm_count">
-                            <gt name="appoint_confirm_count" value="0">
-                                <span class="badge">{$appoint_confirm_count}</span>
-                            </gt>
-                        </present>
+
+                        <if condition="$nav.appoint gt 0 ">
+                                <span class="label label-danger">{$nav.appoint}</span>
+                            <else />
+                        </if>
                     </a>
                 </li>
                 <li>

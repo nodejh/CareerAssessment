@@ -310,33 +310,55 @@ class TeacherController extends BaseController {
         $this->is_teacher();
         $id = I('post.id', 0);
         $time = I('post.time', 0);
-        var_dump($id);
-        var_dump($time);
+        //var_dump($id);
+        //var_dump($time);
         if($id && $time) {
             $Appoint = M('appoint');
             $appoint_where['appoint_id'] = $id;
             $appoint_data['status'] = 1;
-            $appoint_data['time'] = $time;
+            $appoint_data['teacher_confirm_date'] = $time;
             $appoint_data['confirm_time'] = time();
             $appoint_result = $Appoint->where($appoint_where)->data($appoint_data)->save();
-
-            // TODO ajax 返回无效
+            //var_dump($appoint_result);
             if ($appoint_result) {
-                //$this->_data['title'] = '我的预约表';
-                //
-                //$this->assign($this->_data);
-                //$this->redirect('appoint', '', 0);
+
                 $result['status'] = 0;
-                $result['message'] = 'success';
+                $result['message'] = 's';
                 $this->ajaxReturn($result);
 
             } else {
                 $result['status'] = -1;
                 $result['message'] = 'fail';
                 $this->ajaxReturn($result);
-                //$this->_data['title'] = '我的预约表';
-                //$this->assign($this->_data);
-                //$this->redirect('appoint', '', 0);
+            }
+        }
+    }
+
+
+    /**
+     * 确认完成预约
+     */
+    public function appoint_finish() {
+        $this->is_teacher();
+
+        $id = I('post.id', 0);
+
+        if ($id) {
+            $Appoint = M('appoint');
+            $appoint_where['appoint_id'] = $id;
+            $appoint_data['status'] = 2;
+            $appoint_data['finish_time'] = time();
+            $appoint_result = $Appoint->where($appoint_where)->data($appoint_data)->save();
+
+            if ($appoint_result !== false) {
+                $res['status'] = 0;
+                $res['message'] = 'success';
+                $this->ajaxReturn($res);
+
+            } else {
+                $res['status'] = -1;
+                $res['message'] = 'fail';
+                $this->ajaxReturn($res);
             }
         }
     }
@@ -359,7 +381,9 @@ class TeacherController extends BaseController {
                     $result['appoint']['appoint_id'] = $appoint_id;
                     $result['appoint']['user_id'] = $v['user_id'];
                     $result['appoint']['teacher_id'] = $v['teacher_id'];
-                    $result['appoint']['time'] = $v['time'];
+                    $result['appoint']['user_select_date'] = $v['user_select_date'];
+                    $result['appoint']['teacher_confirm_date'] = $v['teacher_confirm_date'];
+                    $result['appoint']['user_confirm_date'] = $v['user_confirm_date'];
                     $result['appoint']['status'] = $v['status'];
                     $result['appoint']['save_time'] = $v['save_time'];
                     $result['appoint']['status'] = $v['status'];
@@ -378,6 +402,8 @@ class TeacherController extends BaseController {
             $this->_data['appoint_info'] = $result;
             $this->_data['html'] = set_week();
             $this->_data['appoint_confirm_url'] = U('appoint_confirm');
+            $this->_data['appoint_finish_url'] = U('appoint_finish');
+
             $this->assign($this->_data);
             $this->display();
 

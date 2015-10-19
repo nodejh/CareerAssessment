@@ -129,12 +129,12 @@ p.tip{color:#666;line-height:20px;padding:5px;margin:0;text-indent:3px;}
     background-color: #449D44;
     cursor: pointer;
 }
-.ca-bg-red {
+.ca-appoint-confirm {
     background-color: red;
     color: #fff;
 }
-.ca-bg-yellow {
-    background-color: yellow;
+.ca-appoint-finish {
+    background-color: #0057F7;
     color: #fff;
 }
 

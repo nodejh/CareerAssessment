@@ -12,11 +12,12 @@
     <div class="row">
 
         <div class="col-xs-10 col-md-8">
+            <p>预约咨询步骤：</p>
+            <p>来访者选择预约时间 -> 咨询师确认预约时间 -> 来访者再次确认预约时间 -> 咨询 -> 咨询师确认咨询完成</p>
             <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>姓名</th>
-                        <th>时间</th>
                         <th>状态</th>
                         <th>操作</th>
                     </tr>
@@ -27,12 +28,12 @@
                         <td>
                             <a href="__APP__/Admin/Teacher/appoint_user/user_id/{$vo.user_account_id}">{$vo.name}</a>
                         </td>
-                        <td>{$vo.save_time|date="y-m-d H:i:s",###}</td>
                         <td>
                             <switch name="vo.status" >
-                                <case value="0">待确认</case>
-                                <case value="1">等待咨询</case>
-                                <case value="2">已完成</case>
+                                <case value="0">待咨询师确认</case>
+                                <case value="1">待用户确认</case>
+                                <case value="2">待咨询</case>
+                                <case value="3">已完成</case>
                             </switch>
                         </td>
                         <td>

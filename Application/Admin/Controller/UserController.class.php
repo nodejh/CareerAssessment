@@ -379,6 +379,65 @@ class UserController extends BaseController {
 
 
     /**
+     * 修改预约
+     */
+    public function appoint_change() {
+        $this->is_user();
+        $this->_data['title'] = '修改预约';
+        if ($_POST && $_POST['appoint_id']) {
+
+            $where['appoint_id'] = $_POST['appoint_id'];
+            $data['time'] = $_POST['time'];
+            $Appoint = M('appoint');
+            $appoint_result = $Appoint->data($data)->where($where)->save();
+            if ($appoint_result !== false ){
+                $res['status']  = 0;
+                $res['content'] = 'success';
+                $this->ajaxReturn($res);
+            } else {
+                $res['status']  = -1;
+                $res['content'] = 'fail';
+                $this->ajaxReturn($res);
+            }
+
+        } else {
+            $appoint_id = I('get.appoint_id', 0);
+            $result = [];
+            foreach($this->_data['user']['appoint_list'] as $k => $v) {
+                if ($v['appoint_id'] == $appoint_id) {
+                    $Teacher = M('teacher');
+                    $where['account_id'] = $v['teacher_id'];
+                    $teacher_info = $Teacher->where($where)->find();
+
+                    $result['appoint']['appoint_id'] = $appoint_id;
+                    $result['appoint']['user_id'] = $v['user_id'];
+                    $result['appoint']['teacher_id'] = $v['teacher_id'];
+                    $result['appoint']['time'] = $v['time'];
+                    $result['appoint']['save_time'] = $v['save_time'];
+                    $result['appoint']['status'] = $v['status'];
+                    $result['teacher']['avatar'] = $teacher_info['avatar'];
+                    $result['teacher']['gender'] = $teacher_info['gender'];
+                    $result['teacher']['email'] = $teacher_info['email'];
+                    $result['teacher']['city'] = $teacher_info['city'];
+                    $result['teacher']['name'] = $teacher_info['name'];
+                    $result['teacher']['service_type'] = $teacher_info['service_type'];
+                    $result['teacher']['free_time'] = $teacher_info['free_time'];
+                    $result['teacher']['certificate'] = $teacher_info['certificate'];
+                    $result['teacher']['introduction'] = $teacher_info['introduction'];
+                    break;
+                }
+            }
+
+            $this->_data['appoint_info'] = $result;
+            $this->_data['html'] = set_week();
+            $this->_data['url'] = U('appoint_change');
+            $this->assign($this->_data);
+            $this->display();
+        }
+    }
+
+
+    /**
      * 判断是 type 否为 user
      * 如果不是，则跳转到相应 type
      */

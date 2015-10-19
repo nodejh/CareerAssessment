@@ -135,14 +135,14 @@ class IndexController extends BaseController {
         if ($_POST && isset($_POST['time'])) {
             $post['user_id'] = I('post.user_id', 0);
             $post['teacher_id'] = I('post.teacher_id', 0);
-            $post['time'] = I('post.time', 0);
+            $post['user_select_date'] = I('post.time', 0);
 
             // TODO 判断是否已经预约
-            if ($post['user_id'] && $post['teacher_id'] && $post['time']) {
+            if ($post['user_id'] && $post['teacher_id'] && $post['user_select_date']) {
                 $Appoint = M('appoint');
                 $data['user_id'] = $post['user_id'];
                 $data['teacher_id'] = $post['teacher_id'];
-                $data['time'] = $post['time'];
+                $data['user_select_date'] = $post['user_select_date'];
                 $data['save_time'] = time();
                 $data['status'] = 0;
                 $appoint_result = $Appoint->data($data)->add();

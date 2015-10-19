@@ -14,28 +14,34 @@
 
         <div class="col-xs-12">
             <div class="row">
-                <div class="col-xs-10 col-sm-4 col-xs-offset-1 col-sm-offset-0">
-                    <div class="thumbnail">
-                        <div class="caption">
-                            <h4>{$appoint_info.user.name} <small>  {$appoint_info.user.gender}  {$appoint_info.user.city}</small></h4>
-                            <p>
-                                ------------
-                                来访者详情
-                            </p>
-                            <p>
-                                ------------
-                                评测结果
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-10 col-sm-8 col-xs-offset-1 col-sm-offset-0">
+                <!--<div class="col-xs-10 col-sm-4 col-xs-offset-1 col-sm-offset-0">-->
+                    <!--<div class="thumbnail">-->
+                        <!--<div class="caption">-->
+                            <!--<h4>{$appoint_info.user.name} <small>  {$appoint_info.user.gender}  {$appoint_info.user.city}</small></h4>-->
+                            <!--<p>-->
+                                <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+                                <!--来访者详情-->
+                            <!--</p>-->
+                            <!--<p>-->
+                                <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+                                <!--评测结果-->
+                            <!--</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="col-xs-12">
                     <span>请点击选择咨询时间，并按“提交”按钮确认</span>
                     {$html}
                 </div>
                 <div class="row">
                     <div class="col-sm-6 col-sm-offset-6">
                         <button type="button" class="form-control btn-primary ca-hide" id="btn-appoint"> 提交</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-6">
+                        <button type="button" class="form-control btn-primary ca-hide" id="finish-appoint"> 确认完成</button>
                     </div>
                 </div>
             </div>
@@ -52,6 +58,10 @@
     $(document).ready(function () {
 
         appoint_time_inilialize();
+        click_to_confirm_appoint();
+        confirm_time();
+        finish_appoint();
+
 
         /**
          * 预约时间表初始化
@@ -59,29 +69,39 @@
         function appoint_time_inilialize() {
             var appointTime = '{$appoint_info.appoint.time}';
             var appointTimeArray = appointTime.split(',');
+
+            var user_select_date = '{$appoint_info.appoint.user_select_date}';
+            var user_select_date_array = user_select_date.split(',');
+
+            var teacher_confirm_date = '{$appoint_info.appoint.teacher_confirm_date}';
+            var teacher_confirm_date_array = teacher_confirm_date.split(',');
+
+            var user_confirm_date = '{$appoint_info.appoint.user_confirm_date}';
+            var user_confirm_date_array = user_confirm_date.split(',');
+
             var appoint_status = '{$appoint_info.appoint.status}';
             $caTd = $('td');
+            console.log(appoint_status);
 
             if (appoint_status == 0) {
                 $caTd.each(function () {
-                    for (var i in appointTimeArray) {
-                        if ($(this).attr('value') == appointTimeArray[i]) {
+                    for (var i in user_select_date_array) {
+                        if ($(this).attr('value') == user_select_date_array[i]) {
                             $(this).addClass('ca-appoint');
                         }
                     }
                     $(this).text('').removeClass('ca-no-free-time');
                 });
                 $('#btn-appoint').removeClass('ca-hide');
-                click_to_confirm_appoint();
-                confirm_time();
+
 
             } else if (appoint_status == 1) {
                 $caTd.each(function () {
                     $(this).text('').removeClass('ca-no-free-time');
-                    for (var i in appointTimeArray) {
-                        if ($(this).attr('value') == appointTimeArray[i]) {
-                            $(this).addClass('ca-bg-red');
-                            $(this).text('等待咨询')
+                    for (var i in teacher_confirm_date_array) {
+                        if ($(this).attr('value') == teacher_confirm_date_array[i]) {
+                            $(this).addClass('ca-appoint-confirm');
+                            $(this).text('等待用户确认')
                         }
                     }
                 });
@@ -89,10 +109,22 @@
             } else if (appoint_status == 2) {
                 $caTd.each(function () {
                     $(this).text('').removeClass('ca-no-free-time');
-                    for (var i in appointTimeArray) {
-                        if ($(this).attr('value') == appointTimeArray[i]) {
-                            $(this).addClass('ca-bg-yellow');
-                            $(this).text('已完成')
+                    for (var i in user_confirm_date_array) {
+                        if ($(this).attr('value') == user_confirm_date_array[i]) {
+                            $(this).addClass('ca-appoint-confirm');
+                            $(this).text('等待咨询')
+                        }
+                    }
+                });
+                $('#finish-appoint').removeClass('ca-hide');
+
+            } else if (appoint_status == 3) {
+                $caTd.each(function () {
+                    $(this).text('').removeClass('ca-no-free-time');
+                    for (var i in user_confirm_date_array) {
+                        if ($(this).attr('value') == user_confirm_date_array[i]) {
+                            $(this).addClass('ca-appoint-finish');
+                            $(this).text('已完成');
                         }
                     }
                 });
@@ -106,15 +138,15 @@
          */
         function click_to_confirm_appoint() {
             $('.ca-appoint').click(function () {
-               $('.ca-appoint').each(function () {
-                 $(this).text('').removeClass('ca-bg-red');
-               });
+//               $('.ca-appoint').each(function () {
+//                 $(this).text('').removeClass('ca-appoint-confirm');
+//               });
                var text = $(this).text();
                 // TODO 这里 text 始终为空？
                 if (text == '') {
-                    $(this).text('选定为咨询定时间').addClass('ca-bg-red');
+                    $(this).text('选定为咨询定时间').addClass('ca-appoint-confirm');
                 } else {
-                    $(this).text('').removeClass('ca-bg-red');
+                    $(this).text('').removeClass('ca-appoint-confirm');
                 }
             });
         }
@@ -127,14 +159,41 @@
             var data = {};
             data.id = '{$appoint_info.appoint.appoint_id}';
             var url = '{$appoint_confirm_url}';
+
             $('#btn-appoint').click(function () {
-               data.time = $('.ca-bg-red').attr('value');
-//                console.log(data);
-//                console.log(url);
+                var time = '';
+                $('.ca-appoint-confirm').each(function () {
+                    time += $(this).attr('value') + ',';
+                });
+                console.log(time.substring(0, time.length - 1));
+               data.time = time.substring(0, time.length - 1);
+                console.log(url);
+
                 $.post(url, data, function (res) {
                     //console.log(res);
                     if (res.status == 0) {
                         alert('确认时间成功！');
+                        location.reload();
+                    } else {
+                        alert('确认失败，请重试');
+                        location.reload();
+                    }
+                });
+            });
+        }
+
+
+        /**
+         * 完成预约
+         */
+        function finish_appoint() {
+            var data = {};
+            data.id = '{$appoint_info.appoint.appoint_id}';
+            var url = '{$appoint_finish_url}';
+            $('#finish-appoint').click(function () {
+                $.post(url, data, function(res) {
+                    if (res.status == 0) {
+                        alert('确认成功！');
                         location.reload();
                     } else {
                         alert('确认失败，请重试');

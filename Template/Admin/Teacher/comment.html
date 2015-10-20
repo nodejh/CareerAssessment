@@ -11,19 +11,38 @@
     <!-- /.row -->
     <div class="row">
 
-        <present name="first">
-            <br>
-            <div class="alert alert-success" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <p>您的用户号是：<strong class="ca-default-usernumber">{$teacher.phone}</strong>
-                    ，默认登录密码是：<strong class="ca-default-usernumber">{$teacher.password}</strong></p>
-                <p>建议您<a href="__APP__/Admin/Teacher/password">修改密码</a>。</p>
-            </div>
-        </present>
+        <div class="col-xs-10">
+            <empty name="comment">
+                尚无评论
+                <else />
 
-        <div class="col-xs-10 col-md-4">
+
+                <table class="table table-hover">
+
+                    <thead>
+                        <tr>
+                            <th>评价者</th>
+                            <th>专业程度</th>
+                            <th>服务态度</th>
+                            <th>评价内容</th>
+                            <th>评价时间</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <volist name="comment" id="vo">
+                            <tr>
+                                <td>{$vo.name}</td>
+                                <td>{$vo.attitude_score}</td>
+                                <td>{$vo.professional_score}</td>
+                                <td>{$vo.content}</td>
+                                <td>{$vo.time|date="y-m-d H:i:s",###}</td>
+                            </tr>
+                        </volist>
+                    </tbody>
+                </table>
+
+            </empty>
+
 
         </div>
     </div>

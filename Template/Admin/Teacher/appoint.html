@@ -18,6 +18,7 @@
                 <thead>
                     <tr>
                         <th>姓名</th>
+                        <th>查看评测</th>
                         <th>状态</th>
                         <th>操作</th>
                     </tr>
@@ -29,11 +30,15 @@
                             <a href="__APP__/Admin/Teacher/appoint_user/user_id/{$vo.user_account_id}">{$vo.name}</a>
                         </td>
                         <td>
+                            <a href="#">查看评测</a>
+                        </td>
+                        <td>
                             <switch name="vo.status" >
-                                <case value="0">待咨询师确认</case>
-                                <case value="1">待用户确认</case>
-                                <case value="2">待咨询</case>
-                                <case value="3">已完成</case>
+                                <case value="0"><span class="label label-success">待咨询师确认</span></case>
+                                <case value="1"><span class="label label-warning">等来访者确认</span></case>
+                                <case value="2"><span class="label label-info">待咨询</span></case>
+                                <case value="3"><span class="label label-primary">已完成</span></case>
+                                <case value="4"><span class="label label-default">已废弃</span></case>
                             </switch>
                         </td>
                         <td>

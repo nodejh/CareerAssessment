@@ -317,7 +317,7 @@ class TeacherController extends BaseController {
             $appoint_where['appoint_id'] = $id;
             $appoint_data['status'] = 1;
             $appoint_data['teacher_confirm_date'] = $time;
-            $appoint_data['confirm_time'] = time();
+            $appoint_data['teacher_confirm_time'] = time();
             $appoint_result = $Appoint->where($appoint_where)->data($appoint_data)->save();
             //var_dump($appoint_result);
             if ($appoint_result) {
@@ -346,7 +346,7 @@ class TeacherController extends BaseController {
         if ($id) {
             $Appoint = M('appoint');
             $appoint_where['appoint_id'] = $id;
-            $appoint_data['status'] = 2;
+            $appoint_data['status'] = 3;
             $appoint_data['finish_time'] = time();
             $appoint_result = $Appoint->where($appoint_where)->data($appoint_data)->save();
 
@@ -431,6 +431,27 @@ class TeacherController extends BaseController {
     public function comment() {
         $this->is_teacher();
         $this->_data['title'] = '我的评分';
+
+        $Comment = M('comment');
+        $where['teacher_id'] = $_SESSION['id'];
+        $comment_list = $Comment->where($where)->order('comment_id desc')->select();
+
+
+        $User = M('user');
+
+        if ($comment_list) {
+            foreach ($comment_list as $k => $v) {
+                $where_user['account_id'] = $v['user_id'];
+                // TODO 只查询 name 一个字段
+                $user = $User->where($where_user)->find();
+                $comment_list[$k]['name'] = $user['name'];
+            }
+
+            $this->_data['comment'] = $comment_list;
+
+        } else {
+            $this->_data['comment'] = '';
+        }
 
         $this->assign($this->_data);
         $this->display();

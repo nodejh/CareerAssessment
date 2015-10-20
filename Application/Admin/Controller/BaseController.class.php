@@ -156,7 +156,7 @@ class BaseController extends Controller {
 
         $Appoint = M('appoint');
         $appoint_where['user_id'] = $id;
-        $data['appoint'] = $Appoint->where($appoint_where)->select();
+        $data['appoint'] = $Appoint->where($appoint_where)->order('save_time desc')->select();
         //var_dump($data['appoint']);
         //die();
 
@@ -237,7 +237,7 @@ class BaseController extends Controller {
         // appoint info
         $Appoint = M('appoint');
         $appoint_where['teacher_id'] = $id;
-        $data['appoint'] = $Appoint->where($appoint_where)->select();
+        $data['appoint'] = $Appoint->where($appoint_where)->order('save_time desc')->select();
 
         if ($data['account'] || $data['teacher']) {
 

@@ -355,7 +355,9 @@ class UserController extends BaseController {
                 $result['appoint']['appoint_id'] = $appoint_id;
                 $result['appoint']['user_id'] = $v['user_id'];
                 $result['appoint']['teacher_id'] = $v['teacher_id'];
-                $result['appoint']['time'] = $v['time'];
+                $result['appoint']['user_select_date'] = $v['user_select_date'];
+                $result['appoint']['teacher_confirm_date'] = $v['teacher_confirm_date'];
+                $result['appoint']['user_confirm_date'] = $v['user_confirm_date'];
                 $result['appoint']['save_time'] = $v['save_time'];
                 $result['appoint']['status'] = $v['status'];
                 $result['teacher']['avatar'] = $teacher_info['avatar'];
@@ -370,9 +372,11 @@ class UserController extends BaseController {
                 break;
             }
         }
-
+        //var_dump($result);
+        //die();
         $this->_data['appoint_info'] = $result;
         $this->_data['html'] = set_week();
+        $this->_data['appoint_confirm_url'] = U('appoint_confirm');
         $this->assign($this->_data);
         $this->display();
     }
@@ -434,6 +438,135 @@ class UserController extends BaseController {
             $this->assign($this->_data);
             $this->display();
         }
+    }
+
+
+    /**
+     * 来访者确认预约时间
+     */
+    public function appoint_confirm() {
+        $this->is_user();
+        if ($_POST && isset($_POST['appoint_id'])) {
+
+            $where['appoint_id'] = $_POST['appoint_id'];
+            $data['user_confirm_date'] = $_POST['time'];
+            $appoint_data['user_confirm_time'] = time();
+            $data['status'] = 2;
+            $Appoint = M('appoint');
+            $appoint_result = $Appoint->data($data)->where($where)->save();
+            if ($appoint_result !== false) {
+                $res['status'] = 0;
+                $res['content'] = 'success';
+                $this->ajaxReturn($res);
+            } else {
+                $res['status'] = -1;
+                $res['content'] = 'fail';
+                $this->ajaxReturn($res);
+            }
+        } else {
+            $res['status'] = -1;
+            $res['content'] = '非法操作';
+            $this->ajaxReturn($res);
+        }
+    }
+
+
+    /**
+     *  评价
+     */
+    public function comment() {
+        $this->is_user();
+
+        if ($_POST && isset($_POST['appoint_id']) && isset($_POST['user_id']) && isset($_POST['teacher_id'])) {
+            $data['appoint_id'] = $_POST['appoint_id'];
+            $data['user_id'] = $_POST['user_id'];
+            $data['teacher_id'] = $_POST['teacher_id'];
+            $data['attitude_score'] = $_POST['attitude_score'] ? $_POST['attitude_score'] : 0 ;
+            $data['professional_score'] = $_POST['professional_score'] ? $_POST['professional_score'] : 0;
+            $data['content'] = $_POST['content'] ? $_POST['content'] : null;
+            $data['time'] = time();
+
+            $Comment = M('comment');
+            $insert_comment = $Comment->data($data)->add();
+
+            // 计算改咨询师的平均分，并存入 teacher 表
+            $where_comment['teacher_id'] = $_POST['teacher_id'];
+            $comment_list = $Comment->where($where_comment)->select();
+
+            $comment_list_length = count($comment_list);
+            $all_attitude_score = 0;
+            $all_professional_score = 0;
+            for ($i = 0; $i < $comment_list_length; $i++) {
+                $all_attitude_score += $comment_list[$i]['attitude_score'];
+                $all_professional_score += $comment_list[$i]['professional_score'];
+            }
+            $data_teacher['attitude_score'] = round($all_attitude_score/$comment_list_length, 2);
+            $data_teacher['professional_score'] = round($all_professional_score/$comment_list_length, 2);
+            $Teacher = M('teacher');
+            $where_teacher['account_id'] = $_POST['teacher_id'];
+            $update_teacher = $Teacher->where($where_teacher)->data($data_teacher)->save();
+            //var_dump($insert_comment);
+            //var_dump($update_teacher);
+            if ($insert_comment && ($update_teacher !== false)) {
+                $res['status'] = 0;
+                $res['content'] = 'success';
+                $this->ajaxReturn($res);
+            } else {
+                $res['status'] = -1;
+                $res['content'] = 'fail';
+                $this->ajaxReturn($res);
+            }
+        } else {
+            //$res['status'] = -1;
+            //$res['content'] = '非法操作';
+            //$this->ajaxReturn($res);
+            $teacher_account_id = $_GET['teacher_id'];
+            $Teacher = M('teacher');
+            $where['account_id'] = $teacher_account_id;
+            $teacher = $Teacher->where($where)->find();
+            $this->_data['teacher'] = $teacher;
+            $this->_data['comment_url'] = U('comment');
+            $this->_data['appoint_id'] = $_GET['appoint_id'];
+            var_dump($this->_data['teacher']);
+            $this->assign($this->_data);
+            $this->display();
+        }
+    }
+
+
+    /**
+     * 评论列表
+     */
+    public function comment_list() {
+        $this->is_user();
+
+        $this->_data['title'] = '我的评分';
+
+        $Comment = M('comment');
+        $where['user_id'] = $_SESSION['id'];
+        $comment_list = $Comment->where($where)->order('comment_id desc')->select();
+
+
+        $User = M('teacher');
+
+        if ($comment_list) {
+            foreach ($comment_list as $k => $v) {
+                $where_teacher['account_id'] = $v['teacher_id'];
+                // TODO 只查询 name 一个字段
+                $teacher = $User->where($where_teacher)->find();
+                $comment_list[$k]['name'] = $teacher['name'];
+            }
+
+            $this->_data['comment'] = $comment_list;
+
+        } else {
+            $this->_data['comment'] = '';
+        }
+
+        $this->assign($this->_data);
+        $this->display();
+
+
     }
 
 

@@ -1,0 +1,59 @@
+<include file="./Template/Admin/Common/user/header.html" />
+<include file="./Template/Admin/Common/user/nav.html" />
+
+
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">我的评分</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+
+        <div class="col-xs-10">
+            <empty name="comment">
+                尚无评论
+                <else />
+
+
+                <table class="table table-hover">
+
+                    <thead>
+                    <tr>
+                        <th>咨询师</th>
+                        <th>专业程度</th>
+                        <th>服务态度</th>
+                        <th>评价内容</th>
+                        <th>评价时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <volist name="comment" id="vo">
+                        <tr>
+                            <td>{$vo.name}</td>
+                            <td>{$vo.attitude_score}</td>
+                            <td>{$vo.professional_score}</td>
+                            <td>{$vo.content}</td>
+                            <td>{$vo.time|date="y-m-d H:i:s",###}</td>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+
+            </empty>
+
+
+        </div>
+    </div>
+
+</div>
+<!-- /#page-wrapper -->
+
+
+<include file="./Template/Admin/Common/user/footer.html" />
+
+
+<include file="./Template/Admin/Common/user/foot.html" />

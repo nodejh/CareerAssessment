@@ -28,9 +28,9 @@
                     <div class="caption">
                         <h4>{$vo.name} <small> {$vo.city}</small></h4>
                         <p>
-                            <small>专业程度</small>
+                            <small>专业程度 {$vo.attitude_score}</small>
                             <br>
-                            <small>服务态度</small>
+                            <small>服务态度 {$vo.professional_score}</small>
                         </p>
                         <p>
                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#home-index-details-{$vo.account_id}" data-id="{$vo.account_id}">详情</button>

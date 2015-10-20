@@ -1,3 +1,223 @@
+<!--<include file="./Template/Admin/Common/user/header.html" />-->
+<!--<include file="./Template/Admin/Common/user/nav.html" />-->
+
+
+
+
+<!--<div id="page-wrapper">-->
+    <!--<div class="row">-->
+
+        <!--<div class="col-lg-12">-->
+            <!--<h1 class="page-header">预约详情</h1>-->
+        <!--</div>-->
+
+
+        <!--<div class="col-xs-12">-->
+            <!--<div class="row">-->
+                <!--<div class="col-xs-10 col-sm-4 col-xs-offset-1 col-sm-offset-0">-->
+                    <!--<div class="thumbnail">-->
+                        <!--<img src="__ROOT__/Uploads/{$appoint_info.teacher.avatar}" alt="{$appoint_info.teacher.name}">-->
+                        <!--<div class="caption">-->
+                            <!--<h4>{$appoint_info.teacher.name} <small> {$appoint_info.teacher.city}</small></h4>-->
+                            <!--<p>-->
+                                <!--<small>专业程度</small>-->
+                                <!--<br>-->
+                                <!--<small>服务态度</small>-->
+                            <!--</p>-->
+                            <!--<p>-->
+                                <!--{$appoint_info.teacher.introduction}-->
+                            <!--</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--<div class="col-xs-10 col-sm-8 col-xs-offset-1 col-sm-offset-0">-->
+                    <!--{$html}-->
+                <!--</div>-->
+                <!--<div class="row">-->
+                    <!--<div class="col-sm-6 col-sm-offset-6">-->
+                        <!--<button type="button" class="form-control btn-primary" id="home-btn-appoint" data-url="{$url}"> 预约</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+    <!--</div>-->
+<!--</div>-->
+
+
+
+<!--<include file="./Template/Admin/Common/user/footer.html" />-->
+
+<!--<script type="text/javascript">-->
+    <!--$(document).ready(function () {-->
+
+<!--//        initialize();-->
+<!--//-->
+<!--//        /**-->
+<!--//         * 页面初始化-->
+<!--//         */-->
+<!--//        function initialize() {-->
+<!--//            appoint_time_inilialize();-->
+<!--//        }-->
+<!--//-->
+<!--//-->
+<!--//        /**-->
+<!--//         * 预约时间表初始化-->
+<!--//         */-->
+<!--//        function appoint_time_inilialize() {-->
+<!--//            var appointTime = '{$appoint_info.appoint.time}';-->
+<!--//            var appointTimeArray = appointTime.split(',');-->
+<!--//-->
+<!--//            $caTd = $('td');-->
+<!--//            $caTd.each(function () {-->
+<!--//                for (var i in appointTimeArray) {-->
+<!--//                    if ($(this).attr('value') == appointTimeArray[i]) {-->
+<!--//                        $(this).addClass('ca-appoint');-->
+<!--//                    }-->
+<!--//                }-->
+<!--//                $(this).text('').removeClass('ca-no-free-time');-->
+<!--//            });-->
+<!--//        }-->
+
+
+
+
+
+        <!--initialize();-->
+
+        <!--/**-->
+         <!--* 页面初始化-->
+         <!--*/-->
+        <!--function initialize() {-->
+            <!--appoint_time_inilialize();-->
+            <!--click_to_appoint();-->
+            <!--appoint();-->
+        <!--}-->
+
+
+        <!--/**-->
+         <!--* 预约时间表初始化-->
+         <!--*/-->
+        <!--function appoint_time_inilialize() {-->
+
+            <!--var freeTime = $('#time-free-time').text();-->
+            <!--var freeTimeArray = freeTime.split(',');-->
+            <!--$caTdTime = $('td.ca-td-time');-->
+            <!--//$('#time-free-time');-->
+            <!--$caTdTime.each(function () {-->
+                <!--for (var i in freeTimeArray) {-->
+                    <!--if ($(this).attr('value') == freeTimeArray[i]) {-->
+                        <!--$(this).removeClass('ca-no-free-time').addClass('ca-can-appoint');-->
+                        <!--$(this).text('可预约');-->
+                    <!--}-->
+                <!--}-->
+            <!--});-->
+
+            <!--var $noFreeTime = $('.ca-no-free-time');-->
+            <!--$noFreeTime.each(function () {-->
+                <!--$(this).removeClass('ca-no-free-time').addClass('ca-cannot-appoint');-->
+            <!--});-->
+        <!--}-->
+
+
+        <!--/**-->
+         <!--* 选择预约时间-->
+         <!--*/-->
+        <!--function click_to_appoint() {-->
+            <!--$('.ca-can-appoint').click(function () {-->
+                <!--// $(this).addClass('ca-appoint');-->
+                <!--//$('.ca-can-appoint').not(this).each(function () {-->
+                <!--//  if ($(this).hasClass('ca-appoint')) {-->
+                <!--//    $(this).removeClass('ca-appoint');-->
+                <!--//  }-->
+                <!--//});-->
+                <!--if ($(this).hasClass('ca-appoint')) {-->
+                    <!--$(this).removeClass('ca-appoint');-->
+                <!--} else {-->
+                    <!--var length = $('.ca-appoint').length;-->
+                    <!--console.log(length);-->
+                    <!--if (length >= '{$appoint.number_per_appoint}') {-->
+                        <!--alert('每次预约最多能选择{$appoint.number_per_appoint}个待确定的时间段');-->
+                    <!--} else {-->
+                        <!--$(this).addClass('ca-appoint');-->
+                    <!--}-->
+                <!--}-->
+
+            <!--});-->
+        <!--}-->
+
+
+        <!--/**-->
+         <!--* 预约-->
+         <!--*/-->
+        <!--function appoint() {-->
+            <!--$('#home-btn-appoint').click(function () {-->
+                <!--//console.log('a');-->
+               <!--// var type = $('#nav-user').attr('data-type');-->
+                <!--//console.log(type);-->
+                <!--//if (type == 1) {-->
+                    <!--var $timeElemt = $('.ca-appoint');-->
+                    <!--var time = '';-->
+                    <!--$timeElemt.each(function () {-->
+                        <!--var val = $(this).attr('value');-->
+                        <!--time += val + ',';-->
+                    <!--});-->
+                    <!--//console.log(time);-->
+                    <!--//var time = $('.ca-appoint').attr('value');-->
+
+                    <!--if (time.length > 0) {-->
+                        <!--time = time.substring(0, time.length -1);-->
+                        <!--var url = $(this).attr('data-url');-->
+                        <!--//var teacher_id = '{$appoint.account_id}';-->
+<!--//                        var user_id = '{$Think.session.id}';-->
+                        <!--var appoint_id = '{appoint_info.appoint.appoint_id}';-->
+<!--//                        console.log(teacher_id);-->
+<!--//                        console.log(user_id);-->
+                        <!--var data = {-->
+                            <!--'appoint_id': appoint_id,-->
+<!--//                            'teacher_id': teacher_id,-->
+<!--//                            'user_id': user_id,-->
+                            <!--'time': time-->
+                        <!--};-->
+                        <!--console.log(data);-->
+                        <!--$.post(url, data, function (result) {-->
+                            <!--console.log(result);-->
+                            <!--if (result.status == 0) {-->
+                                <!--alert('修改成功');-->
+                                <!--//location.reload();-->
+                                <!--location.href = result.url;-->
+                            <!--} else {-->
+                                <!--alert('修改失败，请重试');-->
+                                <!--//location.reload();-->
+                            <!--}-->
+                        <!--});-->
+
+                    <!--} else {-->
+                        <!--alert('请选择预约时间');-->
+                    <!--}-->
+<!--//                } else {-->
+<!--//                    alert('请您先登录后再预约');-->
+<!--//                    window.location.href = $('#login').attr('href');-->
+<!--//                }-->
+            <!--});-->
+        <!--}-->
+
+
+
+
+
+
+    <!--});-->
+
+
+<!--</script>-->
+
+<!--<include file="./Template/Admin/Common/user/foot.html" />-->
+
+
+
+
+
 <include file="./Template/Admin/Common/user/header.html" />
 <include file="./Template/Admin/Common/user/nav.html" />
 
@@ -33,11 +253,14 @@
                 <div class="col-xs-10 col-sm-8 col-xs-offset-1 col-sm-offset-0">
                     {$html}
                 </div>
+
                 <div class="row">
                     <div class="col-sm-6 col-sm-offset-6">
-                        <button type="button" class="form-control btn-primary" id="home-btn-appoint" data-url="{$url}"> 预约</button>
+                        <button type="button" class="form-control btn-primary ca-hide" id="btn-change"> 修改</button>
                     </div>
                 </div>
+
+
             </div>
         </div>
 
@@ -51,23 +274,23 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-//        initialize();
-//
-//        /**
-//         * 页面初始化
-//         */
-//        function initialize() {
-//            appoint_time_inilialize();
-//        }
-//
-//
-//        /**
-//         * 预约时间表初始化
-//         */
+        initialize();
+
+        /**
+         * 页面初始化
+         */
+        function initialize() {
+            appoint_time_inilialize();
+        }
+
+
+        /**
+         * 预约时间表初始化
+         */
 //        function appoint_time_inilialize() {
-//            var appointTime = '{$appoint_info.appoint.time}';
+//            var appointTime = '{$appoint_info.appoint.teacher_confirm_date}';
 //            var appointTimeArray = appointTime.split(',');
-//
+//            console.log(appointTime);
 //            $caTd = $('td');
 //            $caTd.each(function () {
 //                for (var i in appointTimeArray) {
@@ -78,132 +301,69 @@
 //                $(this).text('').removeClass('ca-no-free-time');
 //            });
 //        }
-
-
-
-
-
-        initialize();
-
-        /**
-         * 页面初始化
-         */
-        function initialize() {
-            appoint_time_inilialize();
-            click_to_appoint();
-            appoint();
-        }
-
-
-        /**
-         * 预约时间表初始化
-         */
         function appoint_time_inilialize() {
 
-            var freeTime = $('#time-free-time').text();
-            var freeTimeArray = freeTime.split(',');
-            $caTdTime = $('td.ca-td-time');
-            //$('#time-free-time');
-            $caTdTime.each(function () {
-                for (var i in freeTimeArray) {
-                    if ($(this).attr('value') == freeTimeArray[i]) {
-                        $(this).removeClass('ca-no-free-time').addClass('ca-can-appoint');
-                        $(this).text('可预约');
+            var user_select_date = '{$appoint_info.appoint.user_select_date}';
+            var user_select_date_array = user_select_date.split(',');
+
+            var teacher_confirm_date = '{$appoint_info.appoint.teacher_confirm_date}';
+            var teacher_confirm_date_array = teacher_confirm_date.split(',');
+
+            var user_confirm_date = '{$appoint_info.appoint.user_confirm_date}';
+            var user_confirm_date_array = user_confirm_date.split(',');
+
+            var appoint_status = '{$appoint_info.appoint.status}';
+            $caTd = $('td');
+            console.log(appoint_status);
+            console.log(user_select_date_array);
+            console.log(user_confirm_date_array);
+            console.log(teacher_confirm_date_array);
+
+            if (appoint_status == 0) {
+                $caTd.each(function () {
+                    for (var i in user_select_date_array) {
+                        if ($(this).attr('value') == user_select_date_array[i]) {
+                            $(this).addClass('ca-appoint');
+                        }
                     }
-                }
-            });
+                    $(this).text('').removeClass('ca-no-free-time');
+                });
+                $('#btn-change').removeClass('ca-hide');
 
-            var $noFreeTime = $('.ca-no-free-time');
-            $noFreeTime.each(function () {
-                $(this).removeClass('ca-no-free-time').addClass('ca-cannot-appoint');
-            });
-        }
-
-
-        /**
-         * 选择预约时间
-         */
-        function click_to_appoint() {
-            $('.ca-can-appoint').click(function () {
-                // $(this).addClass('ca-appoint');
-                //$('.ca-can-appoint').not(this).each(function () {
-                //  if ($(this).hasClass('ca-appoint')) {
-                //    $(this).removeClass('ca-appoint');
-                //  }
-                //});
-                if ($(this).hasClass('ca-appoint')) {
-                    $(this).removeClass('ca-appoint');
-                } else {
-                    var length = $('.ca-appoint').length;
-                    console.log(length);
-                    if (length >= '{$appoint.number_per_appoint}') {
-                        alert('每次预约最多能选择{$appoint.number_per_appoint}个待确定的时间段');
-                    } else {
-                        $(this).addClass('ca-appoint');
+            } else if (appoint_status == 1) {
+                $caTd.each(function () {
+                    $(this).text('').removeClass('ca-no-free-time');
+                    for (var i in teacher_confirm_date_array) {
+                        if ($(this).attr('value') == teacher_confirm_date_array[i]) {
+                            $(this).addClass('ca-appoint');
+                            $(this).text('点击确认');
+                        }
                     }
-                }
+                });
 
-            });
-        }
-
-
-        /**
-         * 预约
-         */
-        function appoint() {
-            $('#home-btn-appoint').click(function () {
-                //console.log('a');
-               // var type = $('#nav-user').attr('data-type');
-                //console.log(type);
-                //if (type == 1) {
-                    var $timeElemt = $('.ca-appoint');
-                    var time = '';
-                    $timeElemt.each(function () {
-                        var val = $(this).attr('value');
-                        time += val + ',';
-                    });
-                    //console.log(time);
-                    //var time = $('.ca-appoint').attr('value');
-
-                    if (time.length > 0) {
-                        time = time.substring(0, time.length -1);
-                        var url = $(this).attr('data-url');
-                        //var teacher_id = '{$appoint.account_id}';
-//                        var user_id = '{$Think.session.id}';
-                        var appoint_id = '{appoint_info.appoint.appoint_id}';
-//                        console.log(teacher_id);
-//                        console.log(user_id);
-                        var data = {
-                            'appoint_id': appoint_id,
-//                            'teacher_id': teacher_id,
-//                            'user_id': user_id,
-                            'time': time
-                        };
-                        console.log(data);
-                        $.post(url, data, function (result) {
-                            console.log(result);
-                            if (result.status == 0) {
-                                alert('修改成功');
-                                //location.reload();
-                                location.href = result.url;
-                            } else {
-                                alert('修改失败，请重试');
-                                //location.reload();
-                            }
-                        });
-
-                    } else {
-                        alert('请选择预约时间');
+            } else if (appoint_status == 2) {
+                $caTd.each(function () {
+                    $(this).text('').removeClass('ca-no-free-time');
+                    for (var i in user_confirm_date_array) {
+                        if ($(this).attr('value') == user_confirm_date_array[i]) {
+                            $(this).addClass('ca-appoint-confirm');
+                            $(this).text('等待咨询');
+                        }
                     }
-//                } else {
-//                    alert('请您先登录后再预约');
-//                    window.location.href = $('#login').attr('href');
-//                }
-            });
+                });
+
+            } else if (appoint_status == 3) {
+                $caTd.each(function () {
+                    $(this).text('').removeClass('ca-no-free-time');
+                    for (var i in user_confirm_date_array) {
+                        if ($(this).attr('value') == user_confirm_date_array[i]) {
+                            $(this).addClass('ca-appoint-finish');
+                            $(this).text('已完成');
+                        }
+                    }
+                });
+            }
         }
-
-
-
 
 
 
@@ -213,3 +373,4 @@
 </script>
 
 <include file="./Template/Admin/Common/user/foot.html" />
+

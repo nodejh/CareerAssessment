@@ -18,7 +18,9 @@
 .ca-cursor-point {
     cursor: pointer;
 }
-
+.ca-color-red {
+    color: red;
+}
 
 /* home */
 .ca-select {

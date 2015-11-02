@@ -426,6 +426,30 @@ class TeacherController extends BaseController {
 
 
     /**
+     * 我的钱包
+     */
+    public function pay() {
+        $this->is_teacher();
+        $this->_data['title'] = '我的钱包';
+
+        $this->assign($this->_data);
+        $this->display();
+    }
+
+
+    /**
+     * 我的证书
+     */
+    public function certificate() {
+        $this->is_teacher();
+        $this->_data['title'] = '我的证书';
+
+        $this->assign($this->_data);
+        $this->display();
+    }
+
+
+    /**
      * 我的评分
      */
     public function comment() {

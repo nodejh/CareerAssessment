@@ -120,6 +120,38 @@ class TeacherController extends BaseController {
 
 
     /**
+     * 个人资料
+     */
+    public function profile() {
+        $this->is_teacher();
+        $this->_data['title'] = '个人资料';
+        var_dump($this->_data);
+        $this->assign($this->_data);
+        $this->display();
+    }
+
+    /**
+     * 修改个人资料
+     */
+    public function edit() {
+        $this->is_teacher();
+        $this->_data['title'] = '修改个人资料';
+        var_dump($this->_data);
+        $this->assign($this->_data);
+        $this->display();
+    }
+
+
+    /**
+     * 修改头像
+     */
+    public function avatar() {
+        $this->is_teacher();
+        $this->_data['title'] = '修改头像';
+    }
+
+
+    /**
      * 修改密码
      */
     public function password() {
@@ -444,6 +476,15 @@ class TeacherController extends BaseController {
         $this->is_teacher();
         $this->_data['title'] = '我的证书';
 
+        $Teacher = M('teacher');
+        $where_teacher['id'] = $_SESSION['id'];
+        $certificate = $Teacher->where($where_teacher)->getField('certificate');
+        var_dump($certificate);
+        if ($certificate != null) {
+
+        } else {
+            $this->_data['certificate'] = null;
+        }
         $this->assign($this->_data);
         $this->display();
     }

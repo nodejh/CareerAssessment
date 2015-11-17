@@ -2,6 +2,34 @@
 <include file="./Template/Admin/Common/teacher/nav.html" />
 
 
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">我的证书</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+
+        <div class="col-xs-10">
+            <empty name="certificate">
+                <p>
+                    尚无证书
+                </p>
+                <button class="btn btn-primary">添加证书</button>
+                <else />
+
+
+            </empty>
+
+
+        </div>
+    </div>
+
+</div>
+
+
 
 <include file="./Template/Admin/Common/teacher/footer.html" />
 

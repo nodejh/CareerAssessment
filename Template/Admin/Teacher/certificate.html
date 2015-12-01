@@ -12,18 +12,40 @@
     <!-- /.row -->
     <div class="row">
 
-        <div class="col-xs-10">
-            <empty name="certificate">
-                <p>
-                    尚无证书
-                </p>
-                <button class="btn btn-primary">添加证书</button>
-                <else />
+        <div class="col-xs-10 col-md-6">
+            <form class="form-horizontal" action="__APP__/Admin/Teacher/certificate" method="post" enctype="multipart/form-data">
+
+                <present name="error">
+                    <div class="alert alert-danger" role="alert">{$error}</div>
+                </present>
+
+                <present name="message">
+                    <br>
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <p>{$message}</p>
+                    </div>
+                </present>
 
 
-            </empty>
+                <div class="form-group">
+                    <label for="teacher-certificate-name" class="col-sm-3 control-label">证书名称</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="name" id="teacher-certificate-name" placeholder="请输入您的证书名称">
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    <label for="teacher-certificate-picture" class="col-sm-3 control-label">证书图片</label>
+                    <div class="col-sm-9">
+                        <input type="file" class="form-control" id="teacher-certificate-picture" name="picture" placeholder="请选择您的证书图片">
+                    </div>
+                </div>
 
+                <button type="submit" class="btn btn-primary btn-block">确定</button>
+            </form>
         </div>
     </div>
 

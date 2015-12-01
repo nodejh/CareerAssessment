@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="__APP__/">蓝鲸教育咨询/咨询师后台</a>
+        <a class="navbar-brand" href="__APP__/Admin/Teacher/index">咨询师后台</a>
     </div>
     <!-- /.navbar-header -->
 
@@ -233,6 +233,10 @@
                     <!--</a>-->
                 <!--</li>-->
                 <li>
+                    <a href="__APP__/Admin/Teacher/index"><i class="fa fa-list-alt fa-fw"></i> 概览
+                    </a>
+                </li>
+                <li>
                     <a href="#"><i class="fa fa-user fa-fw"></i>
                         个人资料
                         <if condition="$nav.profile eq 1">
@@ -251,35 +255,38 @@
                         <li>
                             <a href="__APP__/Admin/Teacher/avatar">修改头像</a>
                         </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
-                    <ul class="nav nav-second-level">
                         <li>
-                            <a href="panels-wells.html">Panels and Wells</a>
+                            <a href="__APP__/Admin/Teacher/password">修改密码</a>
                         </li>
                         <li>
-                            <a href="buttons.html">Buttons</a>
-                        </li>
-                        <li>
-                            <a href="notifications.html">Notifications</a>
-                        </li>
-                        <li>
-                            <a href="typography.html">Typography</a>
-                        </li>
-                        <li>
-                            <a href="icons.html"> Icons</a>
-                        </li>
-                        <li>
-                            <a href="grid.html">Grid</a>
+                            <a href="__APP__/Admin/Teacher/certificate">添加证书</a>
                         </li>
                     </ul>
                 </li>
+                <!--<li>-->
+                    <!--<a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>-->
+                    <!--<ul class="nav nav-second-level">-->
+                        <!--<li>-->
+                            <!--<a href="panels-wells.html">Panels and Wells</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="buttons.html">Buttons</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="notifications.html">Notifications</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="typography.html">Typography</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="icons.html"> Icons</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="grid.html">Grid</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</li>-->
 
-                <li>
-                    <a href="__APP__/Admin/Teacher/password"><i class="fa fa-cog fa-fw"></i> 修改密码</a>
-                </li>
                 <li>
                     <a href="__APP__/Admin/Teacher/time"><i class="fa fa-calendar fa-fw"></i>
                         我的空闲时间
@@ -297,9 +304,9 @@
                         </if>
                     </a>
                 </li>
-                <li>
-                    <a href="__APP__/Admin/Teacher/certificate"><i class="fa fa-calendar-o fa-fw"></i> 我的证书</a>
-                </li>
+                <!--<li>-->
+                    <!--<a href="__APP__/Admin/Teacher/certificate"><i class="fa fa-calendar-o fa-fw"></i> 我的证书</a>-->
+                <!--</li>-->
                 <li>
                     <a href="__APP__/Admin/Teacher/course"><i class="fa fa-book fa-fw"></i> 我的课程</a>
                 </li>

@@ -470,6 +470,16 @@ class UserController extends BaseController {
         }
     }
 
+    /**
+     * 对预约进行支付宝付款
+     */
+    public function appoint_pay() {
+        $this->is_user();
+        $this->_data['title'] = '付款';
+        $this->assign($this->_data);
+        $this->display();
+    }
+
 
     /**
      *  评价
@@ -527,10 +537,20 @@ class UserController extends BaseController {
             $this->_data['teacher'] = $teacher;
             $this->_data['comment_url'] = U('comment');
             $this->_data['appoint_id'] = $_GET['appoint_id'];
-            var_dump($this->_data['teacher']);
             $this->assign($this->_data);
             $this->display();
         }
+    }
+
+
+    public function pay() {
+        $this->is_user();
+
+        $this->_data['title'] = '我的钱包';
+        $where['id'] = $_SESSION['id'];
+        $this->_data['user'] = M('user')->where($where)->find();
+        $this->assign($this->_data);
+        $this->display();
     }
 
 
@@ -567,6 +587,17 @@ class UserController extends BaseController {
         $this->display();
 
 
+    }
+
+
+    /**
+     * 评测
+     */
+    public function test() {
+        $this->is_user();
+        $this->_data['title'] = '我的评分';
+        $this->assign($this->_data);
+        $this->display();
     }
 
 

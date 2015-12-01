@@ -38,29 +38,31 @@
                         </td>
                         <td>
                             <switch name="vo.status" >
-                                <case value="0">
-                                    <a href="__APP__/Admin/User/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">详情</a>
-                                    <a href="__APP__/Admin/User/appoint_change/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">修改</a>
-                                    <a href="__APP__/Admin/User/appoint_delete/appoint_id/{$vo.appoint_id}" class="btn btn-default btn-sm" role="button">删除</a>
-                                </case>
+                            <case value="0">
+                                <a href="__APP__/Admin/User/appoint_pay/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">付款</a>
+                                <a href="__APP__/Admin/User/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">详情</a>
+                            <a href="__APP__/Admin/User/appoint_change/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">修改</a>
+                            <a href="__APP__/Admin/User/appoint_delete/appoint_id/{$vo.appoint_id}" class="btn btn-default btn-sm" role="button">删除</a>
+                            </case>
 
-                                <case value="1">
-                                    <a href="__APP__/Admin/User/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">详情</a>
-                                    <a href="__APP__/Admin/User/appoint_change/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">修改</a>
-                                    <a href="__APP__/Admin/User/appoint_delete/appoint_id/{$vo.appoint_id}" class="btn btn-default btn-sm" role="button">删除</a>
-                                </case>
+                            <case value="1">
+                                <a href="__APP__/Admin/User/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">确认预约</a>
+                            <a href="__APP__/Admin/User/appoint_change/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">修改</a>
+                            <a href="__APP__/Admin/User/appoint_delete/appoint_id/{$vo.appoint_id}" class="btn btn-default btn-sm" role="button">删除</a>
+                            </case>
 
-                                <case value="2">
-                                    <a href="__APP__/Admin/User/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">详情</a>
-                                </case>
+                            <case value="2">
+                                <a href="__APP__/Admin/User/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">确认完成</a>
+                            <a href="__APP__/Admin/User/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">详情</a>
+                            </case>
 
-                                <case value="3">
-                                    <a href="__APP__/Admin/User/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">详情</a>
-                                    <a href="__APP__/Admin/User/comment/teacher_id/{$vo.account_id}" class="btn btn-primary btn-sm" role="button">评价</a>
-                                </case>
+                            <case value="3">
+                            <a href="__APP__/Admin/User/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">详情</a>
+                            <a href="__APP__/Admin/User/comment/teacher_id/{$vo.account_id}" class="btn btn-primary btn-sm" role="button">评价</a>
+                            </case>
 
-                                <default />
-                                    <a href="__APP__/Admin/User/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">详情</a>
+                            <default />
+                            <a href="__APP__/Admin/User/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">详情</a>
                             </switch>
 
                         </td>

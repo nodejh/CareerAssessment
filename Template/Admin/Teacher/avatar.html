@@ -1,0 +1,50 @@
+<include file="./Template/Admin/Common/teacher/header.html" />
+<include file="./Template/Admin/Common/teacher/nav.html" />
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">修改头像</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+
+        <div class="col-xs-10 col-md-4">
+            <form class="form-horizontal" action="__APP__/Admin/Teacher/avatar" method="post" enctype="multipart/form-data">
+
+                <present name="error">
+                    <div class="alert alert-danger" role="alert">{$error}</div>
+                </present>
+
+                <present name="message">
+                    <br>
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <p>{$message}</p>
+                    </div>
+                </present>
+
+                <div class="form-group">
+                    <label for="teacher-avatar" class="col-sm-3 control-label">头像</label>
+                    <div class="col-sm-9">
+                        <input type="file" class="form-control" id="teacher-avatar" name="avatar" placeholder="请选择您的头像">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">确定</button>
+            </form>
+        </div>
+
+    </div>
+
+</div>
+<!-- /#page-wrapper -->
+
+
+<include file="./Template/Admin/Common/teacher/footer.html" />
+
+<include file="./Template/Admin/Common/teacher/foot.html" />

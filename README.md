@@ -8,3 +8,12 @@
 + 1 user 
 + 2 teacher 
 + 3 administrator
+
+
+
+
+## TODO
+
+1. 使用 modal，将数据库查询语句分离出来
+ 
+ 

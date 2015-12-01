@@ -105,8 +105,8 @@
                     $(this).text('').removeClass('ca-no-free-time');
                     for (var i in teacher_confirm_date_array) {
                         if ($(this).attr('value') == teacher_confirm_date_array[i]) {
-                            $(this).addClass('ca-appoint');
-                            $(this).text('点击确认');
+                            $(this).addClass('ca-appoint ca-appoint-confirm');
+                            $(this).text('请点击确认按钮进行确认');
                         }
                     }
                 });
@@ -149,7 +149,7 @@
                 var text = $(this).text();
 
                 if (text == '点击确认') {
-                    $(this).text('选定为咨询定时间').addClass('ca-appoint-confirm');
+                    $(this).text('请点击确认按钮进行确认').addClass('ca-appoint-confirm');
                 } else {
                     $(this).text('点击确认').removeClass('ca-appoint-confirm');
                 }
@@ -177,7 +177,7 @@
                 $.post(url, data, function (res) {
                     //console.log(res);
                     if (res.status == 0) {
-                        alert('确认时间成功！');
+                        alert('确认时间成功，将扣除 30 代币！');
                         location.reload();
                     } else {
                         alert('确认失败，请重试');

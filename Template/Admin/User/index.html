@@ -15,34 +15,130 @@
             </div>
         </present>
         <div class="col-lg-12">
-            <h1 class="page-header">咨询师/课程列表</h1>
+            <h1 class="page-header">概览</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
     <!-- /.row -->
+
+
     <div class="row">
-        <volist name="list" id="vo">
-            <div class="col-lg-3 col-md-6">
-                <div class="thumbnail">
-                    <img src="__ROOT__/Uploads/{$vo.avatar}" alt="{$vo.name}">
-                    <div class="caption">
-                        <h4>{$vo.name} <small> {$vo.city}</small></h4>
-                        <p>
-                            <small>专业程度 {$vo.attitude_score}</small>
-                            <br>
-                            <small>服务态度 {$vo.professional_score}</small>
-                        </p>
-                        <p>
-                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#home-index-details-{$vo.account_id}" data-id="{$vo.account_id}">详情</button>
-                        <a href="__APP__/Home/Index/appoint/id/{$vo.account_id}" class="btn btn-primary btn-sm" role="button">快速预约</a>
-                        <!--<a href="__APP__/Home/Course/teacher/{$vo.account_id}" class="btn btn-primary btn-sm" role="button">课程</a>-->
-                        </p>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-calendar fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">26</div>
+                            <div>咨询预约</div>
+                        </div>
                     </div>
                 </div>
-
+                <a href="__APP__/Admin/User/appoint">
+                    <div class="panel-footer">
+                        <span class="pull-left">查看详情</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
             </div>
-        </volist>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-calendar-o fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">12</div>
+                            <div>课程预约</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="__APP__/Admin/User/index">
+                    <div class="panel-footer">
+                        <span class="pull-left">查看详情</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-edit fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">124</div>
+                            <div>我的评测</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="__APP__/Admin/User/test">
+                    <div class="panel-footer">
+                        <span class="pull-left">查看详情</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-credit-card fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">13</div>
+                            <div>我的钱包</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="__APP__/Admin/User/pay">
+                    <div class="panel-footer">
+                        <span class="pull-left">查看详情</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
     </div>
+
+
+
+
+    <!--<div class="row">-->
+        <!--<volist name="list" id="vo">-->
+            <!--<div class="col-lg-3 col-md-6">-->
+                <!--<div class="thumbnail">-->
+                    <!--<img src="__ROOT__/Uploads/{$vo.avatar}" alt="{$vo.name}">-->
+                    <!--<div class="caption">-->
+                        <!--<h4>{$vo.name} <small> {$vo.city}</small></h4>-->
+                        <!--<p>-->
+                            <!--<small>专业程度 {$vo.attitude_score}</small>-->
+                            <!--<br>-->
+                            <!--<small>服务态度 {$vo.professional_score}</small>-->
+                        <!--</p>-->
+                        <!--<p>-->
+                        <!--<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#home-index-details-{$vo.account_id}" data-id="{$vo.account_id}">详情</button>-->
+                        <!--<a href="__APP__/Home/Index/appoint/id/{$vo.account_id}" class="btn btn-primary btn-sm" role="button">快速预约</a>-->
+                        <!--&lt;!&ndash;<a href="__APP__/Home/Course/teacher/{$vo.account_id}" class="btn btn-primary btn-sm" role="button">课程</a>&ndash;&gt;-->
+                        <!--</p>-->
+                    <!--</div>-->
+                <!--</div>-->
+
+            <!--</div>-->
+        <!--</volist>-->
+    <!--</div>-->
 
 </div>
 <!-- /#page-wrapper -->

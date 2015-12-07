@@ -42,9 +42,16 @@
 .ca-index-teacher-thumbs {
     position: absolute;
     top: 130px;
+    right: 50px;
+    color: #fff;
+}
+.ca-index-teacher-thumbs-number {
+    position: absolute;
+    top: 130px;
     right: 25px;
     color: #fff;
 }
+
 
 /* navbar */
 .navbar-default .navbar-nav > li > a.ca-a-navbar-btn {

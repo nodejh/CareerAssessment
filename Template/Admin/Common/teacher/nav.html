@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="__APP__/Admin/Teacher/index">咨询师后台</a>
+        <a class="navbar-brand" href="__APP__/Admin/Teacher/index">个人中心（咨询师）</a>
     </div>
     <!-- /.navbar-header -->
 
@@ -263,29 +263,6 @@
                         </li>
                     </ul>
                 </li>
-                <!--<li>-->
-                    <!--<a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>-->
-                    <!--<ul class="nav nav-second-level">-->
-                        <!--<li>-->
-                            <!--<a href="panels-wells.html">Panels and Wells</a>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<a href="buttons.html">Buttons</a>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<a href="notifications.html">Notifications</a>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<a href="typography.html">Typography</a>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<a href="icons.html"> Icons</a>-->
-                        <!--</li>-->
-                        <!--<li>-->
-                            <!--<a href="grid.html">Grid</a>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                <!--</li>-->
 
                 <li>
                     <a href="__APP__/Admin/Teacher/time"><i class="fa fa-calendar fa-fw"></i>
@@ -295,15 +272,45 @@
                         </if>
                     </a>
                 </li>
+
                 <li>
-                    <a href="__APP__/Admin/Teacher/appoint"><i class="fa fa-list fa-fw"></i>
-                        我的预约表
+                    <a href="#"><i class="fa fa-list fa-fw"></i> 我的预约表
                         <if condition="$nav.appoint gt 0 ">
                             <span class="label label-danger">{$nav.appoint}</span>
                             <else />
                         </if>
+                        <span class="fa arrow"></span>
                     </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="__APP__/Admin/Teacher/appoint_table">预约总揽</a>
+                        </li>
+                        <li>
+                            <a href="__APP__/Admin/Teacher/appoint">未完成预约</a>
+                        </li>
+                        <li>
+                            <a href="__APP__/Admin/Teacher/appoint_complete_page">已完成预约</a>
+                        </li>
+                        <!--<li>-->
+                            <!--<a href="typography.html">Typography</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="icons.html"> Icons</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a href="grid.html">Grid</a>-->
+                        <!--</li>-->
+                    </ul>
                 </li>
+                <!--<li>-->
+                    <!--<a href="__APP__/Admin/Teacher/appoint"><i class="fa fa-list fa-fw"></i>-->
+                        <!--我的预约表-->
+                        <!--<if condition="$nav.appoint gt 0 ">-->
+                            <!--<span class="label label-danger">{$nav.appoint}</span>-->
+                            <!--<else />-->
+                        <!--</if>-->
+                    <!--</a>-->
+                <!--</li>-->
                 <!--<li>-->
                     <!--<a href="__APP__/Admin/Teacher/certificate"><i class="fa fa-calendar-o fa-fw"></i> 我的证书</a>-->
                 <!--</li>-->

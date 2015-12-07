@@ -7,50 +7,18 @@
 
 
 
-            <present name="phone">
-            <!---------------------------一般用户登录--------------------------------------------------->
+            <present name="card">
+
+                <!---------------------------会员登录--------------------------------------------------->
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation"><a href="#login-card" aria-controls="home" role="tab" data-toggle="tab">会员登录</a></li>
-                    <li role="presentation" class="active"><a href="#login-phone" aria-controls="profile" role="tab" data-toggle="tab">一般用户登录</a></li>
+                    <li role="presentation"><a href="#login-phone" aria-controls="profile" role="tab" data-toggle="tab">一般用户登录</a></li>
+                    <li role="presentation" class="active"><a href="#login-card" aria-controls="home" role="tab" data-toggle="tab">会员登录</a></li>
                 </ul>
 
                 <!-- Tab panes -->
                 <div class="tab-content ca-tab-content">
-                    <div role="tabpanel" class="tab-pane" id="login-card">
-                        <present name="error">
-                            <div class="alert alert-danger" role="alert">{$error}</div>
-                        </present>
-                        <form class="form-horizontal" action="__APP__/Home/Login/card" method="post">
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <present name="msg.card">
-                                        <input type="text" class="form-control" name="card" id="login-card-number" placeholder="请输入您的会员卡卡号" value="{$msg.card}" required>
-
-                                        <else />
-                                        <input type="text" class="form-control" name="card" id="login-card-number" placeholder="请输入您的会员卡卡号" required>
-
-                                    </present>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <present name="msg.password">
-                                        <input type="password" class="form-control" name="password" id="login-card-password" placeholder="请输入您的会员卡密码" value="{$msg.password}" required>
-                                        <else />
-                                        <input type="password" class="form-control" name="password" id="login-card-password" placeholder="请输入您的会员卡密码" required>
-                                    </present>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <button type="submit" class="btn btn-primary btn-block" id="login-card-btn">会员登录</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div role="tabpanel" class="tab-pane active" id="login-phone">
+                    <div role="tabpanel" class="tab-pane" id="login-phone">
                         <present name="error">
                             <div class="alert alert-danger" role="alert">{$error}</div>
                         </present>
@@ -66,11 +34,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <present name="msg.password">
-                                        <input type="password" class="form-control" name="password" id="login-card-password" placeholder="请输入您的会员卡密码" value="{$msg.password}" required>
-                                        <else />
-                                        <input type="password" class="form-control" name="password" id="login-card-password" placeholder="请输入您的会员卡密码" required>
-                                    </present>
+                                    <input type="password" class="form-control" name="password" id="login-phone-password" placeholder="请输入您的登录密码" required>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -80,20 +44,7 @@
                             </div>
                         </form>
                     </div>
-                </div>
 
-
-                <else />
-
-                <!---------------------------会员登录--------------------------------------------------->
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#login-card" aria-controls="home" role="tab" data-toggle="tab">会员登录</a></li>
-                    <li role="presentation"><a href="#login-phone" aria-controls="profile" role="tab" data-toggle="tab">一般用户登录</a></li>
-                </ul>
-
-                <!-- Tab panes -->
-                <div class="tab-content ca-tab-content">
                     <div role="tabpanel" class="tab-pane active" id="login-card">
 
                         <present name="error">
@@ -124,7 +75,20 @@
                         </form>
                     </div>
 
-                    <div role="tabpanel" class="tab-pane" id="login-phone">
+                </div>
+
+                <else />
+
+                <!---------------------------一般用户登录--------------------------------------------------->
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#login-phone" aria-controls="profile" role="tab" data-toggle="tab">一般用户登录</a></li>
+                    <li role="presentation"><a href="#login-card" aria-controls="home" role="tab" data-toggle="tab">会员登录</a></li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content ca-tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="login-phone">
                         <present name="error">
                             <div class="alert alert-danger" role="alert">{$error}</div>
                         </present>
@@ -140,12 +104,49 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <input type="password" class="form-control" name="password" id="login-phone-password" placeholder="请输入您的登录密码" required>
+                                    <present name="msg.password">
+                                        <input type="password" class="form-control" name="password" id="login-card-password" placeholder="请输入您的会员卡密码" value="{$msg.password}" required>
+                                        <else />
+                                        <input type="password" class="form-control" name="password" id="login-card-password" placeholder="请输入您的会员卡密码" required>
+                                    </present>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <button type="submit" class="btn btn-primary btn-block" id="login-phone-btn">一般用户登录</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div role="tabpanel" class="tab-pane" id="login-card">
+                        <present name="error">
+                            <div class="alert alert-danger" role="alert">{$error}</div>
+                        </present>
+                        <form class="form-horizontal" action="__APP__/Home/Login/card" method="post">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <present name="msg.card">
+                                        <input type="text" class="form-control" name="card" id="login-card-number" placeholder="请输入您的会员卡卡号" value="{$msg.card}" required>
+
+                                        <else />
+                                        <input type="text" class="form-control" name="card" id="login-card-number" placeholder="请输入您的会员卡卡号" required>
+
+                                    </present>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <present name="msg.password">
+                                        <input type="password" class="form-control" name="password" id="login-card-password" placeholder="请输入您的会员卡密码" value="{$msg.password}" required>
+                                        <else />
+                                        <input type="password" class="form-control" name="password" id="login-card-password" placeholder="请输入您的会员卡密码" required>
+                                    </present>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <button type="submit" class="btn btn-primary btn-block" id="login-card-btn">会员登录</button>
                                 </div>
                             </div>
                         </form>

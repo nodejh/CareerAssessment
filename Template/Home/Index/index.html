@@ -61,13 +61,14 @@
                         <p>
                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#home-index-details-{$vo.account_id}" data-id="{$vo.account_id}">详情</button>
                             <a href="__APP__/Home/Index/appoint/id/{$vo.account_id}" class="btn btn-primary btn-sm" role="button">快速预约</a>
-                            <a href="__APP__/Home/Index/appoint2/id/{$vo.account_id}" class="btn btn-primary btn-sm" role="button">一般预约</a>
+                            <a href="__APP__/Home/Index/appoint/id/{$vo.account_id}" class="btn btn-primary btn-sm" role="button">一般预约</a>
                             <!--<a href="__APP__/Home/Course/teacher/{$vo.account_id}" class="btn btn-primary btn-sm" role="button">课程</a>-->
                         </p>
                     </div>
                     <span class="ca-index-teacher-free">空闲</span>
                     <i class="fa fa-heart fa-lg ca-index-teacher-like ca-cursor-point"></i>
                     <i class="fa fa-thumbs-up fa-lg ca-index-teacher-thumbs ca-cursor-point"></i>
+                    <span class="ca-index-teacher-thumbs-number ca-cursor-point">100</span>
                 </div>
             </div>
         </volist>
@@ -95,6 +96,11 @@
                             </div>
                             <div class="col-xs-6">
                                 {$vo.introduction}
+                            </div>
+                            <div class="col-xs-6">
+                                <p>服务类型: {$vo.service_type}</p>
+                                <p>服务对象: {$vo.service_object}</p>
+                                <p>证书: </p>
                             </div>
                         </div>
                         <div class="caption">

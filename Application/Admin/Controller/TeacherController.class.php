@@ -204,6 +204,8 @@ class TeacherController extends BaseController {
             }
 
             $data['introduction'] = $_POST['introduction'];
+            $data['appoint_location'] = $_POST['appoint_location'];
+            $data['price'] = $_POST['price'];
             $where['account_id'] = $_SESSION['id'];
             $update = M('teacher')->where($where)->data($data)->save();
             //var_dump($update);
@@ -729,5 +731,15 @@ class TeacherController extends BaseController {
     //}
 
 
-    
+    // 已完成预约列表页面
+    public function appoint_complete_page() {
+
+    }
+
+
+    // 预约概揽
+    public function appoint_table() {
+
+    }
+
 }

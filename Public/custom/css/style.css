@@ -179,7 +179,9 @@ p.tip{color:#666;line-height:20px;padding:5px;margin:0;text-indent:3px;}
     height: 100px;
     border: 1px solid red;
 }
-
+.ca-teacher-time-table {
+    margin: 20px 0;
+}
 
 /* user/appoint */
 .ca-appoint-list-avatar {

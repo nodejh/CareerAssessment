@@ -739,7 +739,40 @@ class TeacherController extends BaseController {
 
     // 预约概揽
     public function appoint_table() {
+        $this->is_teacher();
+        $this->_data['title'] = '我的空闲时间';
+        $today_week = date('N', time());
 
+        switch ($today_week) {
+            case '1':
+                $this->_data['html'] = $this->set_month_by_1();
+                break;
+            case '2':
+                $this->_data['html'] = $this->set_month_by_2();
+                break;
+            case '3':
+                $this->_data['html'] = $this->set_month_by_3();
+                break;
+            case '4':
+                $this->_data['html'] = $this->set_month_by_4();
+                break;
+            case '5':
+                $this->_data['html'] = $this->set_month_by_5();
+                break;
+            case '6':
+                $this->_data['html'] = $this->set_month_by_6();
+                break;
+            case '7':
+                $this->_data['html'] = $this->set_month_by_7();
+                break;
+        }
+
+        // 查询某个咨询师的预约情况
+
+
+
+        $this->assign($this->_data);
+        $this->display();
     }
 
 }

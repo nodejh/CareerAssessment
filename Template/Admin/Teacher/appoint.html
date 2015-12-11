@@ -1,6 +1,13 @@
 <include file="./Template/Admin/Common/teacher/header.html" />
 <include file="./Template/Admin/Common/teacher/nav.html" />
 
+<style>
+    .a {
+        display: block;
+        width: 100px;
+    }
+</style>
+
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
@@ -14,6 +21,29 @@
         <div class="col-xs-10 col-md-8">
             <p>预约咨询步骤：</p>
             <p>来访者选择预约时间 -> 咨询师确认预约时间 -> 来访者确认或放弃本次咨询 -> 咨询 -> 咨询师确认咨询完成</p>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title" id="appoint-step">预约步骤</h3>
+                </div>
+                <div class="panel-body">
+                    <img src="__PUBLIC__/picture/appoint_step.png" alt="预约步骤">
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title" id="appoint-status">预约状态</h3>
+                </div>
+                <div class="panel-body">
+                    <span class="label label-primary">待咨询师确认</span> ->
+                    <span class="label label-warning">待来访者付款</span> ->
+                    <span class="label label-info">双方见面咨询</span> ->
+                    <span class="label label-success">确认咨询完成</span> ->
+                    <span class="label label-default">待来访者评价</span>
+                </div>
+            </div>
+
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -34,18 +64,41 @@
                         </td>
                         <td>
                             <switch name="vo.status" >
-                                <case value="0"><span class="label label-success">待咨询师确认</span></case>
-                                <case value="1"><span class="label label-warning">等来访者确认</span></case>
-                                <case value="2"><span class="label label-info">待咨询</span></case>
-                                <case value="3"><span class="label label-primary">已完成</span></case>
-                                <case value="4"><span class="label label-default">已废弃</span></case>
+                                <case value="0"><span class="label label-primary a">待咨询师确认</span></case>
+                                <case value="1"><span class="label label-warning a">等来访者确认</span></case>
+                                <case value="2"><span class="label label-info a">待咨询</span></case>
+                                <case value="3"><span class="label label-success a">已完成</span></case>
+                                <case value="4"><span class="label label-default a">已废弃</span></case>
                             </switch>
                         </td>
                         <td>
-                            <a href="__APP__/Admin/Teacher/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">回应</a>
-                            <a href="__APP__/Admin/Teacher/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">确认完成</a>
-                            <a href="__APP__/Admin/Teacher/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">预约详情</a>
+                            <switch name="vo.status" >
+                                <case value="0">
+                                    <a href="__APP__/Admin/Teacher/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-default btn-sm" role="button">确认咨询时间</a>
+                                </case>
+                                <case value="1">
+                                    <a href="__APP__/Admin/Teacher/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-default btn-sm disabled" role="button">预约详情</a>
+                                </case>
+                                <case value="2">
+                                    <a href="__APP__/Admin/Teacher/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-default btn-sm disabled" role="button">预约详情</a>
+                                </case>
+                                <case value="3">
+                                    <a href="__APP__/Admin/Teacher/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-default btn-sm" role="button">确认完成</a>
+                                </case>
+                                <case value="4">
+                                    <a href="__APP__/Admin/Teacher/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-default btn-sm" role="button">预约详情</a>
+                                </case>
+                            </switch>
                         </td>
+
+
+                        <!--<td>-->
+                            <!--<a href="__APP__/Admin/Teacher/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">确认咨询时间</a>-->
+                            <!--<a href="__APP__/Admin/Teacher/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">确认完成</a>-->
+                            <!--<a href="__APP__/Admin/Teacher/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">预约详情</a>-->
+                        <!--</td>-->
+
+
                     </tr>
                 </volist>
 

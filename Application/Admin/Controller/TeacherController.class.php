@@ -139,7 +139,44 @@ class TeacherController extends BaseController {
             $where_certificate['id'] = $v;
             $this->_data['teacher']['certificate_list'][$k] = $Certificate->where($where_certificate)->find();
         }
+        if ($this->_data['teacher']['topic'] != null) {
+            $topic_array = explode(',', $this->_data['teacher']['topic']);
+        }
+        $Topic = M('topic');
+        foreach($topic_array as $k => $v) {
+            $where_topic['id'] = $v;
+            $this->_data['teacher']['topic_list'][$k] = $Topic->where($where_topic)->find();
+        }
+        $this->assign($this->_data);
+        $this->display();
+    }
 
+
+
+    /**
+     * 申请成为咨询师
+     */
+    public function apply() {
+        $this->is_teacher();
+        $this->_data['title'] = '个人资料';
+        $this->_data['teacher'] = M('teacher')->where(array('account_id'=>$_SESSION['id']))->find();
+
+        if ($this->_data['teacher']['certificate'] != null) {
+            $certificate_array = explode(',', $this->_data['teacher']['certificate']);
+        }
+        $Certificate = M('certificate');
+        foreach($certificate_array as $k => $v) {
+            $where_certificate['id'] = $v;
+            $this->_data['teacher']['certificate_list'][$k] = $Certificate->where($where_certificate)->find();
+        }
+        if ($this->_data['teacher']['topic'] != null) {
+            $topic_array = explode(',', $this->_data['teacher']['topic']);
+        }
+        $Topic = M('topic');
+        foreach($topic_array as $k => $v) {
+            $where_topic['id'] = $v;
+            $this->_data['teacher']['topic_list'][$k] = $Topic->where($where_topic)->find();
+        }
         $this->assign($this->_data);
         $this->display();
     }
@@ -157,6 +194,7 @@ class TeacherController extends BaseController {
             $data['name'] = $_POST['name'];
             $data['gender'] = $_POST['gender'];
             $data['email'] = $_POST['email'];
+            $data['occupation'] = $_POST['occupation'];
             $data['city'] = $_POST['city'];
             $data['service_type'] = '';
             if ($_POST['service_type_a']) {
@@ -774,5 +812,49 @@ class TeacherController extends BaseController {
         $this->assign($this->_data);
         $this->display();
     }
+
+
+    /**
+     * 话题页面
+     */
+    public function topic() {
+        $this->is_teacher();
+
+        if ($_POST) {
+            $data['name'] = $_POST['name'];
+            $data['content'] = $_POST['content'];
+            $Topic = M('topic');
+            $insert = $Topic->data($data)->add();
+            if ($insert) {
+                $id = $_SESSION['id'];
+                $Teacher = M('teacher');
+                $topic_old =  $Teacher->where('account_id='.$id)->getField('topic');
+                if ($topic_old) {
+                    $topic_now = $topic_old . ',' . $insert;
+                } else {
+                    $topic_now = $insert;
+                }
+                $data_topic['topic'] = $topic_now;
+                $update_topic = $Teacher->where('account_id='.$id)->data($data_topic)->save();
+                if ($update_topic) {
+                    $this->_data['message'] = '添加话题成功！跳转到<a href="'.U('profile').'">基本资料</a>查看';
+                    $this->assign($this->_data);
+                    $this->display();
+                } else {
+                    $this->_data['error'] = '更新话题失败，请重试';
+                    $this->assign($this->_data);
+                    $this->display();
+                }
+            } else {
+                $this->_data['error'] = '添加话题失败，请重试';
+                $this->assign($this->_data);
+                $this->display();
+            }
+        }
+
+        $this->assign($this->_data);
+        $this->display();
+    }
+
 
 }

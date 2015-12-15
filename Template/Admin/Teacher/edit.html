@@ -66,12 +66,21 @@
 
                     </div>
                 </div>
+
                 <div class="form-group">
                     <label for="teacher-info-email" class="col-sm-3 control-label">邮箱</label>
                     <div class="col-sm-9">
                         <input type="email" class="form-control" name="email" id="teacher-info-email" placeholder="请输入您的邮箱" value="{$teacher.email}">
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="teacher-info-occupation" class="col-sm-3 control-label">职业</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="occupation" id="teacher-info-occupation" placeholder="请填写您的职业" value="{$teacher.occupation}">
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label for="teacher-index-city" class="col-sm-3 control-label">城市</label>
                     <div class="col-sm-9">
@@ -92,22 +101,6 @@
                         <input type="text" class="form-control" name="price" id="teacher-appoint-price" placeholder="请填写您的咨询费用" value="{$teacher.price}">
                     </div>
                 </div>
-
-                <!--<div class="form-group" id="teache-rinfo-form-service-type">-->
-                    <!--<label class="col-sm-3 control-label">服务类型</label>-->
-                    <!--<div class="col-sm-9">-->
-                        <!--<div class="row">-->
-                            <!--<foreach name="service_type" item="v" key="k" >-->
-                            <!--<div class="col-sm-6">-->
-                                <!--<label class="checkbox-inline">-->
-                                    <!--<input type="checkbox" name="service_type_{$k}" value="{$v.name}"> {$v.name}-->
-                                <!--</label>-->
-                            <!--</div>-->
-                            <!--</foreach>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-
 
                 <div class="form-group" id="teache-rinfo-form-service-type">
                     <label class="col-sm-3 control-label">服务类型</label>
@@ -191,9 +184,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="teacher-info-name" class="col-sm-3 control-label">个人简介</label>
+                    <label for="teacher-info-introduction" class="col-sm-3 control-label">个人简介</label>
                     <div class="col-sm-9">
-                        <textarea class="form-control" rows="3" name="introduction">{$teacher.introduction}</textarea>
+                        <textarea id="teacher-info-introduction" class="form-control" rows="10" name="introduction">{$teacher.introduction}</textarea>
                     </div>
                 </div>
 
@@ -246,6 +239,24 @@
 //        }
 //    }
 //    window.onload = file_click;
+
+
+    var kIntroduction = '请输入您的个人简介';
+    $('#teacher-info-introduction').focus(function() {
+        var introduction = $(this).val();
+        console.log(introduction);
+        if (introduction == kIntroduction) {
+         $(this).val('');
+        }
+    });
+
+    $('#teacher-info-introduction').blur(function() {
+        var introduction = $(this).val();
+        console.log(introduction);
+        if (introduction == '') {
+            $(this).val(kIntroduction);
+        }
+    });
 
 </script>
 

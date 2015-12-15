@@ -72,7 +72,24 @@
 
     // 添加预约者
 
+    $(document).ready(function () {
+        var url = '/CareerAssessment/index.php/Admin/TeacherAppoint/appoint_table';
+        $.get(url, function(res) {
+            var appoint_list = $.parseJSON(res);
+            console.log(appoint_list);
+            $.each(appoint_list.data, function(key, val) {
+                console.log(val.user.name);
+                var teacher_confirm_date_array = val.teacher_confirm_date.split(',');
 
+                $.each(teacher_confirm_date_array, function (key2, val2) {
+                    $('#'+val2).text(val.user.name);
+                });
+
+            });
+        });
+
+
+    });
 
 </script>
 

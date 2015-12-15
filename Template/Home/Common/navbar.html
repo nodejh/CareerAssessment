@@ -10,14 +10,32 @@
             </button>
             <a class="navbar-brand" href="__APP__/Home/Index/index">蓝鲸教育咨询</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
 
-                <li><a href="#">性格色彩</a></li>
-                <li><a href="#">MBTI</a></li>
-                <li><a href="#">霍兰德职业兴趣评测</a></li>
-                <li><a href="#">职业锚评测</a></li>
+        <div id="navbar" class="navbar-collapse collapse">
+
+
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">咨询分类 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">升学信息与指导</a></li>
+                        <li><a href="#">留学信息与规划</a></li>
+                        <li><a href="#">学业规划</a></li>
+                        <li><a href="#">学习能力与技能</a></li>
+                        <li><a href="#">职业规划与转型</a></li>
+                        <li><a href="#">心理及情绪相关</a></li>
+                        <li><a href="#">工作能力与技能</a></li>
+                    </ul>
+                </li>
             </ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="搜索人名、话题、手机">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+            </form>
 
             <switch name="Think.session.type">
                 <case value="1">

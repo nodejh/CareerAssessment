@@ -430,7 +430,7 @@ class TeacherController extends BaseController {
     /**
      * 我的预约表
      */
-    public function appoint() {
+    public function appoint_incomplete() {
         $this->is_teacher();
         $this->_data['title'] = '我的预约表';
 
@@ -771,14 +771,17 @@ class TeacherController extends BaseController {
 
     // 已完成预约列表页面
     public function appoint_complete_page() {
-
+        $this->is_teacher();
+        $this->_data['title'] = '已完成预约';
+        $this->assign($this->_data);
+        $this->display();
     }
 
 
     // 预约概揽
     public function appoint_table() {
         $this->is_teacher();
-        $this->_data['title'] = '我的空闲时间';
+        $this->_data['title'] = '预约概揽';
         $today_week = date('N', time());
 
         switch ($today_week) {

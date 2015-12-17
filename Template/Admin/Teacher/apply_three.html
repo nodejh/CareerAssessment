@@ -1,0 +1,55 @@
+<include file="./Template/Admin/Common/teacher/header.html" />
+<include file="./Template/Admin/Common/teacher/nav.html" />
+
+<div id="page-wrapper">
+    <div class="row">
+
+        <div class="col-lg-12">
+            <h4 class="page-header">
+                <span class="label label-default">填写基本资料</span>
+                <span class="label label-default">填写个人简介</span>
+                <span class="label label-warning">上传头像和证书</span>
+                <span class="label label-default">添加话题</span>
+            </h4>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-xs-10 col-sm-8 col-md-6">
+            <form class="form-horizontal" action="__APP__/Admin/TeacherApply/apply_three" method="post" enctype="multipart/form-data">
+
+                <present name="error">
+                    <div class="alert alert-danger" role="alert">{$error}</div>
+                </present>
+
+                <present name="message">
+                    <br>
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <p>{$message}</p>
+                    </div>
+                </present>
+
+                <div class="form-group">
+                    <label for="teacher-avatar" class="col-sm-3 control-label">头像</label>
+                    <div class="col-sm-9">
+                        <input type="file" class="form-control" id="teacher-avatar" name="avatar" placeholder="请选择您的头像">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+
+    <button type="submit" class="btn btn-primary">下一步(3/4)</button>
+
+</div>
+<!-- /#page-wrapper -->
+
+
+
+<include file="./Template/Admin/Common/teacher/footer.html" />
+<include file="./Template/Admin/Common/teacher/foot.html" />

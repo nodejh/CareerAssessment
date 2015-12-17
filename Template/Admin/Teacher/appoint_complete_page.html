@@ -52,7 +52,7 @@
             </div>
 
             <div class="col-xs-4 col-xs-offset-8">
-                <button type="button" class="btn btn-primary btn-block" id="print">打印</button>
+                <button type="button" class="btn btn-primary btn-block" id="time-button" url="{$save_time_url}">打印</button>
             </div>
         </div>
     </div>
@@ -83,15 +83,11 @@
 
                 $.each(teacher_confirm_date_array, function (key2, val2) {
                     $('#'+val2).text(val.user.name);
-                    console.log(val2);
                 });
 
             });
         });
 
-        $('#print').click(function () {
-            window.print();
-        });
 
     });
 

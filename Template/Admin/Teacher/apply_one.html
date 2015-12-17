@@ -1,0 +1,205 @@
+<include file="./Template/Admin/Common/teacher/header.html" />
+<include file="./Template/Admin/Common/teacher/nav.html" />
+
+<div id="page-wrapper">
+    <div class="row">
+
+        <div class="col-lg-12">
+            <h4 class="page-header">
+                <span class="label label-warning">填写基本资料</span>
+                <span class="label label-default">填写个人简介</span>
+                <span class="label label-default">上传头像和证书</span>
+                <span class="label label-default">添加话题</span>
+            </h4>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-xs-10 col-sm-8 col-md-6">
+            <form class="form-horizontal" id="teacher-info-panel" action="__APP__/Admin/TeacherApply/apply_one" method="post" enctype="multipart/form-data">
+
+                <present name="error">
+                    <div class="alert alert-danger" role="alert">{$error}</div>
+                </present>
+
+                <present name="message">
+                    <br>
+                    <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <p>{$message}</p>
+                    </div>
+                </present>
+
+                <div class="form-group">
+                    <label for="teacher-info-name" class="col-sm-3 control-label">姓名</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="name" id="teacher-info-name" placeholder="请输入您的真实姓名" value="{$teacher.name}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">性别</label>
+                    <div class="col-sm-9" id="teacher-info-gender">
+
+                        <switch name="teacher.gender" >
+                            <case value="男">
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender" value="男" checked> 男
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender" value="女"> 女
+                                </label>
+                            </case>
+                            <case value="女">
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender" value="男"> 男
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="gender" value="女" checked> 女
+                                </label>
+                            </case>
+                            <default />
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" value="男"> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" value="女"> 女
+                            </label>
+                        </switch>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="teacher-info-email" class="col-sm-3 control-label">邮箱</label>
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control" name="email" id="teacher-info-email" placeholder="请输入您的邮箱" value="{$teacher.email}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="teacher-info-occupation" class="col-sm-3 control-label">职业</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="occupation" id="teacher-info-occupation" placeholder="请填写您的职业" value="{$teacher.occupation}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="teacher-index-city" class="col-sm-3 control-label">城市</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="city" id="teacher-index-city" placeholder="请选择您所在城市" value="{$teacher.city}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="teacher-appoint-location" class="col-sm-3 control-label">咨询地点</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="appoint_location" id="teacher-appoint-location" placeholder="请填写您的咨询地点" value="{$teacher.appoint_location}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="teacher-appoint-price" class="col-sm-3 control-label">咨询费用</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="price" id="teacher-appoint-price" placeholder="请填写您的咨询费用" value="{$teacher.price}">
+                    </div>
+                </div>
+
+                <div class="form-group" id="teache-rinfo-form-service-type">
+                    <label class="col-sm-3 control-label">服务类型</label>
+                    <div class="col-sm-9">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="service_type_a" value="升学信息与指导"> 升学信息与指导
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="service_type_b" value="留学信息与规划"> 留学信息与规划
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="service_type_c" value="学业规划"> 学业规划
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="service_type_d" value="学习能力与技能"> 学习能力与技能
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="service_type_e" value="工作能力与技能"> 工作能力与技能
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="service_type_f" value="职业规划与转型"> 职业规划与转型
+                                </label>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="service_type_g" value="心理及情绪相关"> 心理及情绪相关
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group" id="teache-rinfo-form-service-object">
+                    <label class="col-sm-3 control-label">服务对象</label>
+                    <div class="col-sm-9">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="service_object_a" value="小学" {$teacher.service_object_a}> 小学
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="service_object_b" value="初中" {$teacher.service_object_b}> 初中
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="service_object_c" value="高中" {$teacher.service_object_c}> 高中
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="service_object_d" value="大学及以上" {$teacher.service_object_d}> 大学及以上
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="checkbox-inline">
+                                            <input type="checkbox" name="service_object_e" value="工作" {$teacher.service_object_e}> 工作
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+    <br>
+
+    <button type="submit" class="btn btn-primary">下一步(1/4)</button>
+
+</div>
+<!-- /#page-wrapper -->
+
+
+
+<include file="./Template/Admin/Common/teacher/footer.html" />
+<include file="./Template/Admin/Common/teacher/foot.html" />

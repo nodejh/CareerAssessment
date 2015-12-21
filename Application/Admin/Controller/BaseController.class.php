@@ -14,7 +14,7 @@ class BaseController extends Controller {
 
 
     public $_data;
-
+    
     /**
      * initialize redirect url
      */
@@ -289,7 +289,7 @@ class BaseController extends Controller {
             $result['service_type_d'] = $data['teacher']['service_type_d'];
             $result['service_type_e'] = $data['teacher']['service_type_e'];
             $result['appoint_list'] = $data['appoint']; //所有预约列表
-
+            $result['apply_status'] = $data['teacher']['apply_status'];
             return $result;
 
         } else {

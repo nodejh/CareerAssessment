@@ -6,10 +6,10 @@
 
         <div class="col-lg-12">
             <h4 class="page-header">
-                <span class="label label-default">填写基本资料</span>
-                <span class="label label-warning">填写个人简介</span>
-                <span class="label label-default">上传头像和证书</span>
-                <span class="label label-default">添加话题</span>
+                <span class="label label-warning">1 填写基本资料</span>
+                <span class="label label-warning">2 填写个人简介</span>
+                <span class="label label-default">3 上传头像和证书</span>
+                <span class="label label-default">4 添加话题</span>
             </h4>
         </div>
         <!-- /.col-lg-12 -->
@@ -21,15 +21,20 @@
                 <div class="form-group">
                     <label for="teacher-info-introduction" class="col-sm-3 control-label">个人简介</label>
                     <div class="col-sm-9">
-                        <textarea id="teacher-info-introduction" class="form-control" rows="10" name="introduction">{$teacher.introduction}</textarea>
+                        <textarea id="teacher-info-introduction" class="form-control" rows="10" name="introduction">
+                        <empty name="teacher.introduction">
+                            {$teacher.introduction}
+                        </eles>
+                             请填写您的个人简介
+                        </empty>
+                        </textarea>
                     </div>
                 </div>
+
+                <button type="submit" class="btn btn-primary">下一步(2/4)</button>
             </form>
+        </div>
     </div>
-        <br>
-
-    <button type="submit" class="btn btn-primary">下一步(2/4)</button>
-
 </div>
 <!-- /#page-wrapper -->
 

@@ -98,7 +98,7 @@
 
         </div><!--/.nav-collapse -->
     </div>
-
+    
 
     <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
@@ -116,7 +116,24 @@
                     </a>
                 </li>
                 <li>
-                    <a href="__APP__/Admin/Teacher/apply_one"><i class="fa fa-credit-card fa-fw"></i> 申请成为咨询师</a>
+                    <a href="__APP__/Admin/TeacherApply/apply_one">
+                        <i class="fa fa-credit-card fa-fw"></i>
+                        申请成为咨询师
+                            <switch name="teacher.apply_status">
+                                <case value="0">
+                                    <span class="label label-danger">未申请</span>
+                                </case>
+                                <case value="1">
+                                    <span class="label label-waring">正在审核</span>
+                                </case>
+                                <case value="2">
+                                    <span class="label label-success">已通过</span>
+                                </case>
+                                <case value="3">
+                                    <span class="label label-danger">未通过</span>
+                                </case>
+                            </switch>
+                        </a>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-user fa-fw"></i>

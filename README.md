@@ -16,4 +16,7 @@
 
 1. 使用 modal，将数据库查询语句分离出来
  
+2. Admin/Teacher BaseController 类重复
+
+3. Base 类始终查询了用户信息，造成了资源浪费
  

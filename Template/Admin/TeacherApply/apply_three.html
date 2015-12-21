@@ -8,8 +8,10 @@
             <h4 class="page-header">
                 <span class="label label-warning">1 填写基本资料</span>
                 <span class="label label-warning">2 填写个人简介</span>
-                <span class="label label-warning">3 上传头像和证书</span>
+                <span class="label label-warning">3 上传证书</span>
                 <span class="label label-default">4 添加话题</span>
+                <span class="label label-default">5 申请成功，等待审核</span>
+                <span class="label label-default">6 审核通过</span>
             </h4>
         </div>
         <!-- /.col-lg-12 -->
@@ -34,17 +36,22 @@
                 </present>
 
                 <div class="form-group">
-                    <label for="teacher-avatar" class="col-sm-3 control-label">头像</label>
+                    <label for="teacher-name" class="col-sm-3 control-label">证书名称</label>
                     <div class="col-sm-9">
-                        <input type="file" class="form-control" id="teacher-avatar" name="avatar" placeholder="请选择您的头像">
+                        <input type="text" class="form-control" name="name" id="teacher-name" placeholder="请填写您的证书名称">
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="teacher-picture" class="col-sm-3 control-label">证书照片</label>
+                    <div class="col-sm-9">
+                        <input type="file" class="form-control" id="teacher-picture" name="picture" placeholder="请选择您的证书图片">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">下一步(3/4)</button>
             </form>
         </div>
     </div>
-    <br>
-
-    <button type="submit" class="btn btn-primary">下一步(3/4)</button>
 
 </div>
 <!-- /#page-wrapper -->

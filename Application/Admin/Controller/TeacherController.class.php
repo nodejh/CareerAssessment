@@ -156,30 +156,30 @@ class TeacherController extends BaseController {
     /**
      * 申请成为咨询师
      */
-    public function apply() {
-        $this->is_teacher();
-        $this->_data['title'] = '个人资料';
-        $this->_data['teacher'] = M('teacher')->where(array('account_id'=>$_SESSION['id']))->find();
+    // public function apply() {
+    //     $this->is_teacher();
+    //     $this->_data['title'] = '个人资料';
+    //     $this->_data['teacher'] = M('teacher')->where(array('account_id'=>$_SESSION['id']))->find();
 
-        if ($this->_data['teacher']['certificate'] != null) {
-            $certificate_array = explode(',', $this->_data['teacher']['certificate']);
-        }
-        $Certificate = M('certificate');
-        foreach($certificate_array as $k => $v) {
-            $where_certificate['id'] = $v;
-            $this->_data['teacher']['certificate_list'][$k] = $Certificate->where($where_certificate)->find();
-        }
-        if ($this->_data['teacher']['topic'] != null) {
-            $topic_array = explode(',', $this->_data['teacher']['topic']);
-        }
-        $Topic = M('topic');
-        foreach($topic_array as $k => $v) {
-            $where_topic['id'] = $v;
-            $this->_data['teacher']['topic_list'][$k] = $Topic->where($where_topic)->find();
-        }
-        $this->assign($this->_data);
-        $this->display();
-    }
+    //     if ($this->_data['teacher']['certificate'] != null) {
+    //         $certificate_array = explode(',', $this->_data['teacher']['certificate']);
+    //     }
+    //     $Certificate = M('certificate');
+    //     foreach($certificate_array as $k => $v) {
+    //         $where_certificate['id'] = $v;
+    //         $this->_data['teacher']['certificate_list'][$k] = $Certificate->where($where_certificate)->find();
+    //     }
+    //     if ($this->_data['teacher']['topic'] != null) {
+    //         $topic_array = explode(',', $this->_data['teacher']['topic']);
+    //     }
+    //     $Topic = M('topic');
+    //     foreach($topic_array as $k => $v) {
+    //         $where_topic['id'] = $v;
+    //         $this->_data['teacher']['topic_list'][$k] = $Topic->where($where_topic)->find();
+    //     }
+    //     $this->assign($this->_data);
+    //     $this->display();
+    // }
 
     /**
      * 修改个人资料
@@ -638,7 +638,6 @@ class TeacherController extends BaseController {
 
             $post['name'] = $_POST['name'];
 
-
             $upload = new \Think\Upload();
             $upload->maxSize = 3145728 ;// 设置附件上传大小
             $upload->exts = array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
@@ -722,25 +721,25 @@ class TeacherController extends BaseController {
         $this->display();
     }
 
-
-    /**
-     * 判断 type 是否为 teacher
-     * 如果不是，则跳转到相应 type
-     */
-    private function is_teacher() {
-        $type = $this->login_type();
-
-        if ($type == 2) {
-
-        } else if($type == 1) {
-            $this->redirect('User/index', '', 0);
-        } else if ($type == 3) {
-            $this->redirect('Admin/index', '', 0);
-        } else {
-            logout();
-            $this->redirect('Home/Login/index', '', 0);
-        }
-    }
+    //
+    ///**
+    // * 判断 type 是否为 teacher
+    // * 如果不是，则跳转到相应 type
+    // */
+    //private function is_teacher() {
+    //    $type = $this->login_type();
+    //
+    //    if ($type == 2) {
+    //
+    //    } else if($type == 1) {
+    //        $this->redirect('User/index', '', 0);
+    //    } else if ($type == 3) {
+    //        $this->redirect('Admin/index', '', 0);
+    //    } else {
+    //        logout();
+    //        $this->redirect('Home/Login/index', '', 0);
+    //    }
+    //}
 
 
     /**

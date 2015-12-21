@@ -8,8 +8,10 @@
             <h4 class="page-header">
                 <span class="label label-warning">1 填写基本资料</span>
                 <span class="label label-warning">2 填写个人简介</span>
-                <span class="label label-default">3 上传头像和证书</span>
+                <span class="label label-default">3 上传证书</span>
                 <span class="label label-default">4 添加话题</span>
+                <span class="label label-default">5 申请成功，等待审核</span>
+                <span class="label label-default">6 审核通过</span>
             </h4>
         </div>
         <!-- /.col-lg-12 -->
@@ -19,15 +21,35 @@
         <div class="col-xs-10 col-sm-8 col-md-6">
             <form class="form-horizontal" action="__APP__/Admin/TeacherApply/apply_two" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label for="teacher-info-introduction" class="col-sm-3 control-label">个人简介</label>
+
+                    <present name="error">
+                        <div class="alert alert-danger" role="alert">{$error}</div>
+                    </present>
+
+                    <present name="message">
+                        <br>
+                        <div class="alert alert-success" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <p>{$message}</p>
+                        </div>
+                    </present>
+
+                    <div class="form-group">
+                        <label for="teacher-avatar" class="col-sm-3 control-label">添加头像</label>
+                        <div class="col-sm-9">
+                            <input type="file" class="form-control" id="teacher-avatar" name="avatar" placeholder="请选择您的头像">
+                        </div>
+                    </div>
+
+                    <label class="col-sm-3 control-label">个人简介</label>
                     <div class="col-sm-9">
-                        <textarea id="teacher-info-introduction" class="form-control" rows="10" name="introduction">
                         <empty name="teacher.introduction">
-                            {$teacher.introduction}
-                        </eles>
-                             请填写您的个人简介
+                            <textarea class="form-control" rows="10" name="introduction">请填写您的个人简介</textarea>
+                        <else />
+                             <textarea class="form-control" rows="10" name="introduction">{$teacher.introduction}</textarea>
                         </empty>
-                        </textarea>
                     </div>
                 </div>
 

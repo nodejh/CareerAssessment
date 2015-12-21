@@ -14,7 +14,7 @@ class BaseController extends Controller {
 
 
     public $_data;
-    
+
     /**
      * initialize redirect url
      */
@@ -296,6 +296,27 @@ class BaseController extends Controller {
             return 0;
         }
     }
+
+
+    /**
+     * 判断 type 是否为 teacher
+     * 如果不是，则跳转到相应 type
+     */
+    protected function is_teacher() {
+        $type = $this->login_type();
+
+        if ($type == 2) {
+
+        } else if($type == 1) {
+            $this->redirect('User/index', '', 0);
+        } else if ($type == 3) {
+            $this->redirect('Admin/index', '', 0);
+        } else {
+            logout();
+            $this->redirect('Home/Login/index', '', 0);
+        }
+    }
+    
 
 
     /**

@@ -116,7 +116,14 @@
                     </a>
                 </li>
                 <li>
-                    <a href="__APP__/Admin/TeacherApply/apply_one">
+                    <switch name="teacher.apply_status">
+                        <case value="0">
+                            <a href="__APP__/Admin/TeacherApply/apply_one">
+                        </case>
+                        <default />
+                        <a href="__APP__/Admin/TeacherApply/apply_success">
+                    </switch>
+
                         <i class="fa fa-credit-card fa-fw"></i>
                         申请成为咨询师
                             <switch name="teacher.apply_status">
@@ -124,7 +131,7 @@
                                     <span class="label label-danger">未申请</span>
                                 </case>
                                 <case value="1">
-                                    <span class="label label-waring">正在审核</span>
+                                    <span class="label label-warning">正在审核</span>
                                 </case>
                                 <case value="2">
                                     <span class="label label-success">已通过</span>

@@ -20,8 +20,6 @@
                     </p>
                 </div>
             </div>
-        </div>
-        <div class="col-xs-10 col-sm-9 col-xs-offset-1 col-sm-offset-0">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title" id="appoint-rule">预约规则</h3>
@@ -34,7 +32,8 @@
                     </ul>
                 </div>
             </div>
-
+        </div>
+        <div class="col-xs-10 col-sm-9 col-xs-offset-1 col-sm-offset-0">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title" id="appoint-step">预约步骤</h3>
@@ -47,10 +46,7 @@
             <div>
                 <p class="text-muted">请点击选择预约时间</p>
             </div>
-
-
             <div>
-
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
 
                     <!-- Wrapper for slides -->
@@ -79,9 +75,7 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
-
             </div>
-
 
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-6">
@@ -111,26 +105,38 @@
 </div>
 
 
+<div class="modal fade" id="message" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3 id="body-content"></h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!--<script src="__PUBLIC__/custom/js/appoint.js"></script>-->
 
 
 <script type="text/javascript">
-//TODO 将提示改为bootstrap的弹出框模式
     // 预约
     $(document).ready(function () {
 
-        initialize();
+        //initialize();
 
         /**
          * 页面初始化
          */
-        function initialize() {
-            appoint_time_inilialize();
-            click_to_appoint();
-            appoint();
-        }
+//        function initialize() {
+//            appoint_time_inilialize();
+//            click_to_appoint();
+//            appoint();
+//        }
 
-
+        appoint_time_inilialize();
         /**
          * 预约时间表初始化
          */
@@ -153,7 +159,34 @@
             $noFreeTime.each(function () {
                 $(this).removeClass('ca-no-free-time').addClass('ca-cannot-appoint');
             });
+
+            appint_time_update(function () {
+                cant_not_time(function() {
+                    click_to_appoint();
+                    appoint();
+                });
+            });
         }
+
+
+        /**
+         * 禁止选择已有的预约
+         *
+         */
+        function appint_time_update(callback) {
+            var teacher_id = '{$appoint.account_id}';
+            var url = '{$api_url.get_appoint_list_confirm}';
+            var data = {
+              "teacher_id": teacher_id
+            };
+            $.post(url, data, function (res) {
+                console.log(url);
+                console.log(res);
+                callback(res);
+            });
+        }
+
+
 
 
         /**
@@ -173,12 +206,12 @@
                     var length = $('.ca-appoint').length;
                     console.log(length);
                     if (length >= '{$appoint.number_per_appoint}') {
-                        alert('每次预约最多能选择{$appoint.number_per_appoint}个待确定的时间段');
+                        $('#body-content').text('每次预约最多能选择{$appoint.number_per_appoint}个待确定的时间段!');
+                        $('#message').modal('show');
                     } else {
                         $(this).addClass('ca-appoint');
                     }
                 }
-
             });
         }
 
@@ -217,17 +250,16 @@
                         $.post(url, data, function (result) {
                             console.log(result);
                             if (result.status == 0) {
-                                alert('预约成功，请及时付款');
-                                //location.reload();
-                                location.href = result.url;
+                                window.location.href=result.url;
                             } else {
-                                alert('预约失败，请重试');
-                                //location.reload();
+                                $('#body-content').text('预约失败，请重试');
+                                $('#message').modal('show');
                             }
                         });
 
                     } else {
-                        alert('请选择预约时间');
+                        $('#body-content').text('请选择预约时间!');
+                        $('#message').modal('show');
                     }
                 } else {
                     alert('请您先登录后再预约');
@@ -240,6 +272,38 @@
 //        $('#appoint-rule').hover(function () {
 //            $('#info-modal').modal('show');
 //        });
+
+
+        function cant_not_time(callback) {
+            var url = '{$api.get_teacher_can_not_appoint_time}';
+            var teacher_id = '{$api.data.teacher_id}';
+            var data = {
+                "teacher_id": teacher_id
+            };
+            $.post(url, data, function(res) {
+                console.log(res);
+                if (res.code == 0) {
+                    var teacher_no_free_time = '';
+                    for(var a=0;a<res.msg.length;a++) {
+                        teacher_no_free_time += res.msg[a].teacher_confirm_date + ',' ;
+                    }
+                    teacher_no_free_time = teacher_no_free_time.substring(0, teacher_no_free_time.length -1);;
+                    var t_array = teacher_no_free_time.split(',');
+                    console.log(t_array);
+                    for(var i=0; i<t_array.length; i++) {
+                        console.log($('#'+t_array[i]));
+                        $('#'+t_array[i]).removeClass('ca-can-appoint ca-td-time')
+                                .addClass('ca-cannot-appoint')
+                                .text('已被预约');
+                    }
+
+                    callback();
+                } else {
+                    console.log('something wrong');
+                    callback();
+                }
+            });
+        }
 
 
     });

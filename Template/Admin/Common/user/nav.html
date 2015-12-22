@@ -117,13 +117,24 @@
                     <a href="__APP__/Admin/User/password"><i class="fa fa-cog fa-fw"></i> 修改密码</a>
                 </li>
                 <li>
-                    <a href="__APP__/Admin/User/appoint"><i class="fa fa-calendar fa-fw"></i> 咨询预约表
-
+                    <a href="#"><i class="fa fa-list fa-fw"></i> 我的预约表
                         <if condition="$nav.appoint gt 0 ">
-                                <span class="label label-danger">{$nav.appoint}</span>
+                            <span class="label label-danger">{$nav.appoint}</span>
                             <else />
                         </if>
+                        <span class="fa arrow"></span>
                     </a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="__APP__/Admin/UserAppoint/appoint_incomplete">未完成预约</a>
+                        </li>
+                        <li>
+                            <a href="__APP__/Admin/UserAppoint/appoint_complete">已完成预约</a>
+                        </li>
+                        <li>
+                            <a href="__APP__/Admin/UserAppoint/appoint_all">所有预约</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="__APP__/Admin/User/index"><i class="fa fa-calendar-o fa-fw"></i> 课程预约表

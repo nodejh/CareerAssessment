@@ -1,0 +1,86 @@
+<include file="./Template/Admin/Common/teacher/header.html" />
+<include file="./Template/Admin/Common/teacher/nav.html" />
+
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">未完成预约 </h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+
+        <div class="col-xs-10 col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title" id="appoint-step">预约步骤</h3>
+                </div>
+                <div class="panel-body">
+                    <img src="__PUBLIC__/picture/appoint_step.png" alt="预约步骤">
+                </div>
+            </div>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>查看评测</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="appoint_info" id="vo">
+                    <tr>
+                        <td>
+                            <a href="__APP__/Admin/Teacher/appoint_user/user_id/{$vo.user_account_id}">{$vo.name}</a>
+                        </td>
+                        <td>
+                            <a href="#">查看评测</a>
+                        </td>
+
+                        <td>
+                            <switch name="vo.status" >
+                                <case value="10000"><span class="label label-success ca-label-tips">待咨询师确认</span></case>
+                                <case value="10001"><span class="label label-warning ca-label-tips">等来访者付款</span></case>
+                                <case value="10002"><span class="label label-info ca-label-tips">见面咨询</span></case>
+                                <case value="20"><span class="label label-primary ca-label-tips">已完成</span></case>
+                                <case value="21"><span class="label label-default ca-label-tips">已完成</span></case>
+                                <case value="10"><span class="label label-default ca-label-tips">已删除</span></case>
+                                <case value="11"><span class="label label-default ca-label-tips">已删除</span></case>
+                            </switch>
+                        </td>
+                        <td>
+                            <switch name="vo.status" >
+                                <case value="10000">
+                                    <a href="__APP__/Admin/TeacherAppoint/appoint_details/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">确认时间</a>
+                                </case>
+
+                                <case value="10002">
+                                    <a href="__APP__/Admin/TeacherAppoint/confirm_complete/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">确认完成</a>
+                                </case>
+
+                                <default />
+                                <a href="__APP__/Admin/TeacherAppoint/appoint_details_view/appoint_id/{$vo.appoint_id}" class="btn btn-primary btn-sm" role="button">预约详情</a>
+                            </switch>
+                        </td>
+
+                    </tr>
+                </volist>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<!-- /#page-wrapper -->
+
+
+<include file="./Template/Admin/Common/teacher/footer.html" />
+
+
+
+<include file="./Template/Admin/Common/teacher/foot.html" />

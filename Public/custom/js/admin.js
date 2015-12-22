@@ -125,11 +125,15 @@
       var data = {'time': allFreeTime};
       $.post(url, data, function (result) {
         if (result.status == 0) {
-          alert('更新时间表成功');
-          location.reload();
+          $('#body-content').text('更新时间表成功!');
+          $('#message').modal('show').on('hidden.bs.modal', function () {
+            location.reload();
+          });
         } else {
-          alert('保存失败，请重试');
-          location.reload();
+          $('#body-content').text('更新时间表失败，请重试!');
+          $('#message').on('hidden.bs.modal', function () {
+            location.reload();
+          });
         }
       });
     });

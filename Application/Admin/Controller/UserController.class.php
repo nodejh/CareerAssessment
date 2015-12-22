@@ -600,25 +600,25 @@ class UserController extends BaseController {
         $this->display();
     }
 
-
-    /**
-     * 判断是 type 否为 user
-     * 如果不是，则跳转到相应 type
-     */
-    private function is_user() {
-        $type = $this->login_type();
-
-        if ($type == 1) {
-
-        } else if($type == 2) {
-            $this->redirect('Teacher/index', '', 0);
-        } else if ($type == 3) {
-            $this->redirect('Admin/index', '', 0);
-        } else {
-            logout();
-            $this->redirect('Home/Login/index', '', 0);
-        }
-    }
+    //
+    ///**
+    // * 判断是 type 否为 user
+    // * 如果不是，则跳转到相应 type
+    // */
+    //private function is_user() {
+    //    $type = $this->login_type();
+    //
+    //    if ($type == 1) {
+    //
+    //    } else if($type == 2) {
+    //        $this->redirect('Teacher/index', '', 0);
+    //    } else if ($type == 3) {
+    //        $this->redirect('Admin/index', '', 0);
+    //    } else {
+    //        logout();
+    //        $this->redirect('Home/Login/index', '', 0);
+    //    }
+    //}
 
 
 }

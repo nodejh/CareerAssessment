@@ -49,6 +49,9 @@ class LoginController extends BaseController {
     public function index(){
 
         $this->_data['title'] = '登录';
+        if ($_GET['error']) {
+            $this->_data['error'] = $_GET['error'];
+        }
         $this->assign($this->_data);
         $this->display();
 

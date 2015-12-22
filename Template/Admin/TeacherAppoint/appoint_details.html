@@ -31,7 +31,36 @@
                 <!--</div>-->
                 <div class="col-xs-12">
                     <span>请点击选择咨询时间，并按“确认”按钮确认</span>
-                    {$html}
+                    <div>
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                <div class="item active">
+                                    {$html[0]}
+                                </div>
+                                <div class="item">
+                                    {$html[1]}
+                                </div>
+                                <div class="item">
+                                    {$html[2]}
+                                </div>
+                                <div class="item">
+                                    {$html[3]}
+                                </div>
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="left carousel-control ca-carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control ca-carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-6">
@@ -52,16 +81,62 @@
 
 
 
+<div class="modal fade" id="message" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3 id="body-content"></h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <include file="./Template/Admin/Common/user/footer.html" />
 
 <script type="text/javascript">
     $(document).ready(function () {
 
         appoint_time_inilialize();
-        click_to_confirm_appoint();
-        confirm_time();
-        finish_appoint();
 
+        //finish_appoint();
+        cant_not_time(function() {
+            click_to_confirm_appoint();
+            confirm_time();
+        });
+
+        function cant_not_time(callback) {
+            var url = '{$api.get_teacher_can_not_appoint_time}';
+            var teacher_id = '{$api.data.teacher_id}';
+            var data = {
+              "teacher_id": teacher_id
+            };
+            $.post(url, data, function(res) {
+                console.log(res);
+                if (res.code == 0) {
+
+                    var teacher_no_free_time = '';
+                    for(var a=0;a<res.msg.length;a++) {
+                        teacher_no_free_time +=res.msg[a].teacher_confirm_date + ',' ;
+                    }
+                    teacher_no_free_time = teacher_no_free_time.substring(0, teacher_no_free_time.length -1);;
+                    var t_array = teacher_no_free_time.split(',');
+                    for(var i=0; i<t_array.length; i++) {
+                        console.log($('#'+t_array[i]));
+                        $('#'+t_array[i]).removeClass('ca-appoint')
+                                .addClass('ca-cannot-appoint')
+                                .text('已有预约');
+                    }
+                    callback();
+                } else {
+                    console.log('something wrong');
+                    callback();
+                }
+            });
+        }
 
         /**
          * 预约时间表初始化
@@ -81,7 +156,7 @@
             $caTd = $('td');
             console.log(appoint_status);
 
-            if (appoint_status == 0) {
+            if (appoint_status == 10000) {
                 $caTd.each(function () {
                     for (var i in user_select_date_array) {
                         if ($(this).attr('value') == user_select_date_array[i]) {
@@ -93,30 +168,30 @@
                 $('#btn-appoint').removeClass('ca-hide');
 
 
-            } else if (appoint_status == 1) {
+            } else if (appoint_status == 10001) {
                 $caTd.each(function () {
                     $(this).text('').removeClass('ca-no-free-time');
                     for (var i in teacher_confirm_date_array) {
                         if ($(this).attr('value') == teacher_confirm_date_array[i]) {
                             $(this).addClass('ca-appoint-confirm');
-                            $(this).text('等待用户确认')
+                            $(this).text('等待来访者付款')
                         }
                     }
                 });
 
-            } else if (appoint_status == 2) {
+            } else if (appoint_status == 10002) {
                 $caTd.each(function () {
                     $(this).text('').removeClass('ca-no-free-time');
                     for (var i in user_confirm_date_array) {
                         if ($(this).attr('value') == user_confirm_date_array[i]) {
                             $(this).addClass('ca-appoint-confirm');
-                            $(this).text('等待咨询')
+                            $(this).text('来访者已付款')
                         }
                     }
                 });
                 $('#finish-appoint').removeClass('ca-hide');
 
-            } else if (appoint_status == 3) {
+            } else if (appoint_status == 20 || appoint_status == 21) {
                 $caTd.each(function () {
                     $(this).text('').removeClass('ca-no-free-time');
                     for (var i in user_confirm_date_array) {
@@ -170,11 +245,16 @@
                 $.post(url, data, function (res) {
                     //console.log(res);
                     if (res.status == 0) {
-                        alert('确认时间成功！');
-                        location.reload();
+                        $('#body-content').text('确认时间成功!');
+                        $('#message').modal('show').on('hidden.bs.modal', function () {
+                            location.reload();
+                        });
                     } else {
-                        alert('确认失败，请重试');
                         location.reload();
+                        $('#body-content').text('确认失败，请重试');
+                        $('#message').modal('show').on('hidden.bs.modal', function () {
+                            location.reload();
+                        });
                     }
                 });
             });
@@ -184,22 +264,22 @@
         /**
          * 完成预约
          */
-        function finish_appoint() {
-            var data = {};
-            data.id = '{$appoint_info.appoint.appoint_id}';
-            var url = '{$appoint_finish_url}';
-            $('#finish-appoint').click(function () {
-                $.post(url, data, function(res) {
-                    if (res.status == 0) {
-                        alert('确认成功！');
-                        location.reload();
-                    } else {
-                        alert('确认失败，请重试');
-                        location.reload();
-                    }
-                });
-            });
-        }
+//        function finish_appoint() {
+//            var data = {};
+//            data.id = '{$appoint_info.appoint.appoint_id}';
+//            var url = '{$appoint_finish_url}';
+//            $('#finish-appoint').click(function () {
+//                $.post(url, data, function(res) {
+//                    if (res.status == 0) {
+//                        alert('确认成功！');
+//                        location.reload();
+//                    } else {
+//                        alert('确认失败，请重试');
+//                        location.reload();
+//                    }
+//                });
+//            });
+//        }
 
 
     });

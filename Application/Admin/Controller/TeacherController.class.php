@@ -490,37 +490,37 @@ class TeacherController extends BaseController {
     //    }
     //}
 
-
-    /**
-     * 确认预约时间
-     */
-    public function appoint_confirm() {
-        $this->is_teacher();
-        $id = I('post.id', 0);
-        $time = I('post.time', 0);
-        //var_dump($id);
-        //var_dump($time);
-        if($id && $time) {
-            $Appoint = M('appoint');
-            $appoint_where['appoint_id'] = $id;
-            $appoint_data['status'] = 1;
-            $appoint_data['teacher_confirm_date'] = $time;
-            $appoint_data['teacher_confirm_time'] = time();
-            $appoint_result = $Appoint->where($appoint_where)->data($appoint_data)->save();
-            //var_dump($appoint_result);
-            if ($appoint_result) {
-
-                $result['status'] = 0;
-                $result['message'] = 's';
-                $this->ajaxReturn($result);
-
-            } else {
-                $result['status'] = -1;
-                $result['message'] = 'fail';
-                $this->ajaxReturn($result);
-            }
-        }
-    }
+    //
+    ///**
+    // * 确认预约时间
+    // */
+    //public function appoint_confirm() {
+    //    $this->is_teacher();
+    //    $id = I('post.id', 0);
+    //    $time = I('post.time', 0);
+    //    //var_dump($id);
+    //    //var_dump($time);
+    //    if($id && $time) {
+    //        $Appoint = M('appoint');
+    //        $appoint_where['appoint_id'] = $id;
+    //        $appoint_data['status'] = 1;
+    //        $appoint_data['teacher_confirm_date'] = $time;
+    //        $appoint_data['teacher_confirm_time'] = time();
+    //        $appoint_result = $Appoint->where($appoint_where)->data($appoint_data)->save();
+    //        //var_dump($appoint_result);
+    //        if ($appoint_result) {
+    //
+    //            $result['status'] = 0;
+    //            $result['message'] = 's';
+    //            $this->ajaxReturn($result);
+    //
+    //        } else {
+    //            $result['status'] = -1;
+    //            $result['message'] = 'fail';
+    //            $this->ajaxReturn($result);
+    //        }
+    //    }
+    //}
 
 
     /**
@@ -551,54 +551,54 @@ class TeacherController extends BaseController {
         }
     }
 
-
-    /**
-     * 预约详情
-     */
-    function appoint_details() {
-        $this->is_teacher();
-        $appoint_id = I('get.appoint_id', 0);
-        if ($appoint_id) {
-
-            $result = [];
-            foreach($this->_data['teacher']['appoint_list'] as $k => $v) {
-                if ($v['appoint_id'] == $appoint_id) {
-                    $User = M('user');
-                    $where['account_id'] = $v['user_id'];
-                    $user_info = $User->where($where)->find();
-                    $result['appoint']['appoint_id'] = $appoint_id;
-                    $result['appoint']['user_id'] = $v['user_id'];
-                    $result['appoint']['teacher_id'] = $v['teacher_id'];
-                    $result['appoint']['user_select_date'] = $v['user_select_date'];
-                    $result['appoint']['teacher_confirm_date'] = $v['teacher_confirm_date'];
-                    $result['appoint']['user_confirm_date'] = $v['user_confirm_date'];
-                    $result['appoint']['status'] = $v['status'];
-                    $result['appoint']['save_time'] = $v['save_time'];
-                    $result['appoint']['status'] = $v['status'];
-                    $result['user']['name'] = $user_info['name'];
-                    $result['user']['gender'] = $user_info['gender'];
-                    $result['user']['email'] = $user_info['email'];
-                    $result['user']['city'] = $user_info['city'];
-                    $result['user']['status'] = $user_info['status'];
-                    $result['user']['school'] = $user_info['school'];
-                    $result['user']['college'] = $user_info['college'];
-                    $result['user']['student_type'] = $user_info['student_type'];
-                    break;
-                }
-            }
-
-            $this->_data['appoint_info'] = $result;
-            $this->_data['html'] = set_week();
-            $this->_data['appoint_confirm_url'] = U('appoint_confirm');
-            $this->_data['appoint_finish_url'] = U('appoint_finish');
-
-            $this->assign($this->_data);
-            $this->display();
-
-        } else {
-            $this->redirect('appoint', '', 0);
-        }
-    }
+    //
+    ///**
+    // * 预约详情
+    // */
+    //function appoint_details() {
+    //    $this->is_teacher();
+    //    $appoint_id = I('get.appoint_id', 0);
+    //    if ($appoint_id) {
+    //
+    //        $result = [];
+    //        foreach($this->_data['teacher']['appoint_list'] as $k => $v) {
+    //            if ($v['appoint_id'] == $appoint_id) {
+    //                $User = M('user');
+    //                $where['account_id'] = $v['user_id'];
+    //                $user_info = $User->where($where)->find();
+    //                $result['appoint']['appoint_id'] = $appoint_id;
+    //                $result['appoint']['user_id'] = $v['user_id'];
+    //                $result['appoint']['teacher_id'] = $v['teacher_id'];
+    //                $result['appoint']['user_select_date'] = $v['user_select_date'];
+    //                $result['appoint']['teacher_confirm_date'] = $v['teacher_confirm_date'];
+    //                $result['appoint']['user_confirm_date'] = $v['user_confirm_date'];
+    //                $result['appoint']['status'] = $v['status'];
+    //                $result['appoint']['save_time'] = $v['save_time'];
+    //                $result['appoint']['status'] = $v['status'];
+    //                $result['user']['name'] = $user_info['name'];
+    //                $result['user']['gender'] = $user_info['gender'];
+    //                $result['user']['email'] = $user_info['email'];
+    //                $result['user']['city'] = $user_info['city'];
+    //                $result['user']['status'] = $user_info['status'];
+    //                $result['user']['school'] = $user_info['school'];
+    //                $result['user']['college'] = $user_info['college'];
+    //                $result['user']['student_type'] = $user_info['student_type'];
+    //                break;
+    //            }
+    //        }
+    //
+    //        $this->_data['appoint_info'] = $result;
+    //        $this->_data['html'] = set_week();
+    //        $this->_data['appoint_confirm_url'] = U('appoint_confirm');
+    //        $this->_data['appoint_finish_url'] = U('appoint_finish');
+    //
+    //        $this->assign($this->_data);
+    //        $this->display();
+    //
+    //    } else {
+    //        $this->redirect('appoint', '', 0);
+    //    }
+    //}
 
 
     /**

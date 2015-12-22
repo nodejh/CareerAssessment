@@ -1,0 +1,291 @@
+<include file="./Template/Admin/Common/teacher/header.html" />
+<include file="./Template/Admin/Common/teacher/nav.html" />
+
+
+
+
+<div id="page-wrapper">
+    <div class="row">
+
+        <div class="col-lg-12">
+            <h1 class="page-header">预约详情</h1>
+        </div>
+
+
+        <div class="col-xs-12">
+            <div class="row">
+                <!--<div class="col-xs-10 col-sm-4 col-xs-offset-1 col-sm-offset-0">-->
+                    <!--<div class="thumbnail">-->
+                        <!--<div class="caption">-->
+                            <!--<h4>{$appoint_info.user.name} <small>  {$appoint_info.user.gender}  {$appoint_info.user.city}</small></h4>-->
+                            <!--<p>-->
+                                <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+                                <!--来访者详情-->
+                            <!--</p>-->
+                            <!--<p>-->
+                                <!--&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+                                <!--评测结果-->
+                            <!--</p>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+                <div class="col-xs-12">
+                    <span>请点击选择咨询时间，并按“确认”按钮确认</span>
+                    <div>
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval="false">
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner" role="listbox">
+                                <div class="item active">
+                                    {$html[0]}
+                                </div>
+                                <div class="item">
+                                    {$html[1]}
+                                </div>
+                                <div class="item">
+                                    {$html[2]}
+                                </div>
+                                <div class="item">
+                                    {$html[3]}
+                                </div>
+                            </div>
+
+                            <!-- Controls -->
+                            <a class="left carousel-control ca-carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="right carousel-control ca-carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <button type="button" class="form-control btn-primary ca-hide" id="btn-appoint"> 确认</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-6">
+                        <button type="button" class="form-control btn-primary ca-hide" id="finish-appoint"> 确认完成</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="message" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3 id="body-content"></h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<include file="./Template/Admin/Common/user/footer.html" />
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        appoint_time_inilialize();
+        click_to_confirm_appoint();
+        confirm_time();
+        //finish_appoint();
+//        cant_not_time(function() {
+//            click_to_confirm_appoint();
+//            confirm_time();
+//        });
+
+        function cant_not_time(callback) {
+            var url = '{$api.get_teacher_can_not_appoint_time}';
+            var teacher_id = '{$api.data.teacher_id}';
+            var data = {
+              "teacher_id": teacher_id
+            };
+            $.post(url, data, function(res) {
+                console.log(res);
+                if (res.code == 0) {
+
+                    var teacher_no_free_time = '';
+                    for(var a=0;a<res.msg.length;a++) {
+                        teacher_no_free_time +=res.msg[a].teacher_confirm_date + ',' ;
+                    }
+                    teacher_no_free_time = teacher_no_free_time.substring(0, teacher_no_free_time.length -1);;
+                    var t_array = teacher_no_free_time.split(',');
+                    for(var i=0; i<t_array.length; i++) {
+                        console.log($('#'+t_array[i]));
+                        $('#'+t_array[i]).removeClass('ca-appoint')
+                                .addClass('ca-cannot-appoint')
+                                .text('已有预约');
+                    }
+                    callback();
+                } else {
+                    console.log('something wrong');
+                    callback();
+                }
+            });
+        }
+
+        /**
+         * 预约时间表初始化
+         */
+        function appoint_time_inilialize() {
+
+            var user_select_date = '{$appoint_info.appoint.user_select_date}';
+            var user_select_date_array = user_select_date.split(',');
+
+            var teacher_confirm_date = '{$appoint_info.appoint.teacher_confirm_date}';
+            var teacher_confirm_date_array = teacher_confirm_date.split(',');
+
+            var user_confirm_date = '{$appoint_info.appoint.user_confirm_date}';
+            var user_confirm_date_array = user_confirm_date.split(',');
+
+            var appoint_status = '{$appoint_info.appoint.status}';
+            $caTd = $('td');
+            console.log(appoint_status);
+
+            if (appoint_status == 10000) {
+                $caTd.each(function () {
+                    for (var i in user_select_date_array) {
+                        if ($(this).attr('value') == user_select_date_array[i]) {
+                            $(this).addClass('ca-appoint');
+                        }
+                    }
+                    $(this).text('').removeClass('ca-no-free-time');
+                });
+                $('#btn-appoint').removeClass('ca-hide');
+
+
+            } else if (appoint_status == 10001) {
+                $caTd.each(function () {
+                    $(this).text('').removeClass('ca-no-free-time');
+                    for (var i in teacher_confirm_date_array) {
+                        if ($(this).attr('value') == teacher_confirm_date_array[i]) {
+                            $(this).addClass('ca-appoint-confirm');
+                            $(this).text('等待来访者付款')
+                        }
+                    }
+                });
+
+            } else if (appoint_status == 10002) {
+                $caTd.each(function () {
+                    $(this).text('').removeClass('ca-no-free-time');
+                    for (var i in user_confirm_date_array) {
+                        if ($(this).attr('value') == user_confirm_date_array[i]) {
+                            $(this).addClass('ca-appoint-confirm');
+                            $(this).text('来访者已付款')
+                        }
+                    }
+                });
+                $('#finish-appoint').removeClass('ca-hide');
+
+            } else if (appoint_status == 20 || appoint_status == 21) {
+                $caTd.each(function () {
+                    $(this).text('').removeClass('ca-no-free-time');
+                    for (var i in user_confirm_date_array) {
+                        if ($(this).attr('value') == user_confirm_date_array[i]) {
+                            $(this).addClass('ca-appoint-finish');
+                            $(this).text('已完成');
+                        }
+                    }
+                });
+            }
+        }
+
+
+
+        /**
+         * 选择预约时间
+         */
+        function click_to_confirm_appoint() {
+            $('.ca-appoint').click(function () {
+//               $('.ca-appoint').each(function () {
+//                 $(this).text('').removeClass('ca-appoint-confirm');
+//               });
+               var text = $(this).text();
+                // TODO 这里 text 始终为空？
+                if (text == '') {
+                    $(this).text('选定为咨询定时间').addClass('ca-appoint-confirm');
+                } else {
+                    $(this).text('').removeClass('ca-appoint-confirm');
+                }
+            });
+        }
+
+
+        /**
+         * 确认预约时间
+         */
+        function confirm_time() {
+            var data = {};
+            data.id = '{$appoint_info.appoint.appoint_id}';
+            var url = '{$appoint_confirm_url}';
+
+            $('#btn-appoint').click(function () {
+                var time = '';
+                $('.ca-appoint-confirm').each(function () {
+                    time += $(this).attr('value') + ',';
+                });
+                console.log(time.substring(0, time.length - 1));
+               data.time = time.substring(0, time.length - 1);
+                console.log(url);
+
+                $.post(url, data, function (res) {
+                    //console.log(res);
+                    if (res.status == 0) {
+                        $('#body-content').text('确认时间成功!');
+                        $('#message').modal('show').on('hidden.bs.modal', function () {
+                            location.reload();
+                        });
+                    } else {
+                        location.reload();
+                        $('#body-content').text('确认失败，请重试');
+                        $('#message').modal('show').on('hidden.bs.modal', function () {
+                            location.reload();
+                        });
+                    }
+                });
+            });
+        }
+
+
+        /**
+         * 完成预约
+         */
+//        function finish_appoint() {
+//            var data = {};
+//            data.id = '{$appoint_info.appoint.appoint_id}';
+//            var url = '{$appoint_finish_url}';
+//            $('#finish-appoint').click(function () {
+//                $.post(url, data, function(res) {
+//                    if (res.status == 0) {
+//                        alert('确认成功！');
+//                        location.reload();
+//                    } else {
+//                        alert('确认失败，请重试');
+//                        location.reload();
+//                    }
+//                });
+//            });
+//        }
+
+
+    });
+
+
+</script>
+
+<include file="./Template/Admin/Common/teacher/foot.html" />
